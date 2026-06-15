@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LampBoardCfg</class>
+ <widget class="QWidget" name="LampBoardCfg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>834</width>
+    <height>709</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,9,1">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="SetEditValueWidget" name="setBoardNum" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton_allInOne">
+       <property name="text">
+        <string>合板</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string notr="true">灯板1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string notr="true">灯板2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string notr="true">灯板3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string notr="true">灯板4</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string notr="true">灯板5</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string notr="true">灯板6</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_2" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="10" column="1">
+       <widget class="QCheckBox" name="checkBox_10">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_layer">
+        <property name="text">
+         <string notr="true">layer</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="label_limit">
+        <property name="text">
+         <string notr="true">limit</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="label_coef">
+        <property name="text">
+         <string notr="true">系数</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QLabel" name="label_rename">
+        <property name="text">
+         <string>Rename</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="myLineEdit" name="layerEdit">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="viewBtn">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="typeBtn">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="myLineEdit" name="lineEdit">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="myLineEdit" name="coefEdit1">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="myLineEdit" name="lineEdit_n1"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string notr="true">2</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="myLineEdit" name="layerEdit_2">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="viewBtn_2">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QPushButton" name="typeBtn_2">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="7">
+       <widget class="myLineEdit" name="lineEdit_n2"/>
+      </item>
+      <item row="2" column="5">
+       <widget class="myLineEdit" name="lineEdit_2">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="4">
+       <widget class="QPushButton" name="typeBtn_6">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="6">
+       <widget class="myLineEdit" name="coefEdit2">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="checkBox_3">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string notr="true">3</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="myLineEdit" name="layerEdit_3">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QPushButton" name="viewBtn_7">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QPushButton" name="viewBtn_3">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="typeBtn_3">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="7">
+       <widget class="myLineEdit" name="lineEdit_n3"/>
+      </item>
+      <item row="3" column="5">
+       <widget class="myLineEdit" name="lineEdit_3">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="6">
+       <widget class="myLineEdit" name="coefEdit3">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="checkBox_4">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string notr="true">4</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QPushButton" name="viewBtn_4">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QPushButton" name="typeBtn_4">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="myLineEdit" name="layerEdit_4">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="7">
+       <widget class="myLineEdit" name="lineEdit_n4"/>
+      </item>
+      <item row="4" column="5">
+       <widget class="myLineEdit" name="lineEdit_4">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="6">
+       <widget class="myLineEdit" name="coefEdit4">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="checkBox_5">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string notr="true">5</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QPushButton" name="viewBtn_5">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QPushButton" name="typeBtn_5">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="myLineEdit" name="layerEdit_5">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="7">
+       <widget class="myLineEdit" name="lineEdit_n5"/>
+      </item>
+      <item row="5" column="5">
+       <widget class="myLineEdit" name="lineEdit_5">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="6">
+       <widget class="myLineEdit" name="coefEdit5">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="checkBox_6">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string notr="true">6</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QPushButton" name="viewBtn_6">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="myLineEdit" name="layerEdit_6">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="7">
+       <widget class="myLineEdit" name="lineEdit_n6"/>
+      </item>
+      <item row="6" column="5">
+       <widget class="myLineEdit" name="lineEdit_6">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="6">
+       <widget class="myLineEdit" name="coefEdit6">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="checkBox_7">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="myLineEdit" name="layerEdit_7">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string notr="true">7</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QPushButton" name="typeBtn_7">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="7">
+       <widget class="myLineEdit" name="lineEdit_n7"/>
+      </item>
+      <item row="7" column="5">
+       <widget class="myLineEdit" name="lineEdit_7">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="6">
+       <widget class="myLineEdit" name="coefEdit7">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QCheckBox" name="checkBox_8">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string notr="true">8</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QPushButton" name="viewBtn_8">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="myLineEdit" name="layerEdit_8">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QPushButton" name="typeBtn_8">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="myLineEdit" name="lineEdit_8">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="6">
+       <widget class="myLineEdit" name="coefEdit8">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="7">
+       <widget class="myLineEdit" name="lineEdit_n8"/>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string notr="true">9</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QCheckBox" name="checkBox_9">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2">
+       <widget class="myLineEdit" name="layerEdit_9">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="3">
+       <widget class="QPushButton" name="viewBtn_9">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="4">
+       <widget class="QPushButton" name="typeBtn_9">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="5">
+       <widget class="myLineEdit" name="lineEdit_9">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="6">
+       <widget class="myLineEdit" name="coefEdit9">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="7">
+       <widget class="myLineEdit" name="lineEdit_n9"/>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string notr="true">10</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="2">
+       <widget class="myLineEdit" name="layerEdit_10">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="3">
+       <widget class="QPushButton" name="viewBtn_10">
+        <property name="text">
+         <string notr="true">前</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="4">
+       <widget class="QPushButton" name="typeBtn_10">
+        <property name="text">
+         <string notr="true">物料</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="5">
+       <widget class="myLineEdit" name="lineEdit_10">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="6">
+       <widget class="myLineEdit" name="coefEdit10">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="7">
+       <widget class="myLineEdit" name="lineEdit_n10"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="restoreBtn">
+       <property name="text">
+        <string notr="true">恢复默认</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okbtn">
+       <property name="text">
+        <string notr="true">ok</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SetEditValueWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">mysortwidget/seteditvaluewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

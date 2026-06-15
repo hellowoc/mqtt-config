@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RemoteWidget</class>
+ <widget class="QWidget" name="RemoteWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>813</width>
+    <height>554</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="IPSetWidget" name="tab">
+      <attribute name="title">
+       <string notr="true">Tab 1</string>
+      </attribute>
+     </widget>
+     <widget class="AutoCtrlBoardIPSetWidget" name="tab_2">
+      <attribute name="title">
+       <string notr="true">Tab 2</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IPSetWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">systeminfo/ipsetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AutoCtrlBoardIPSetWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/autoctrlboardipsetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

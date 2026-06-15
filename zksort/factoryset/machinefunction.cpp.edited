@@ -1,0 +1,1051 @@
+#include "machinefunction.h"
+#include "globalflow.h"
+#include "mqttsrv.h"
+#include "ui_machinefunction.h"
+#include <QFile>
+#include "qrencode.h"
+#include "setsvmusedialog.h"
+
+MachineFunction::MachineFunction(QWidget *parent) :
+    basewidget(parent),
+    ui(new Ui::MachineFunction)
+{
+    ui->setupUi(this);
+    QStringList list;
+    list<<"1"<<"2"<<"3"<<"4";
+    ui->comboBox->addItems(list);
+    ui->oldBtn->setCheckable(true);
+    ui->lineEdit->setType(textType);
+
+    m_pbtnGroup = new QButtonGroup(this);
+    m_pbtnGroup->addButton(ui->pushButton_3,0);
+    m_pbtnGroup->addButton(ui->pushButton_4,1);
+    m_pbtnGroup->addButton(ui->pushButton_5,2);
+    m_pbtnGroup->addButton(ui->pushButton_6,3);
+    m_pbtnGroup->addButton(ui->pushButton_7,4);
+    m_pbtnGroup->addButton(ui->pushButton_8,5);
+
+    m_pbtnGroup->addButton(ui->btn_valve,6);
+    m_pbtnGroup->addButton(ui->btn_filter,7);
+    m_pbtnGroup->addButton(ui->btn_wipe,8);
+    m_pbtnGroup->addButton(ui->btn_lamp,9);
+
+    for(int i = 0;i< m_pbtnGroup->buttons().count();i++){
+        m_pbtnGroup->button(i)->setCheckable(true);
+        connect(m_pbtnGroup->button(i),SIGNAL(clicked(bool)),this,SLOT(btn_clicked(bool)));
+    }
+
+    ui->cmboxPort->clear();
+    QStringList comlist;
+    comlist<<"COM2"<<"COM1";
+    ui->cmboxPort->addItems(comlist);
+    ui->pushButton_3->setChecked(true);
+    ui->stackedWidget->setCurrentIndex(0);
+
+    QSettings setting(CFG_APPSet,QSettings::IniFormat);
+    QString testip = setting.value("testIp","www.chinaamd.cn").toString();
+
+    setting.setValue("testIp",testip);
+    setting.sync();
+    ui->lvMachine->setVisible(false);
+    ui->encryptBtn->setVisible(false);
+    ui->autoImageCheckBox->setVisible(false);
+    ui->pushButton->setObjectName("levelSenseBtn");
+ }
+
+MachineFunction::~MachineFunction()
+{
+    delete ui;
+}
+
+void MachineFunction::showPage(bool bshow)
+{
+    if(bshow){
+        m_sTotalStaticsGetDuration = (struCnfg.sTotalStaticsGetDuration == 10) ? 0: (struCnfg.sTotalStaticsGetDuration /60);
+
+        ui->ledit_realtime->setMinMax(this,0,10,0,&m_sTotalStaticsGetDuration);
+        ui->ledit_realtime->setText(QString::number(m_sTotalStaticsGetDuration));
+        ui->bigSmallMaxLineedit->setMinMax(this,255,65535,1,&struCnfg.nBigSmallArithMaxValue);
+        ui->bigSmallMaxLineedit->setText(QString::number(struCnfg.nBigSmallArithMaxValue));
+        ui->edgeCutMaxLineedit->setMinMax(this,1,32,1,&struCnfg.nEdgeCutMaxValue);
+        ui->edgeCutMaxLineedit->setText(QString::number(struCnfg.nEdgeCutMaxValue));
+        ui->impuredMaxLineedit->setMinMax(this,1,32,1,&struCnfg.nImpuredMaxValue);
+        ui->impuredMaxLineedit->setText(QString::number(struCnfg.nImpuredMaxValue));
+        ui->ejectDurationMaxLineedit->setFloatMinMax(this,1,54.0,1,&struCnfg.nEjectDurationMaxValue);
+        ui->ejectDurationMaxLineedit->setText(QString::number(struCnfg.nEjectDurationMaxValue));
+
+        ui->ledit_valve->setMinMax(this,0,65535,2,&struCnfg.stuUseLimitCfg.valve_life);
+        ui->ledit_filter->setMinMax(this,0,65535,3,&struCnfg.stuUseLimitCfg.filter_life);
+        ui->ledit_wipe->setMinMax(this,0,65535,4,&struCnfg.stuUseLimitCfg.wipe_life);
+        ui->ledit_lamp->setMinMax(this,0,65535,5,&struCnfg.stuUseLimitCfg.lamp_life);
+        ui->ledit_onoffDelay->setMinMax(this,0,30,7,&struCnfg.nOnoffDelay);
+        ui->ledit_onoffDelay->setText(QString::number(struCnfg.nOnoffDelay));
+
+        ui->ledit_onoffDelay_2->setMinMax(this,0,30,7,&struCnfg.nOnoffDelay_2);
+        ui->ledit_onoffDelay_2->setText(QString::number(struCnfg.nOnoffDelay_2));
+
+        updateoldBtnState();
+        updateViceFeedState();
+        updateAutoImageCaptureState();
+        updateUseIpcEnableState();
+        updateVavleTimeSetModeState();
+        updateArithParamsSetByTimes();
+        updateFeedCtrlTpye();
+        updateConnectName();
+
+        updatePressureAlarmTypeCombox();
+        updateFlowStaticsEnableState();
+        updateFlowStaticsInWorkingState();
+
+        updatePartsUsedInfo();
+        updatePortUsedCombox();
+
+        updateSpray();
+        updateWheelType();
+        updateVibType();
+        updateCrossCam();
+        updateCrossMode1();
+        updateCrossMode2();
+        updateValveSiteState();
+
+        updateValveType();
+        updateVibFreq();
+        updateVibFreq2();
+        updateBigVibPos();
+        updateBigVibEnable();
+
+        updateSVMPara();
+        updateAllInOne();
+        updateValveDefend();
+        updateScreenSet();
+
+        bool bVisiable = ((struCnfg.nMachineType == MACHINE_LD2_ZL_GP) || (struCnfg.nMachineType == MACHINE_LD_ZL_GP))?true:false;
+        ui->vibMode->setVisible(bVisiable);
+        ui->label_vib->setVisible(bVisiable);
+        ui->sprayCheckbox->setVisible(bVisiable);
+        ui->wheelRun->setVisible(bVisiable);
+        ui->checkBox->setChecked(struGsh.debugMode);
+        ui->lvMachine->setChecked(struCnfg.nLVMachine);
+        ui->plcControl->setChecked(struCnfg.nPlcControl);
+        ui->dpMachine->setChecked(struCnfg.nDPMachine);
+
+        if(paramDelayCode.enable == 0xAA)
+        {
+            ui->moreBtn->hide();
+        }
+        else
+        {
+            ui->moreBtn->show();
+        }
+        if(paramDelayCode.uiLanguage == 0xAA)
+        {
+            ui->checkBoxChs->setChecked(false);
+        }
+        else
+        {
+            ui->checkBoxChs->setChecked(true);
+        }
+        ui->checkBoxChs->hide();
+    }
+}
+
+void MachineFunction::receiveMsg(int msg1, int msg2, int msg3)
+{
+    if(msg1 == MSG_DATA_CHANGED){
+        switch(msg2)
+        {
+        case 0:
+            struCnfg.sTotalStaticsGetDuration = (m_sTotalStaticsGetDuration == 0)? 10 :(m_sTotalStaticsGetDuration*60);
+            ui->ledit_realtime->setText(QString::number(m_sTotalStaticsGetDuration));
+            break;
+        case 1:
+            ui->bigSmallMaxLineedit->setText(QString::number(struCnfg.nBigSmallArithMaxValue));
+            ui->edgeCutMaxLineedit->setText(QString::number(struCnfg.nEdgeCutMaxValue));
+            ui->impuredMaxLineedit->setText(QString::number(struCnfg.nImpuredMaxValue));
+            ui->ejectDurationMaxLineedit->setText(QString::number(struCnfg.nEjectDurationMaxValue));
+            break;
+        case -1:
+            myFlow.resetSystemControlRG();
+        }
+    }
+}
+
+void MachineFunction::retranslateUiWidget()
+{
+    ui->viceFeederCheckBox->setText(g_myLan().vice_feeder);
+    ui->feederCtrlType1CheckBox->setText(g_myLan().feederCtrlType1);
+    ui->encryptBtn->setText(g_myLan().dc_set);
+    ui->checkBox_flow->setText(g_myLan().flow_statis);
+    ui->checkBox->setText(g_myLan().ids_factoryModel);
+
+    ui->pressurAlarmLbl->setText(g_myLan().pressure_alarm_type);
+    presAlarmTypeList.clear();
+    presAlarmTypeList<<g_myLan().pressure_alarm_switch<<g_myLan().pressure_alarm_digi;
+    alarmVoiceTypeList.clear();
+    alarmVoiceTypeList<<g_myLan().ids_disable<<g_myLan().lighting+g_myLan().sound<<g_myLan().lighting<<g_myLan().sound;
+
+    ui->checkBox_3->setText(g_myLan().operating_mode);
+    ui->delayTimeSetByTimescheckBox->setText(g_myLan().set_delay_time_by_time);
+    ui->identifyParamsSetByTimescheckBox->setText(g_myLan().arith_params_set_alike);
+    ui->lbl_realtime->setText(g_myLan().realtime_statistical_query_cycle);
+    ui->resetModeName->setText(g_myLan().one_click_recovery);
+    ui->label->setText(g_myLan().alarm_method);
+    ui->bigSmallMaxLabel->setText(g_myLan().arith_big_small_limit);
+    ui->edgeCutMaxLabel->setText(g_myLan().edge_cut_max_limit);
+    ui->impuredMaxLabel->setText(g_myLan().impured_max_limit);
+    ui->ejectDurationMaxLabel->setText(g_myLan().eject_duration_max_limit);
+
+    ui->changelogoBtn->setText(g_myLan().ui_style);
+    ui->pushButton->setText(g_myLan().level_sensor);
+    ui->tempSensorBtn->setText(g_myLan().temperature_sensor);
+    ui->pushButton_3->setText(g_myLan().ids_machineModel);
+    ui->pushButton_4->setText(g_myLan().ids_alarm);
+    ui->pushButton_5->setText(g_myLan().flow_set);
+
+    ui->emmcp1UgBtn->setText(g_myLan().recover_part);
+    ui->emmcUgBtn->setText(g_myLan().recover_all);
+    ui->ugCancelBtn->setText(g_myLan().recover_cancel);
+    ui->pushButton_6->setText(g_myLan().recovery_set);
+    ui->pushButton_7->setText("SVM "+g_myLan().ids_set);
+    ui->pushButton_8->setText(g_myLan().ids_paramName+g_myLan().ids_set);
+
+    ui->portLbl->setText(g_myLan().port);
+
+    ui->sensorNameRestoreBtn->setText(g_myLan().sensorNameRestore);
+
+    ui->crossCheckbox->setText(g_myLan().crossCAM);
+    ui->crossMode1Checkbox->setText(g_myLan().mode_1);
+    ui->crossMode2Checkbox->setText(g_myLan().mode_2);
+    ui->vavleSite->setText(g_myLan().vavle+g_myLan().ids_position);
+    ui->vibUseEnable->setText(g_myLan().big_feeder);
+    ui->label_17->setText(g_myLan().feeder_freq);
+
+    ui->groupBox->hide();
+//    ui->groupBox->setTitle(g_myLan().life_time);
+    ui->label_4->setText(g_myLan().ids_usefultime_valve);
+    ui->label_5->setText(g_myLan().ids_usefultime_filter);
+    ui->label_6->setText(g_myLan().ids_usefultime_clean);
+    ui->label_7->setText(g_myLan().ids_light);
+    ui->label_8->setText(g_myLan().day);
+    ui->label_9->setText(g_myLan().day);
+    ui->label_10->setText(g_myLan().day);
+    ui->label_11->setText(g_myLan().times);
+    ui->btn_filter->setText(g_myLan().recovery_set);
+    ui->btn_valve->setText(g_myLan().recovery_set);
+    ui->btn_wipe->setText(g_myLan().recovery_set);
+    ui->btn_lamp->setText(g_myLan().recovery_set);
+    ui->label_vib->setText(g_myLan().related_mode);
+    ui->vibUseEnable->setText(g_myLan().big_feeder);
+    ui->label_12->setText(g_myLan().big_feeder_pos);
+    ui->label_17->setText(g_myLan().big_feeder_freq);
+    ui->label_16->setText(g_myLan().feeder_freq);
+
+    ui->lvMachine->setText("LV"+g_myLan().ids_machineModel);
+    ui->lblValveType->setText(g_myLan().vavle+g_myLan().type);
+    ui->pushButton_2->setText(g_myLan().ids_apply);
+    ui->lbl_onoffDelay->setText(g_myLan().feeder+g_myLan().ids_off+g_myLan().ids_cleaningTime);
+    ui->lbl_onoffDelay_2->setText(g_myLan().feeder+g_myLan().ids_turnOn+g_myLan().ids_cleaningTime);
+
+    ui->moreBtn->setText(g_myLan().ids_more);
+
+    ui->sprayCheckbox->setText(g_myLan().spray);
+    ui->wheelRun->setText(g_myLan().wheelRun);
+    ui->ipcEnableCheckBox->setText("IPC "+g_myLan().ids_enable);
+    ui->autoImageCheckBox->setText(g_myLan().ids_smart+g_myLan().ids_image);
+    ui->allInOne->setText(g_myLan().ids_allInOne);
+    ui->checkBoxChs->setText(g_myLan().languageChange);
+    ui->valveDefend->setText(g_myLan().ids_valveDefend);
+    ui->screenSetCheckBox->setText(g_myLan().ids_ScreenSet);
+
+    ui->alarmVoiceTestBtn->setText(g_myLan().alarm+g_myLan().check);
+}
+
+void MachineFunction::btn_clicked(bool check)
+{
+    if(check)
+    {
+        for(int i = 6;i < 10;i++)
+        {
+            if ((QPushButton *)sender() == m_pbtnGroup->button(i))
+            {
+                switch (i) {
+                case 6:
+                    struCnfg.stuUseLimitCfg.valve_start_use = struCnfg.nCounter;
+                    break;
+                case 7:
+                    struCnfg.stuUseLimitCfg.filter_start_use = struCnfg.nCounter;
+                    break;
+                case 8:
+                    struCnfg.stuUseLimitCfg.wipe_start_use = 0;
+                    break;
+                case 9:
+                    struCnfg.stuUseLimitCfg.lamp_start_use = struCnfg.nCounter;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+        ui->stackedWidget->setCurrentIndex(m_pbtnGroup->id((QPushButton*)sender()));
+    }
+}
+
+void MachineFunction::on_oldBtn_clicked(bool checked)
+{
+    if(checked){
+        //todo open
+        myFlow.resetAgeTestFre(1);
+    }else{
+        //todo close
+        myFlow.resetAgeTestFre(0);
+    }
+    updateoldBtnState();
+}
+
+void MachineFunction::on_comboBox_activated(int index)
+{
+    //todo
+    struGsh.ageTestFre = index;
+}
+
+void MachineFunction::updateoldBtnState()
+{
+    if(ui->oldBtn->isChecked()){
+        ui->oldBtn->setText(g_myLan().ids_enable);
+    }else{
+        ui->oldBtn->setText(g_myLan().ids_disable);
+    }
+}
+
+void MachineFunction::updateViceFeedState()
+{
+    ui->viceFeederCheckBox->setChecked(struCnfg.nFeedViceTotal == 1);
+}
+
+void MachineFunction::updateAutoImageCaptureState()
+{
+    ui->autoImageCheckBox->setChecked(struCnfg.nAutoImageCaptureEnable == 1);
+}
+
+void MachineFunction::updateUseIpcEnableState()
+{
+    ui->ipcEnableCheckBox->setChecked(struCnfg.nUseIpcEnable == 1);
+    ui->dpMachine->setChecked(struCnfg.nDPMachine);
+}
+
+void MachineFunction::updateVavleTimeSetModeState()
+{
+    ui->delayTimeSetByTimescheckBox->setChecked(struCnfg.nVavleTimeSetMode == 1);
+}
+
+void MachineFunction::updateArithParamsSetByTimes()
+{
+    ui->identifyParamsSetByTimescheckBox->setChecked(struCnfg.nEnableDispArithSetByTimes == 1);
+}
+
+void MachineFunction::updateFeedCtrlTpye()
+{
+    ui->feederCtrlType1CheckBox->setChecked(struCnfg.nFeedControlType1 == 1);
+}
+
+void MachineFunction::updateConnectName()
+{
+    QSettings setting(CFG_APPSet,QSettings::IniFormat);
+    QString connectName = setting.value("connectName","").toString();
+    ui->lineEdit->setText(connectName);
+    if (connectName != "")
+    {
+        GenerateQRcode(connectName);
+    }
+}
+
+void MachineFunction::updateValveDefend()
+{
+   ui->valveDefend->setChecked(struCnfg.nValveDefend == 1);
+}
+
+void MachineFunction::updatePressureAlarmTypeCombox()
+{
+    ui->pressureAlarmType->show();
+    ui->pressureAlarmType->clear();
+    ui->pressureAlarmType->addItems(presAlarmTypeList);
+    ui->pressureAlarmType->setCurrentIndex(struCnfg.struAlarmConfig.nAirPressureAlarmType);
+
+    ui->alarmVoiceTypeCombobox->clear();
+    ui->alarmVoiceTypeCombobox->addItems(alarmVoiceTypeList);
+    ui->alarmVoiceTypeCombobox->setCurrentIndex(struCnfg.struAlarmConfig.nLightVoiceAlarmType);
+}
+
+void MachineFunction::on_encryptBtn_clicked()
+{
+    myEncrypt dlg;
+
+    bool bFlagEna = TRUE;
+
+    if (paramDelayCode.enable != 0xAA) {
+        bFlagEna = TRUE;
+    }
+    else {
+        bFlagEna = FALSE;
+    }
+    int ret = dlg.exec();
+    if (ret == QDialog::Accepted){
+        if (bFlagEna) { //未加密过的机器，启动实时纪录系统时间
+           /*启动定时保存参数功能*/
+           QProcess *process = new QProcess;
+           QStringList strList;
+           strList<<"";
+           process->startDetached("./MyTimer",strList);
+        }
+    }
+}
+
+void MachineFunction::on_viceFeederCheckBox_clicked()
+{
+    struCnfg.nFeedViceTotal = !struCnfg.nFeedViceTotal;
+    updateViceFeedState();
+}
+
+void MachineFunction::on_lineEdit_textChanged(const QString &arg1)
+{
+    if (arg1 != "")
+    {
+        QSettings setting(CFG_APPSet,QSettings::IniFormat);
+        setting.setValue("connectName",arg1);
+        setting.sync();
+        GenerateQRcode(arg1);
+    }
+}
+
+void MachineFunction::GenerateQRcode(QString tempstr)
+{
+    QRcode *qrcode; //二维码数据
+    //QR_ECLEVEL_Q 容错等级
+    qrcode = QRcode_encodeString(tempstr.toStdString().c_str(), 2, QR_ECLEVEL_Q, QR_MODE_8, 1);
+    qint32 temp_width=ui->label_3->width(); //二维码图片的大小
+    qint32 temp_height=ui->label_3->height();
+    qint32 qrcode_width = qrcode->width > 0 ? qrcode->width : 1;
+    double scale_x = (double)temp_width / (double)qrcode_width; //二维码图片的缩放比例
+    double scale_y =(double) temp_height /(double) qrcode_width;
+    QImage mainimg=QImage(temp_width,temp_height,QImage::Format_ARGB32);
+    QPainter painter(&mainimg);
+    QColor background(Qt::white);
+    painter.setBrush(background);
+    painter.setPen(Qt::NoPen);
+    painter.drawRect(0, 0, temp_width, temp_height);
+    QColor foreground(Qt::black);
+    painter.setBrush(foreground);
+    for( qint32 y = 0; y < qrcode_width; y ++)
+    {
+        for(qint32 x = 0; x < qrcode_width; x++)
+        {
+            unsigned char b = qrcode->data[y * qrcode_width + x];
+            if(b & 0x01)
+            {
+                QRectF r(x * scale_x, y * scale_y, scale_x, scale_y);
+                painter.drawRects(&r, 1);
+            }
+        }
+    }
+    QPixmap mainmap=QPixmap::fromImage(mainimg);
+    ui->label_3->setPixmap(mainmap);
+    ui->label_3->setVisible(true);
+}
+
+void MachineFunction::on_delayTimeSetByTimescheckBox_clicked(bool checked)
+{
+    struCnfg.nVavleTimeSetMode = checked;
+}
+
+void MachineFunction::on_identifyParamsSetByTimescheckBox_clicked(bool checked)
+{
+    struCnfg.nEnableDispArithSetByTimes = checked;
+}
+
+void MachineFunction::on_feederCtrlType1CheckBox_clicked(bool checked)
+{
+  struCnfg.nFeedControlType1 = checked;
+}
+
+void MachineFunction::on_checkBox_flow_clicked(bool checked)
+{
+    if(checked)
+        struCnfg.nAutoStaticsEnable = 1;
+    else
+        struCnfg.nAutoStaticsEnable = 0;
+    updateFlowStaticsEnableState();
+}
+
+void MachineFunction::updateFlowStaticsEnableState()
+{
+    if(struCnfg.nAutoStaticsEnable == 1)
+        ui->checkBox_flow->setChecked(true);
+    else
+        ui->checkBox_flow->setChecked(false);
+}
+
+void MachineFunction::updateFlowStaticsInWorkingState()
+{
+    if(struCnfg.nAutoStaticsWorking == 1){
+        ui->checkBox_3->setChecked(true);
+    }else{
+        ui->checkBox_3->setChecked(false);
+    }
+}
+
+void MachineFunction::updatePartsUsedInfo()
+{
+    if(struCnfg.nHasUps == 1)
+    {
+        ui->upsCheckBox->setChecked(TRUE);
+    }
+    else
+    {
+        ui->upsCheckBox->setChecked(FALSE);
+    }
+
+    ui->ledit_valve->setText(QString::number(struCnfg.stuUseLimitCfg.valve_life));
+    ui->ledit_filter->setText(QString::number(struCnfg.stuUseLimitCfg.filter_life));
+    ui->ledit_wipe->setText(QString::number(struCnfg.stuUseLimitCfg.wipe_life));
+    ui->ledit_lamp->setText(QString::number(struCnfg.stuUseLimitCfg.lamp_life));
+}
+
+void MachineFunction::updatePortUsedCombox()
+{
+    QSettings setting(CFG_APPSet,QSettings::IniFormat);
+    int value = setting.value("portName",2).toInt();
+    int index = (value == 2)? 0 : 1;
+    ui->cmboxPort->setCurrentIndex(index);
+}
+
+void MachineFunction::updateSpray()
+{
+    ui->sprayCheckbox->setChecked(struCnfg.nSpray == 1);
+}
+
+void MachineFunction::updateVibType()
+{
+    ui->vibMode->clear();
+    QStringList list;
+    list<<g_myLan().rice_mode<<g_myLan().material_mode<<g_myLan().synchronization<<g_myLan().independent;
+    ui->vibMode->addItems(list);
+    ui->vibMode->setCurrentIndex(struCnfg.nVibType);
+}
+
+void MachineFunction::updateCrossCam()
+{
+    ui->crossCheckbox->setChecked(struCnfg.bCrossCam == 1);
+}
+
+void MachineFunction::updateCrossMode1()
+{
+    ui->crossMode1Checkbox->setVisible(struCnfg.bCrossCam);
+    ui->crossMode1Checkbox->setChecked(struCnfg.bCrossMode1);
+}
+
+void MachineFunction::updateCrossMode2()
+{
+    ui->crossMode2Checkbox->setVisible(struCnfg.bCrossCam);
+    ui->crossMode2Checkbox->setChecked(struCnfg.bCrossMode2);
+}
+
+void MachineFunction::updateWheelType()
+{
+   ui->wheelRun->setChecked(struCnfg.nWheelRunType == 1);
+}
+
+void MachineFunction::on_pressureAlarmType_activated(int index)
+{
+    struCnfg.struAlarmConfig.nAirPressureAlarmType = index;
+    if(struCnfg.struAlarmConfig.nAirPressureAlarmType == 0)   //使用压力开关
+    {
+        struCnfg.struAlarmConfig.nFeederLevelAlarmEnable[CTRL_ALARM_MAX_FEED_SENSOR-1] = 0;
+    }
+    myFlow.resetSystemControlRG();
+}
+
+void MachineFunction::on_resetModeName_clicked()
+{
+    myMessageBox msgBox(MSG_QUES,  g_myLan().cfm_reset_current_scheme_materialname);
+    int ret = msgBox.exec();
+
+    if (ret == QDialog::Accepted){
+        myFlow.resetSortNamesByLan();
+    }
+}
+
+void MachineFunction::on_checkBox_3_clicked(bool checked)
+{
+    if(checked){
+        struCnfg.nAutoStaticsWorking = 1;
+    }else{
+        struCnfg.nAutoStaticsWorking = 0;
+    }
+    updateFlowStaticsInWorkingState();
+}
+
+void MachineFunction::on_pushButton_clicked()
+{
+    logger()->info("enter feeder sensor setting page");
+    g_MainManager().ShowWidget(SM_FEEDER_SENSOR_SET_WIDGET);
+}
+
+void MachineFunction::on_tempSensorBtn_clicked()
+{
+    logger()->info("enter temperature sensor setting page");
+    g_MainManager().ShowWidget(SM_TEMP_SENSOR_SET_WIDGET);
+}
+
+void MachineFunction::on_alarmVoiceTypeCombobox_activated(int index)
+{
+    struCnfg.struAlarmConfig.nLightVoiceAlarmType = index;
+}
+
+void MachineFunction::on_sensorNameRestoreBtn_clicked()
+{
+    myFlow.resetSensorNamesByLan();
+}
+
+void MachineFunction::on_changelogoBtn_clicked()
+{
+    if(!g_Runtime().checkUsbExist()){
+        g_infoWidget().setLabelText(g_myLan().msg_usb_insert);
+        g_infoWidget().showSecs();
+        return;
+    }
+    QString path = g_Runtime().getUsbPath();
+    if (path == ""){
+        g_infoWidget().setLabelText(g_myLan().msg_usb_not_recognized);
+        g_infoWidget().showSecs();
+        return;
+    }
+
+    QDir logoDir(path+"logo");
+    if(!logoDir.exists()){
+        g_infoWidget().setLabelText(g_myLan().msg_usb_logofile_not_exist);
+        g_infoWidget().showSecs();
+        return;
+    }
+    g_Runtime().dirExist("/sdcard/logo/");
+#ifdef Q_OS_UNIX
+    g_Runtime().copyFileToPath(path+"logo/top.bmp","/media/mmcblk1p2/logo/top.bmp",true);
+    g_Runtime().copyFileToPath(path+"logo/homepage.bmp","/media/mmcblk1p2/logo/homepage.bmp",true);
+
+    g_Runtime().copyFileToPath(path+"logo/top.bmp","/media/mmcblk0p1/logo/top.bmp",true);
+    g_Runtime().copyFileToPath(path+"logo/homepage.bmp","/media/mmcblk0p1/logo/homepage.bmp",true);
+    g_Runtime().copyFileToPath(path+"logo/boot.bmp","/sdcard/logo/boot.bmp",true);
+
+    QString cmd = "cp -f "+path+"logo/*.ini"+ " /app/lang/";
+    system(QString(cmd).toLocal8Bit().constData());
+    system("sync");
+#endif
+    g_infoWidget().setLabelText(g_myLan().msg_usb_logofile_replace_success);
+    g_infoWidget().showSecs();
+}
+
+void MachineFunction::on_cmboxPort_currentIndexChanged(int index)
+{
+    int value = (index == 0)? 2 : 1;
+    QSettings setting(CFG_APPSet,QSettings::IniFormat);
+    setting.setValue("portName",value);
+    setting.sync();
+}
+
+void MachineFunction::on_emmcUgBtn_clicked()
+{
+    QFile file("/media/mmcblk0p1/upgrade");
+    myMessageBox *mesBox = new myMessageBox(MSG_QUES, g_myLan().cfm_recover_all);
+    int ret = mesBox->exec();
+    if(ret == QDialog::Accepted){
+#ifdef Q_OS_UNIX
+        QFile f_file("/dev/mmcblk1");
+        if (f_file.exists())
+        {
+            if(!file.exists())
+            {
+                char cmd[64];
+                sprintf(cmd, "cd /media/mmcblk0p1/;touch upgrade");
+                system(cmd);
+                system("sync");
+            }
+        }
+
+#endif
+    }
+    if (file.exists())
+    {
+        g_infoWidget().setLabelText(g_myLan().recover_all_cfg_success);
+        g_infoWidget().showSecs();
+    }
+}
+
+void MachineFunction::on_emmcp1UgBtn_clicked()
+{
+    QFile file("/media/mmcblk0p1/upgradep1");
+    myMessageBox *mesBox = new myMessageBox(MSG_QUES, g_myLan().cfm_recover_part);
+    int ret = mesBox->exec();
+    if(ret == QDialog::Accepted){
+#ifdef Q_OS_UNIX
+        QFile f_file("/dev/mmcblk1");
+        if (f_file.exists())
+        {
+            if(!file.exists())
+            {
+                char cmd[64];
+                sprintf(cmd, "cd /media/mmcblk0p1/;touch upgradep1");
+                system(cmd);
+                system("sync");
+            }
+        }
+
+#endif
+    }
+    if (file.exists())
+    {
+        g_infoWidget().setLabelText(g_myLan().recover_part_cfg_success);
+        g_infoWidget().showSecs();
+    }
+}
+
+void MachineFunction::on_ugCancelBtn_clicked()
+{
+#ifdef Q_OS_UNIX
+    QFile f_file("/dev/mmcblk1");
+    if (f_file.exists())
+    {
+        system("rm -fr /media/mmcblk0p1/upgrade*");
+    }
+
+#endif
+}
+
+void MachineFunction::on_upsCheckBox_clicked()
+{
+    struCnfg.nHasUps = (struCnfg.nHasUps == 0) ? 1 : 0;
+
+    if(struCnfg.nHasUps == 1)
+    {
+        ui->upsCheckBox->setChecked(TRUE);
+    }
+    else
+    {
+        ui->upsCheckBox->setChecked(FALSE);
+    }
+}
+
+
+void MachineFunction::on_sprayCheckbox_clicked(bool checked)
+{
+   struCnfg.nSpray = (int)checked;
+   updateSpray();
+}
+
+
+void MachineFunction::on_vibMode_activated(int index)
+{
+   struCnfg.nVibType = index;
+   updateVibType();
+   myFlow.resetSystemControlRG();
+}
+
+void MachineFunction::on_wheelRun_clicked(bool checked)
+{
+   struCnfg.nWheelRunType = (int)checked;
+   updateWheelType();
+}
+
+void MachineFunction::on_checkBox_clicked(bool checked)
+{
+    struGsh.debugMode = checked;
+    QSettings setting(DEBUG_MODE_Set,QSettings::IniFormat);
+    setting.setValue("debugmode",(int)checked);
+    setting.sync();
+}
+
+void MachineFunction::on_crossMode1Checkbox_clicked(bool checked)
+{
+    struCnfg.bCrossMode1 = (int)checked;
+    myFlow.resetCrossCam();
+}
+
+void MachineFunction::on_crossCheckbox_clicked(bool checked)
+{
+    struCnfg.bCrossCam = (int)checked;
+    struCnfg.bCrossMode1 &= struCnfg.bCrossCam;
+    struCnfg.bCrossMode2 &= struCnfg.bCrossCam;
+    updateCrossMode1();
+    updateCrossMode2();
+    myFlow.resetCrossCam();
+}
+
+void MachineFunction::on_crossMode2Checkbox_clicked(bool checked)
+{
+    struCnfg.bCrossMode2 = (int)checked;
+    myFlow.resetCrossCam();
+}
+
+void MachineFunction::updateValveSiteState()
+{
+    ui->vavleSite->setChecked(struCnfg.nValveSite == 1);
+}
+
+void MachineFunction::on_vavleSite_clicked(bool checked)
+{
+    struCnfg.nValveSite = (int)checked;
+}
+
+void MachineFunction::on_autoImageCheckBox_clicked()
+{
+    struCnfg.nAutoImageCaptureEnable = (struCnfg.nAutoImageCaptureEnable == 0) ? 1: 0;
+    updateAutoImageCaptureState();
+}
+
+void MachineFunction::on_ipcEnableCheckBox_clicked()
+{
+    struCnfg.nUseIpcEnable = (struCnfg.nUseIpcEnable == 0) ? 1 : 0;
+    updateUseIpcEnableState();
+}
+
+void MachineFunction::on_ledit_onoffDelay_textChanged(const QString &arg1)
+{
+    struCnfg.nOnoffDelay = QString(arg1).toInt();
+}
+
+void MachineFunction::on_comboBox_valveType_activated(int index)
+{
+    struCnfg.nValveType = index;
+    updateValveType();
+    myFlow.resetMachineConfigRG();
+}
+
+void MachineFunction::updateValveType()
+{
+    ui->comboBox_valveType->clear();
+    QStringList list;
+    list<<g_myLan().shortDrive<<g_myLan().longDrive;
+    ui->comboBox_valveType->addItems(list);
+    ui->comboBox_valveType->setCurrentIndex(struCnfg.nValveType);
+}
+
+void MachineFunction::updateVibFreq()
+{
+    ui->comboBox_vibFreq->setCurrentIndex(struCnfg.nVibFreq);
+}
+
+void MachineFunction::updateVibFreq2()
+{
+   ui->comboBox_vibFreq_2->setCurrentIndex(struCnfg.nVibFreq_2);
+}
+
+void MachineFunction::updateBigVibPos()
+{
+   ui->vibPosEdit->setMinMax(this,1,12,-1,&struCnfg.nBigVibPos);
+   ui->vibPosEdit->setText(QString::number(struCnfg.nBigVibPos));
+}
+
+void MachineFunction::updateBigVibEnable()
+{
+    ui->vibUseEnable->setChecked(struCnfg.bigVibIsUse == 1);
+    ui->vibPosEdit->setVisible(struCnfg.bigVibIsUse == 1);
+    ui->comboBox_vibFreq_2->setVisible(struCnfg.bigVibIsUse == 1);
+    ui->label_12->setVisible(struCnfg.bigVibIsUse == 1);
+    ui->label_17->setVisible(struCnfg.bigVibIsUse == 1);
+}
+
+void MachineFunction::on_vibUseEnable_clicked(bool checked)
+{
+    struCnfg.bigVibIsUse = (int)checked;
+    updateBigVibEnable();
+    myFlow.resetSystemControlRG();
+}
+
+void MachineFunction::on_comboBox_vibFreq_activated(int index)
+{
+    struCnfg.nVibFreq = index;
+    updateVibFreq();
+    myFlow.resetSystemControlRG();
+}
+
+void MachineFunction::on_comboBox_vibFreq_2_activated(int index)
+{
+    struCnfg.nVibFreq_2 = index;
+    updateVibFreq2();
+    myFlow.resetSystemControlRG();
+}
+
+void MachineFunction::updateSVMPara()
+{
+    ui->ledit_C->setType(textType);
+    ui->ledit_R->setType(textType);
+    ui->ledit_G->setType(textType);
+    ui->ledit_B->setType(textType);
+    ui->ledit_RG->setType(textType);
+    ui->ledit_GB->setType(textType);
+    ui->ledit_RB->setType(textType);
+    ui->ledit_RR->setType(textType);
+    ui->ledit_GG->setType(textType);
+    ui->ledit_BB->setType(textType);
+
+    ui->ledit_C->setText(QString::number(struGsh.m_svmcoefs[9]));
+    ui->ledit_R->setText(QString::number(struGsh.m_svmcoefs[0]));
+    ui->ledit_G->setText(QString::number(struGsh.m_svmcoefs[1]));
+    ui->ledit_B->setText(QString::number(struGsh.m_svmcoefs[2]));
+    ui->ledit_RG->setText(QString::number(struGsh.m_svmcoefs[3]));
+    ui->ledit_GB->setText(QString::number(struGsh.m_svmcoefs[4]));
+    ui->ledit_RB->setText(QString::number(struGsh.m_svmcoefs[5]));
+    ui->ledit_RR->setText(QString::number(struGsh.m_svmcoefs[6]));
+    ui->ledit_GG->setText(QString::number(struGsh.m_svmcoefs[7]));
+    ui->ledit_BB->setText(QString::number(struGsh.m_svmcoefs[8]));
+}
+
+void MachineFunction::on_pushButton_2_clicked()
+{
+    struGsh.m_svmcoefs[9] = ui->ledit_C->text().toDouble();
+    struGsh.m_svmcoefs[0] = ui->ledit_R->text().toDouble();
+    struGsh.m_svmcoefs[1] = ui->ledit_G->text().toDouble();
+    struGsh.m_svmcoefs[2] = ui->ledit_B->text().toDouble();
+    struGsh.m_svmcoefs[3] = ui->ledit_RG->text().toDouble();
+    struGsh.m_svmcoefs[4] = ui->ledit_GB->text().toDouble();
+    struGsh.m_svmcoefs[5] = ui->ledit_RB->text().toDouble();
+    struGsh.m_svmcoefs[6] = ui->ledit_RR->text().toDouble();
+    struGsh.m_svmcoefs[7] = ui->ledit_GG->text().toDouble();
+    struGsh.m_svmcoefs[8] = ui->ledit_BB->text().toDouble();
+
+    SetSvmUseDialog dlg;
+    dlg.exec();
+}
+
+void MachineFunction::on_lvMachine_clicked(bool checked)
+{
+    struCnfg.nLVMachine = checked;
+    QSettings setting(CFG_APPSet,QSettings::IniFormat);
+    if(checked)
+        setting.setValue("testIp","www.lauffer-cloud.com");
+    else
+        setting.setValue("testIp","www.chinaamd.cn");
+    setting.sync();
+}
+
+void MachineFunction::on_plcControl_clicked(bool checked)
+{
+    struCnfg.nPlcControl = checked;
+}
+
+void MachineFunction::on_moreBtn_clicked()
+{
+    myInputMethod inputPanel;
+    inputPanel.setType(KB_PD);
+    inputPanel.setInputBtnText(g_myLan().ids_ok,g_myLan().ids_cancel,g_myLan().ids_delete,g_myLan().ids_space);
+    if(inputPanel.exec() == QDialog::Accepted)
+    {
+       QString str = inputPanel.getText();
+       if ((PRODUCT_DEFAULT_VENDOR == PRODUCT_VENDOR_ZK && str == "ZK.GD.2021.LANG")||(PRODUCT_DEFAULT_VENDOR == PRODUCT_VENDOR_LV && str == "LV.123.321.LANG"))
+       {
+            ui->checkBoxChs->show();
+       }
+       else
+       {
+           g_infoWidget().setLabelText(g_myLan().ids_wrongPassword);
+           g_infoWidget().delayShow();
+           myFlow.sleep(2);
+           g_infoWidget().hide();
+       }
+    }
+}
+
+void MachineFunction::on_checkBoxChs_clicked()
+{
+    myMessageBox msgBox(MSG_QUES, g_myLan().checkLanChange);
+
+    int ret = msgBox.exec();
+
+    if (ret == QDialog::Accepted)
+    {
+        g_infoWidget().setLabelText(g_myLan().msg_applying);
+        g_infoWidget().delayShow();
+
+        paramDelayCode.uiLanguage = (paramDelayCode.uiLanguage == 0xAA) ? 0xFF : 0xAA;
+        paramDelayCode.setUiLanguage();
+
+        myFlow.sleep(2);
+        g_infoWidget().hide();
+
+        if(paramDelayCode.uiLanguage == 0xAA)
+        {
+            logger()->info("change machine outside");
+            ui->checkBoxChs->setChecked(false);
+        }
+        else
+        {
+            logger()->info("change machine inside");
+            ui->checkBoxChs->setChecked(true);
+        }
+    }
+}
+
+void MachineFunction::on_dpMachine_clicked(bool checked)
+{
+    struCnfg.nDPMachine = (int)checked;
+    updateUseIpcEnableState();
+
+    myFlow.imgHeight = (struCnfg.nDPMachine == 1) ? IMAGE_HEIGHT : IMAGE_HEIGHT_NOT_DP;
+    logger()->info("dp machine :%1",checked);
+}
+
+void MachineFunction::updateAllInOne()
+{
+    ui->allInOne->setChecked(struCnfg.nAllInOne);
+}
+
+void MachineFunction::on_allInOne_clicked(bool checked)
+{
+    struCnfg.nAllInOne = (checked) ? 1:0;
+}
+
+void MachineFunction::on_ledit_onoffDelay_2_textChanged(const QString &arg1)
+{
+    struCnfg.nOnoffDelay_2 = QString(arg1).toInt();
+}
+
+void MachineFunction::on_valveDefend_clicked(bool checked)
+{
+    struCnfg.nValveDefend = (int)checked;
+    updateValveDefend();
+    myFlow.resetMachineConfigRG();
+}
+
+void MachineFunction::updateScreenSet()
+{
+    ui->screenSetCheckBox->setChecked(struCnfg.nScreenSet);
+}
+
+void MachineFunction::on_screenSetCheckBox_clicked(bool checked)
+{
+    struCnfg.nScreenSet = (checked) ? 1:0;
+}
+
+void MachineFunction::on_alarmVoiceTestBtn_clicked()
+{
+    char data[SEND_PACKET_DATA_SIZE];
+    memset(data, 0, SEND_PACKET_DATA_SIZE);
+
+    switch(struCnfg.struAlarmConfig.nLightVoiceAlarmType)
+    {
+    case 0: //不使能
+        mySerial.pushCom1CmdData(CMD_CTRL_ALARM_SET, 0, BOARD_TYPE_CONTROL, BOARD_TYPE_ALL_IN_CHAIN, data, 3);   //默认第一个控制板清灰
+        break;
+    case 1: //使能灯光+声音
+        data[1] = 0x09;
+        break;
+    case 2: //仅灯光
+        data[1] = 0x01;
+
+        break;
+    case 3: //仅声音
+        data[1] = 0x08;
+        break;
+    default:
+        break;
+    }
+    mySerial.pushCom1CmdData(CMD_CTRL_ALARM_SET, 0, BOARD_TYPE_CONTROL, BOARD_TYPE_ALL_IN_CHAIN, data, 3);   //默认第一个控制板清灰
+}

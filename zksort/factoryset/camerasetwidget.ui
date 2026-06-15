@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CameraSetWidget</class>
+ <widget class="QWidget" name="CameraSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>898</width>
+    <height>811</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0" colspan="2">
+    <widget class="QWidget" name="widget_2" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="mainBtn">
+        <property name="text">
+         <string notr="true">main</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="viceBtn">
+        <property name="text">
+         <string notr="true">vice</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>772</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="frontMainBtn">
+       <property name="text">
+        <string notr="true">前主</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearMainBtn">
+       <property name="text">
+        <string notr="true">后主</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="frontViceBtn">
+       <property name="text">
+        <string notr="true">前辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearViceBtn">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearViceBtn_2">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearViceBtn_3">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearViceBtn_4">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rearViceBtn_5">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="viewsetgroup">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string notr="true">Algorithm configuration</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QTableWidget" name="tableWidget">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>519</width>
+           <height>740</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="10" column="2">
+             <widget class="QComboBox" name="chainAddrCombox"/>
+            </item>
+            <item row="9" column="2">
+             <widget class="QComboBox" name="SensorImageComboBox"/>
+            </item>
+            <item row="14" column="0">
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string notr="true">cmdSpeed</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QComboBox" name="SensorPixelcomboBox"/>
+            </item>
+            <item row="7" column="2">
+             <widget class="QComboBox" name="SensorRowFreComboBox"/>
+            </item>
+            <item row="13" column="2">
+             <widget class="myLineEdit" name="SensorDropLineEdit"/>
+            </item>
+            <item row="11" column="2">
+             <widget class="QComboBox" name="MirrorComboBox"/>
+            </item>
+            <item row="12" column="0">
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string notr="true">BrightSelect</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string notr="true">dim2</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="SensorDimComboBox_2"/>
+              </item>
+             </layout>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string notr="true">Image</string>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string notr="true">dropLine</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string notr="true">Frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string notr="true">mirror</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="checkBox_R">
+                <property name="text">
+                 <string>R</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_N">
+                <property name="text">
+                 <string>N</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="5" column="2">
+             <widget class="QComboBox" name="SensBitWidthComboBox"/>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string notr="true">address</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QComboBox" name="colorModeComboBox"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_B">
+                <property name="text">
+                 <string>B</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_G">
+                <property name="text">
+                 <string>G</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="6" column="2">
+             <widget class="QComboBox" name="MachineTypeComboBox"/>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string notr="true">Bit width</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="2">
+             <widget class="QComboBox" name="BrightSelectComboBox"/>
+            </item>
+            <item row="14" column="2">
+             <widget class="QComboBox" name="SensorCmdSpeedComboBox"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true">SensorPixel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="2">
+             <widget class="myLineEdit" name="SensorRowFreLineEdit"/>
+            </item>
+            <item row="0" column="2">
+             <widget class="QComboBox" name="sensorType"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="text">
+               <string notr="true">Color</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string notr="true">Frequency</string>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="2">
+             <widget class="QComboBox" name="ResizeModeComboBox"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string notr="true">dim</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="sensorTypelbl">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string notr="true">Sensortype</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string notr="true">machine type</string>
+              </property>
+             </widget>
+            </item>
+            <item row="16" column="0">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string notr="true">correction</string>
+              </property>
+             </widget>
+            </item>
+            <item row="16" column="2">
+             <widget class="QCheckBox" name="correctionCheckBox">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string notr="true">resize</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QComboBox" name="TDscheme"/>
+            </item>
+            <item row="3" column="2">
+             <widget class="QComboBox" name="SensorDimComboBox"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>分时方案</string>
+              </property>
+             </widget>
+            </item>
+            <item row="17" column="2">
+             <widget class="QCheckBox" name="inhanceCheckBox">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="17" column="0">
+             <widget class="QLabel" name="label_20">
+              <property name="text">
+               <string>inhance</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="imgCompresscheckBox">
+       <property name="text">
+        <string>compress</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string notr="true">Start Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CameraBoardModeComboBox"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>User Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="UserMode"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="restoreBtn">
+       <property name="text">
+        <string notr="true">restore</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyBtn">
+       <property name="text">
+        <string notr="true">apply</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

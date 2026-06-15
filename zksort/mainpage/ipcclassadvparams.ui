@@ -1,0 +1,1315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ipcclassadvparams</class>
+ <widget class="QWidget" name="ipcclassadvparams">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1047</width>
+    <height>625</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="UiGroupWidget" name="groupWidget" native="true">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" rowspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="labelIpcNum">
+       <property name="text">
+        <string>IPC序号</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBoxIpcSelect"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>下层上视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_1">
+       <property name="text">
+        <string>下层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string>上层上视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>上层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>上层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string>上层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string>上层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="text">
+        <string>上层下视</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>898</width>
+           <height>557</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class1NameEdit"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox1">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox1">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox1">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox1">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class2NameEdit"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_2">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox2">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox2">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox2">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox2">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_2"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class3NameEdit">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>419</width>
+                  <height>25</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_3">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox3">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox3">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox3">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox3">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_3"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class4NameEdit"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_4">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox4">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox4">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox4">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox4">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_4"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class5NameEdit"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_5">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox5">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox5">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox5">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox5">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_5"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_6">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_6"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_2"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_7">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_2">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_2">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_2">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_2">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_7"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_3"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_8">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_3">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_3">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_3">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_8"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_4"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_9">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_4">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_4">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_4">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_4">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_9"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_5"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_10">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_5">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_5">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_5">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_10"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_6"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_11">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_6">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_6">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_6">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_11"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_7"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_12">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_7">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_7">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_7">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_7">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_12"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_8"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_13">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_8">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_8">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_8">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_8">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_13"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_9"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_14">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_9">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_9">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_9">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_9">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_14"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_10"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_15">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_10">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_10">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_10">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_10">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_15"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_11"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_16">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_11">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_11">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_11">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_11">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_16"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_12"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_17">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_12">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_12">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_12">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_12">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_17">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_17"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="5,1,0,0,0,0,0,0">
+              <item>
+               <widget class="myLineEdit" name="class6NameEdit_13"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_18">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelBox6_13">
+                <property name="text">
+                 <string>下限</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="myLineEdit" name="lineEditBox6_13">
+                <property name="maximumSize">
+                 <size>
+                  <width>200</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tickModeCheckBox6_13">
+                <property name="text">
+                 <string>重吹</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="fixedModecheckBox6_13">
+                <property name="text">
+                 <string>最值</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_18">
+                <property name="text">
+                 <string>模式</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox_18"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+         <zorder></zorder>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="SetEditValueWidget" name="classCountWidget" native="true"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="lastPageBtn">
+         <property name="text">
+          <string>&lt;&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="curPagelabel">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="nextPageBtn">
+         <property name="text">
+          <string>&gt;&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelLengthLimit">
+       <property name="text">
+        <string>下限</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEditLengthLimit">
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyBtn">
+       <property name="text">
+        <string>apply</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SetEditValueWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">mysortwidget/seteditvaluewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UiGroupWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">../uikits/src/UiGroupWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

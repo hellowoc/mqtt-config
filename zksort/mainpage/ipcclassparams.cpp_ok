@@ -1,0 +1,1114 @@
+#include "ipcclassparams.h"
+#include "ui_ipcclassparams.h"
+#include "globalflow.h"
+
+ipcclassparams::ipcclassparams(QWidget *parent) :
+    basewidget(parent),
+    ui(new Ui::ipcclassparams)
+{
+    ui->setupUi(this);
+
+    m_pGroupWidget = ui->groupWidget;
+    m_pViewBtn[0] = ui->pushButton;
+    m_pViewBtn[1] = ui->pushButton_1;
+    m_pViewBtn[2] = ui->pushButton_2;
+    m_pViewBtn[3] = ui->pushButton_3;
+    m_pViewBtn[4]= ui->pushButton_4;
+    m_pViewBtn[5]= ui->pushButton_5;
+    m_pViewBtn[6]= ui->pushButton_6;
+    m_pViewBtn[7]= ui->pushButton_7;
+
+//    m_pChuteWidget = ui->chuteWidget;
+//    m_pLayerBtn[0] = ui->mainBtn;
+//    m_pLayerBtn[1] = ui->viceBtn;
+
+    setSlotConnect();
+
+//    m_viewBtn[0] = ui->pushButton;
+//    m_viewBtn[1] = ui->pushButton_1;
+//    m_viewBtn[2] = ui->pushButton_2;
+//    m_viewBtn[3] = ui->pushButton_3;
+
+    m_pClassEnable[0]= ui->checkBox;
+    m_pClassEnable[1]= ui->checkBox_2;
+    m_pClassEnable[2]= ui->checkBox_3;
+    m_pClassEnable[3]= ui->checkBox_4;
+    m_pClassEnable[4]= ui->checkBox_5;
+    m_pClassEnable[5]= ui->checkBox_6;
+    m_pClassEnable[6]= ui->checkBox_7;
+    m_pClassEnable[7]= ui->checkBox_8;
+    m_pClassEnable[8]= ui->checkBox_9;
+    m_pClassEnable[9]= ui->checkBox_10;
+    m_pClassEnable[10]= ui->checkBox_11;
+    m_pClassEnable[11]= ui->checkBox_12;
+    m_pClassEnable[12]= ui->checkBox_13;
+    m_pClassEnable[13]= ui->checkBox_14;
+    m_pClassEnable[14]= ui->checkBox_15;
+    m_pClassEnable[15]= ui->checkBox_16;
+    m_pClassEnable[16]= ui->checkBox_17;
+    m_pClassEnable[17]= ui->checkBox_18;
+    m_pClassEnable[18]= ui->checkBox_19;
+    m_pClassEnable[19]= ui->checkBox_20;
+    m_pClassEnable[20]= ui->checkBox_21;
+    m_pClassEnable[21]= ui->checkBox_22;
+    m_pClassEnable[22]= ui->checkBox_23;
+    m_pClassEnable[23]= ui->checkBox_24;
+    m_pClassEnable[24]= ui->checkBox_25;
+    m_pClassEnable[25]= ui->checkBox_26;
+    m_pClassEnable[26]= ui->checkBox_27;
+    m_pClassEnable[27]= ui->checkBox_28;
+    m_pClassEnable[28]= ui->checkBox_29;
+    m_pClassEnable[29]= ui->checkBox_30;
+    m_pClassEnable[30]= ui->checkBox_31;
+    m_pClassEnable[31]= ui->checkBox_32;
+    m_pClassEnable[32]= ui->checkBox_33;
+    m_pClassEnable[33]= ui->checkBox_34;
+    m_pClassEnable[34]= ui->checkBox_35;
+    m_pClassEnable[35]= ui->checkBox_36;
+    m_pClassEnable[36]= ui->checkBox_37;
+    m_pClassEnable[37]= ui->checkBox_38;
+    m_pClassEnable[38]= ui->checkBox_39;
+    m_pClassEnable[39]= ui->checkBox_40;
+    m_pClassEnable[40]= ui->checkBox_41;
+    m_pClassEnable[41]= ui->checkBox_42;
+    m_pClassEnable[42]= ui->checkBox_43;
+    m_pClassEnable[43]= ui->checkBox_44;
+    m_pClassEnable[44]= ui->checkBox_45;
+    m_pClassEnable[45]= ui->checkBox_46;
+    m_pClassEnable[46]= ui->checkBox_47;
+    m_pClassEnable[47]= ui->checkBox_48;
+    m_pClassEnable[48]= ui->checkBox_49;
+    m_pClassEnable[49]= ui->checkBox_50;
+    m_pClassEnable[50]= ui->checkBox_51;
+    m_pClassEnable[51]= ui->checkBox_52;
+
+    m_nameClassEdit[0]= ui->class1NameEdit;
+    m_nameClassEdit[1]= ui->class1NameEdit_2;
+    m_nameClassEdit[2]= ui->class1NameEdit_3;
+    m_nameClassEdit[3]= ui->class1NameEdit_4;
+    m_nameClassEdit[4]= ui->class1NameEdit_5;
+    m_nameClassEdit[5]= ui->class1NameEdit_6;
+    m_nameClassEdit[6]= ui->class1NameEdit_7;
+    m_nameClassEdit[7]= ui->class1NameEdit_8;
+    m_nameClassEdit[8]= ui->class1NameEdit_9;
+    m_nameClassEdit[9]= ui->class1NameEdit_10;
+    m_nameClassEdit[10]= ui->class1NameEdit_11;
+    m_nameClassEdit[11]= ui->class1NameEdit_12;
+    m_nameClassEdit[12]= ui->class1NameEdit_13;
+    m_nameClassEdit[13]= ui->class1NameEdit_14;
+    m_nameClassEdit[14]= ui->class1NameEdit_15;
+    m_nameClassEdit[15]= ui->class1NameEdit_16;
+    m_nameClassEdit[16]= ui->class1NameEdit_17;
+    m_nameClassEdit[17]= ui->class1NameEdit_18;
+    m_nameClassEdit[18]= ui->class1NameEdit_19;
+    m_nameClassEdit[19]= ui->class1NameEdit_20;
+    m_nameClassEdit[20]= ui->class1NameEdit_21;
+    m_nameClassEdit[21]= ui->class1NameEdit_22;
+    m_nameClassEdit[22]= ui->class1NameEdit_23;
+    m_nameClassEdit[23]= ui->class1NameEdit_24;
+    m_nameClassEdit[24]= ui->class1NameEdit_25;
+    m_nameClassEdit[25]= ui->class1NameEdit_26;
+    m_nameClassEdit[26]= ui->class1NameEdit_27;
+    m_nameClassEdit[27]= ui->class1NameEdit_28;
+    m_nameClassEdit[28]= ui->class1NameEdit_29;
+    m_nameClassEdit[29]= ui->class1NameEdit_30;
+    m_nameClassEdit[30]= ui->class1NameEdit_31;
+    m_nameClassEdit[31]= ui->class1NameEdit_32;
+    m_nameClassEdit[32]= ui->class1NameEdit_33;
+    m_nameClassEdit[33]= ui->class1NameEdit_34;
+    m_nameClassEdit[34]= ui->class1NameEdit_35;
+    m_nameClassEdit[35]= ui->class1NameEdit_36;
+    m_nameClassEdit[36]= ui->class1NameEdit_37;
+    m_nameClassEdit[37]= ui->class1NameEdit_38;
+    m_nameClassEdit[38]= ui->class1NameEdit_39;
+    m_nameClassEdit[39]= ui->class1NameEdit_40;
+    m_nameClassEdit[40]= ui->class1NameEdit_41;
+    m_nameClassEdit[41]= ui->class1NameEdit_42;
+    m_nameClassEdit[42]= ui->class1NameEdit_43;
+    m_nameClassEdit[43]= ui->class1NameEdit_44;
+    m_nameClassEdit[44]= ui->class1NameEdit_45;
+    m_nameClassEdit[45]= ui->class1NameEdit_46;
+    m_nameClassEdit[46]= ui->class1NameEdit_47;
+    m_nameClassEdit[47]= ui->class1NameEdit_48;
+    m_nameClassEdit[48]= ui->class1NameEdit_49;
+    m_nameClassEdit[49]= ui->class1NameEdit_50;
+    m_nameClassEdit[50]= ui->class1NameEdit_51;
+    m_nameClassEdit[51]= ui->class1NameEdit_52;
+
+    m_pClassSensEdit[0]= ui->class1SensWidget;
+    m_pClassSensEdit[1]= ui->class1SensWidget_2;
+    m_pClassSensEdit[2]= ui->class1SensWidget_3;
+    m_pClassSensEdit[3]= ui->class1SensWidget_4;
+    m_pClassSensEdit[4]= ui->class1SensWidget_5;
+    m_pClassSensEdit[5]= ui->class1SensWidget_6;
+    m_pClassSensEdit[6]= ui->class1SensWidget_7;
+    m_pClassSensEdit[7]= ui->class1SensWidget_8;
+    m_pClassSensEdit[8]= ui->class1SensWidget_9;
+    m_pClassSensEdit[9]= ui->class1SensWidget_10;
+    m_pClassSensEdit[10]= ui->class1SensWidget_11;
+    m_pClassSensEdit[11]= ui->class1SensWidget_12;
+    m_pClassSensEdit[12]= ui->class1SensWidget_13;
+    m_pClassSensEdit[13]= ui->class1SensWidget_14;
+    m_pClassSensEdit[14]= ui->class1SensWidget_15;
+    m_pClassSensEdit[15]= ui->class1SensWidget_16;
+    m_pClassSensEdit[16]= ui->class1SensWidget_17;
+    m_pClassSensEdit[17]= ui->class1SensWidget_18;
+    m_pClassSensEdit[18]= ui->class1SensWidget_19;
+    m_pClassSensEdit[19]= ui->class1SensWidget_20;
+    m_pClassSensEdit[20]= ui->class1SensWidget_21;
+    m_pClassSensEdit[21]= ui->class1SensWidget_22;
+    m_pClassSensEdit[22]= ui->class1SensWidget_23;
+    m_pClassSensEdit[23]= ui->class1SensWidget_24;
+    m_pClassSensEdit[24]= ui->class1SensWidget_25;
+    m_pClassSensEdit[25]= ui->class1SensWidget_26;
+    m_pClassSensEdit[26]= ui->class1SensWidget_27;
+    m_pClassSensEdit[27]= ui->class1SensWidget_28;
+    m_pClassSensEdit[28]= ui->class1SensWidget_29;
+    m_pClassSensEdit[29]= ui->class1SensWidget_30;
+    m_pClassSensEdit[30]= ui->class1SensWidget_31;
+    m_pClassSensEdit[31]= ui->class1SensWidget_32;
+    m_pClassSensEdit[32]= ui->class1SensWidget_33;
+    m_pClassSensEdit[33]= ui->class1SensWidget_34;
+    m_pClassSensEdit[34]= ui->class1SensWidget_35;
+    m_pClassSensEdit[35]= ui->class1SensWidget_36;
+    m_pClassSensEdit[36]= ui->class1SensWidget_37;
+    m_pClassSensEdit[37]= ui->class1SensWidget_38;
+    m_pClassSensEdit[38]= ui->class1SensWidget_39;
+    m_pClassSensEdit[39]= ui->class1SensWidget_40;
+    m_pClassSensEdit[40]= ui->class1SensWidget_41;
+    m_pClassSensEdit[41]= ui->class1SensWidget_42;
+    m_pClassSensEdit[42]= ui->class1SensWidget_43;
+    m_pClassSensEdit[43]= ui->class1SensWidget_44;
+    m_pClassSensEdit[44]= ui->class1SensWidget_45;
+    m_pClassSensEdit[45]= ui->class1SensWidget_46;
+    m_pClassSensEdit[46]= ui->class1SensWidget_47;
+    m_pClassSensEdit[47]= ui->class1SensWidget_48;
+    m_pClassSensEdit[48]= ui->class1SensWidget_49;
+    m_pClassSensEdit[49]= ui->class1SensWidget_50;
+    m_pClassSensEdit[50]= ui->class1SensWidget_51;
+    m_pClassSensEdit[51]= ui->class1SensWidget_52;
+
+    m_pClassThresholdEdit[0]= ui->class1ThreadWidget;
+    m_pClassThresholdEdit[1]= ui->class1ThreadWidget_2;
+    m_pClassThresholdEdit[2]= ui->class1ThreadWidget_3;
+    m_pClassThresholdEdit[3]= ui->class1ThreadWidget_4;
+    m_pClassThresholdEdit[4]= ui->class1ThreadWidget_5;
+    m_pClassThresholdEdit[5]= ui->class1ThreadWidget_6;
+    m_pClassThresholdEdit[6]= ui->class1ThreadWidget_7;
+    m_pClassThresholdEdit[7]= ui->class1ThreadWidget_8;
+    m_pClassThresholdEdit[8]= ui->class1ThreadWidget_9;
+    m_pClassThresholdEdit[9]= ui->class1ThreadWidget_10;
+    m_pClassThresholdEdit[10]= ui->class1ThreadWidget_11;
+    m_pClassThresholdEdit[11]= ui->class1ThreadWidget_12;
+    m_pClassThresholdEdit[12]= ui->class1ThreadWidget_13;
+    m_pClassThresholdEdit[13]= ui->class1ThreadWidget_14;
+    m_pClassThresholdEdit[14]= ui->class1ThreadWidget_15;
+    m_pClassThresholdEdit[15]= ui->class1ThreadWidget_16;
+    m_pClassThresholdEdit[16]= ui->class1ThreadWidget_17;
+    m_pClassThresholdEdit[17]= ui->class1ThreadWidget_18;
+    m_pClassThresholdEdit[18]= ui->class1ThreadWidget_19;
+    m_pClassThresholdEdit[19]= ui->class1ThreadWidget_20;
+    m_pClassThresholdEdit[20]= ui->class1ThreadWidget_21;
+    m_pClassThresholdEdit[21]= ui->class1ThreadWidget_22;
+    m_pClassThresholdEdit[22]= ui->class1ThreadWidget_23;
+    m_pClassThresholdEdit[23]= ui->class1ThreadWidget_24;
+    m_pClassThresholdEdit[24]= ui->class1ThreadWidget_25;
+    m_pClassThresholdEdit[25]= ui->class1ThreadWidget_26;
+    m_pClassThresholdEdit[26]= ui->class1ThreadWidget_27;
+    m_pClassThresholdEdit[27]= ui->class1ThreadWidget_28;
+    m_pClassThresholdEdit[28]= ui->class1ThreadWidget_29;
+    m_pClassThresholdEdit[29]= ui->class1ThreadWidget_30;
+    m_pClassThresholdEdit[30]= ui->class1ThreadWidget_31;
+    m_pClassThresholdEdit[31]= ui->class1ThreadWidget_32;
+    m_pClassThresholdEdit[32]= ui->class1ThreadWidget_33;
+    m_pClassThresholdEdit[33]= ui->class1ThreadWidget_34;
+    m_pClassThresholdEdit[34]= ui->class1ThreadWidget_35;
+    m_pClassThresholdEdit[35]= ui->class1ThreadWidget_36;
+    m_pClassThresholdEdit[36]= ui->class1ThreadWidget_37;
+    m_pClassThresholdEdit[37]= ui->class1ThreadWidget_38;
+    m_pClassThresholdEdit[38]= ui->class1ThreadWidget_39;
+    m_pClassThresholdEdit[39]= ui->class1ThreadWidget_40;
+    m_pClassThresholdEdit[40]= ui->class1ThreadWidget_41;
+    m_pClassThresholdEdit[41]= ui->class1ThreadWidget_42;
+    m_pClassThresholdEdit[42]= ui->class1ThreadWidget_43;
+    m_pClassThresholdEdit[43]= ui->class1ThreadWidget_44;
+    m_pClassThresholdEdit[44]= ui->class1ThreadWidget_45;
+    m_pClassThresholdEdit[45]= ui->class1ThreadWidget_46;
+    m_pClassThresholdEdit[46]= ui->class1ThreadWidget_47;
+    m_pClassThresholdEdit[47]= ui->class1ThreadWidget_48;
+    m_pClassThresholdEdit[48]= ui->class1ThreadWidget_49;
+    m_pClassThresholdEdit[49]= ui->class1ThreadWidget_50;
+    m_pClassThresholdEdit[50]= ui->class1ThreadWidget_51;
+    m_pClassThresholdEdit[51]= ui->class1ThreadWidget_52;
+
+    //高级参数
+    m_pBoxClassLable[0]= ui->labelBox1;
+    m_pBoxClassLable[1]= ui->labelBox1_2;
+    m_pBoxClassLable[2]= ui->labelBox1_3;
+    m_pBoxClassLable[3]= ui->labelBox1_4;
+    m_pBoxClassLable[4]= ui->labelBox1_5;
+    m_pBoxClassLable[5]= ui->labelBox1_6;
+    m_pBoxClassLable[6]= ui->labelBox1_7;
+    m_pBoxClassLable[7]= ui->labelBox1_8;
+    m_pBoxClassLable[8]= ui->labelBox1_9;
+    m_pBoxClassLable[9]= ui->labelBox1_10;
+    m_pBoxClassLable[10]= ui->labelBox1_11;
+    m_pBoxClassLable[11]= ui->labelBox1_12;
+    m_pBoxClassLable[12]= ui->labelBox1_13;
+    m_pBoxClassLable[13]= ui->labelBox1_14;
+    m_pBoxClassLable[14]= ui->labelBox1_15;
+    m_pBoxClassLable[15]= ui->labelBox1_16;
+    m_pBoxClassLable[16]= ui->labelBox1_17;
+    m_pBoxClassLable[17]= ui->labelBox1_18;
+    m_pBoxClassLable[18]= ui->labelBox1_19;
+    m_pBoxClassLable[19]= ui->labelBox1_20;
+    m_pBoxClassLable[20]= ui->labelBox1_21;
+    m_pBoxClassLable[21]= ui->labelBox1_22;
+    m_pBoxClassLable[22]= ui->labelBox1_23;
+    m_pBoxClassLable[23]= ui->labelBox1_24;
+    m_pBoxClassLable[24]= ui->labelBox1_25;
+    m_pBoxClassLable[25]= ui->labelBox1_26;
+    m_pBoxClassLable[26]= ui->labelBox1_27;
+    m_pBoxClassLable[27]= ui->labelBox1_28;
+    m_pBoxClassLable[28]= ui->labelBox1_29;
+    m_pBoxClassLable[29]= ui->labelBox1_30;
+    m_pBoxClassLable[30]= ui->labelBox1_31;
+    m_pBoxClassLable[31]= ui->labelBox1_32;
+    m_pBoxClassLable[32]= ui->labelBox1_33;
+    m_pBoxClassLable[33]= ui->labelBox1_34;
+    m_pBoxClassLable[34]= ui->labelBox1_35;
+    m_pBoxClassLable[35]= ui->labelBox1_36;
+    m_pBoxClassLable[36]= ui->labelBox1_37;
+    m_pBoxClassLable[37]= ui->labelBox1_38;
+    m_pBoxClassLable[38]= ui->labelBox1_39;
+    m_pBoxClassLable[39]= ui->labelBox1_40;
+    m_pBoxClassLable[40]= ui->labelBox1_41;
+    m_pBoxClassLable[41]= ui->labelBox1_42;
+    m_pBoxClassLable[42]= ui->labelBox1_43;
+    m_pBoxClassLable[43]= ui->labelBox1_44;
+    m_pBoxClassLable[44]= ui->labelBox1_45;
+    m_pBoxClassLable[45]= ui->labelBox1_46;
+    m_pBoxClassLable[46]= ui->labelBox1_47;
+    m_pBoxClassLable[47]= ui->labelBox1_48;
+    m_pBoxClassLable[48]= ui->labelBox1_49;
+    m_pBoxClassLable[49]= ui->labelBox1_50;
+    m_pBoxClassLable[50]= ui->labelBox1_51;
+    m_pBoxClassLable[51]= ui->labelBox1_52;
+
+
+    m_pBoxClassEdit[0]= ui->lineEditBox1;
+    m_pBoxClassEdit[1]= ui->lineEditBox1_2;
+    m_pBoxClassEdit[2]= ui->lineEditBox1_3;
+    m_pBoxClassEdit[3]= ui->lineEditBox1_4;
+    m_pBoxClassEdit[4]= ui->lineEditBox1_5;
+    m_pBoxClassEdit[5]= ui->lineEditBox1_6;
+    m_pBoxClassEdit[6]= ui->lineEditBox1_7;
+    m_pBoxClassEdit[7]= ui->lineEditBox1_8;
+    m_pBoxClassEdit[8]= ui->lineEditBox1_9;
+    m_pBoxClassEdit[9]= ui->lineEditBox1_10;
+    m_pBoxClassEdit[10]= ui->lineEditBox1_11;
+    m_pBoxClassEdit[11]= ui->lineEditBox1_12;
+    m_pBoxClassEdit[12]= ui->lineEditBox1_13;
+    m_pBoxClassEdit[13]= ui->lineEditBox1_14;
+    m_pBoxClassEdit[14]= ui->lineEditBox1_15;
+    m_pBoxClassEdit[15]= ui->lineEditBox1_16;
+    m_pBoxClassEdit[16]= ui->lineEditBox1_17;
+    m_pBoxClassEdit[17]= ui->lineEditBox1_18;
+    m_pBoxClassEdit[18]= ui->lineEditBox1_19;
+    m_pBoxClassEdit[19]= ui->lineEditBox1_20;
+    m_pBoxClassEdit[20]= ui->lineEditBox1_21;
+    m_pBoxClassEdit[21]= ui->lineEditBox1_22;
+    m_pBoxClassEdit[22]= ui->lineEditBox1_23;
+    m_pBoxClassEdit[23]= ui->lineEditBox1_24;
+    m_pBoxClassEdit[24]= ui->lineEditBox1_25;
+    m_pBoxClassEdit[25]= ui->lineEditBox1_26;
+    m_pBoxClassEdit[26]= ui->lineEditBox1_27;
+    m_pBoxClassEdit[27]= ui->lineEditBox1_28;
+    m_pBoxClassEdit[28]= ui->lineEditBox1_29;
+    m_pBoxClassEdit[29]= ui->lineEditBox1_30;
+    m_pBoxClassEdit[30]= ui->lineEditBox1_31;
+    m_pBoxClassEdit[31]= ui->lineEditBox1_32;
+    m_pBoxClassEdit[32]= ui->lineEditBox1_33;
+    m_pBoxClassEdit[33]= ui->lineEditBox1_34;
+    m_pBoxClassEdit[34]= ui->lineEditBox1_35;
+    m_pBoxClassEdit[35]= ui->lineEditBox1_36;
+    m_pBoxClassEdit[36]= ui->lineEditBox1_37;
+    m_pBoxClassEdit[37]= ui->lineEditBox1_38;
+    m_pBoxClassEdit[38]= ui->lineEditBox1_39;
+    m_pBoxClassEdit[39]= ui->lineEditBox1_40;
+    m_pBoxClassEdit[40]= ui->lineEditBox1_41;
+    m_pBoxClassEdit[41]= ui->lineEditBox1_42;
+    m_pBoxClassEdit[42]= ui->lineEditBox1_43;
+    m_pBoxClassEdit[43]= ui->lineEditBox1_44;
+    m_pBoxClassEdit[44]= ui->lineEditBox1_45;
+    m_pBoxClassEdit[45]= ui->lineEditBox1_46;
+    m_pBoxClassEdit[46]= ui->lineEditBox1_47;
+    m_pBoxClassEdit[47]= ui->lineEditBox1_48;
+    m_pBoxClassEdit[48]= ui->lineEditBox1_49;
+    m_pBoxClassEdit[49]= ui->lineEditBox1_50;
+    m_pBoxClassEdit[50]= ui->lineEditBox1_51;
+    m_pBoxClassEdit[51]= ui->lineEditBox1_52;
+
+
+    m_pTickModeClass[0]= ui->tickModeCheckBox1;
+    m_pTickModeClass[1]= ui->tickModeCheckBox1_2;
+    m_pTickModeClass[2]= ui->tickModeCheckBox1_3;
+    m_pTickModeClass[3]= ui->tickModeCheckBox1_4;
+    m_pTickModeClass[4]= ui->tickModeCheckBox1_5;
+    m_pTickModeClass[5]= ui->tickModeCheckBox1_6;
+    m_pTickModeClass[6]= ui->tickModeCheckBox1_7;
+    m_pTickModeClass[7]= ui->tickModeCheckBox1_8;
+    m_pTickModeClass[8]= ui->tickModeCheckBox1_9;
+    m_pTickModeClass[9]= ui->tickModeCheckBox1_10;
+    m_pTickModeClass[10]= ui->tickModeCheckBox1_11;
+    m_pTickModeClass[11]= ui->tickModeCheckBox1_12;
+    m_pTickModeClass[12]= ui->tickModeCheckBox1_13;
+    m_pTickModeClass[13]= ui->tickModeCheckBox1_14;
+    m_pTickModeClass[14]= ui->tickModeCheckBox1_15;
+    m_pTickModeClass[15]= ui->tickModeCheckBox1_16;
+    m_pTickModeClass[16]= ui->tickModeCheckBox1_17;
+    m_pTickModeClass[17]= ui->tickModeCheckBox1_18;
+    m_pTickModeClass[18]= ui->tickModeCheckBox1_19;
+    m_pTickModeClass[19]= ui->tickModeCheckBox1_20;
+    m_pTickModeClass[20]= ui->tickModeCheckBox1_21;
+    m_pTickModeClass[21]= ui->tickModeCheckBox1_22;
+    m_pTickModeClass[22]= ui->tickModeCheckBox1_23;
+    m_pTickModeClass[23]= ui->tickModeCheckBox1_24;
+    m_pTickModeClass[24]= ui->tickModeCheckBox1_25;
+    m_pTickModeClass[25]= ui->tickModeCheckBox1_26;
+    m_pTickModeClass[26]= ui->tickModeCheckBox1_27;
+    m_pTickModeClass[27]= ui->tickModeCheckBox1_28;
+    m_pTickModeClass[28]= ui->tickModeCheckBox1_29;
+    m_pTickModeClass[29]= ui->tickModeCheckBox1_30;
+    m_pTickModeClass[30]= ui->tickModeCheckBox1_31;
+    m_pTickModeClass[31]= ui->tickModeCheckBox1_32;
+    m_pTickModeClass[32]= ui->tickModeCheckBox1_33;
+    m_pTickModeClass[33]= ui->tickModeCheckBox1_34;
+    m_pTickModeClass[34]= ui->tickModeCheckBox1_35;
+    m_pTickModeClass[35]= ui->tickModeCheckBox1_36;
+    m_pTickModeClass[36]= ui->tickModeCheckBox1_37;
+    m_pTickModeClass[37]= ui->tickModeCheckBox1_38;
+    m_pTickModeClass[38]= ui->tickModeCheckBox1_39;
+    m_pTickModeClass[39]= ui->tickModeCheckBox1_40;
+    m_pTickModeClass[40]= ui->tickModeCheckBox1_41;
+    m_pTickModeClass[41]= ui->tickModeCheckBox1_42;
+    m_pTickModeClass[42]= ui->tickModeCheckBox1_43;
+    m_pTickModeClass[43]= ui->tickModeCheckBox1_44;
+    m_pTickModeClass[44]= ui->tickModeCheckBox1_45;
+    m_pTickModeClass[45]= ui->tickModeCheckBox1_46;
+    m_pTickModeClass[46]= ui->tickModeCheckBox1_47;
+    m_pTickModeClass[47]= ui->tickModeCheckBox1_48;
+    m_pTickModeClass[48]= ui->tickModeCheckBox1_49;
+    m_pTickModeClass[49]= ui->tickModeCheckBox1_50;
+    m_pTickModeClass[50]= ui->tickModeCheckBox1_51;
+    m_pTickModeClass[51]= ui->tickModeCheckBox1_52;
+
+
+    m_pFixedClass[0]= ui->fixedModecheckBox1;
+    m_pFixedClass[1]= ui->fixedModecheckBox1_2;
+    m_pFixedClass[2]= ui->fixedModecheckBox1_3;
+    m_pFixedClass[3]= ui->fixedModecheckBox1_4;
+    m_pFixedClass[4]= ui->fixedModecheckBox1_5;
+    m_pFixedClass[5]= ui->fixedModecheckBox1_6;
+    m_pFixedClass[6]= ui->fixedModecheckBox1_7;
+    m_pFixedClass[7]= ui->fixedModecheckBox1_8;
+    m_pFixedClass[8]= ui->fixedModecheckBox1_9;
+    m_pFixedClass[9]= ui->fixedModecheckBox1_10;
+    m_pFixedClass[10]= ui->fixedModecheckBox1_11;
+    m_pFixedClass[11]= ui->fixedModecheckBox1_12;
+    m_pFixedClass[12]= ui->fixedModecheckBox1_13;
+    m_pFixedClass[13]= ui->fixedModecheckBox1_14;
+    m_pFixedClass[14]= ui->fixedModecheckBox1_15;
+    m_pFixedClass[15]= ui->fixedModecheckBox1_16;
+    m_pFixedClass[16]= ui->fixedModecheckBox1_17;
+    m_pFixedClass[17]= ui->fixedModecheckBox1_18;
+    m_pFixedClass[18]= ui->fixedModecheckBox1_19;
+    m_pFixedClass[19]= ui->fixedModecheckBox1_20;
+    m_pFixedClass[20]= ui->fixedModecheckBox1_21;
+    m_pFixedClass[21]= ui->fixedModecheckBox1_22;
+    m_pFixedClass[22]= ui->fixedModecheckBox1_23;
+    m_pFixedClass[23]= ui->fixedModecheckBox1_24;
+    m_pFixedClass[24]= ui->fixedModecheckBox1_25;
+    m_pFixedClass[25]= ui->fixedModecheckBox1_26;
+    m_pFixedClass[26]= ui->fixedModecheckBox1_27;
+    m_pFixedClass[27]= ui->fixedModecheckBox1_28;
+    m_pFixedClass[28]= ui->fixedModecheckBox1_29;
+    m_pFixedClass[29]= ui->fixedModecheckBox1_30;
+    m_pFixedClass[30]= ui->fixedModecheckBox1_31;
+    m_pFixedClass[31]= ui->fixedModecheckBox1_32;
+    m_pFixedClass[32]= ui->fixedModecheckBox1_33;
+    m_pFixedClass[33]= ui->fixedModecheckBox1_34;
+    m_pFixedClass[34]= ui->fixedModecheckBox1_35;
+    m_pFixedClass[35]= ui->fixedModecheckBox1_36;
+    m_pFixedClass[36]= ui->fixedModecheckBox1_37;
+    m_pFixedClass[37]= ui->fixedModecheckBox1_38;
+    m_pFixedClass[38]= ui->fixedModecheckBox1_39;
+    m_pFixedClass[39]= ui->fixedModecheckBox1_40;
+    m_pFixedClass[40]= ui->fixedModecheckBox1_41;
+    m_pFixedClass[41]= ui->fixedModecheckBox1_42;
+    m_pFixedClass[42]= ui->fixedModecheckBox1_43;
+    m_pFixedClass[43]= ui->fixedModecheckBox1_44;
+    m_pFixedClass[44]= ui->fixedModecheckBox1_45;
+    m_pFixedClass[45]= ui->fixedModecheckBox1_46;
+    m_pFixedClass[46]= ui->fixedModecheckBox1_47;
+    m_pFixedClass[47]= ui->fixedModecheckBox1_48;
+    m_pFixedClass[48]= ui->fixedModecheckBox1_49;
+    m_pFixedClass[49]= ui->fixedModecheckBox1_50;
+    m_pFixedClass[50]= ui->fixedModecheckBox1_51;
+    m_pFixedClass[51]= ui->fixedModecheckBox1_52;
+
+
+    m_pModeLabel[0]= ui->labelMode;
+    m_pModeLabel[1]= ui->labelMode_2;
+    m_pModeLabel[2]= ui->labelMode_3;
+    m_pModeLabel[3]= ui->labelMode_4;
+    m_pModeLabel[4]= ui->labelMode_5;
+    m_pModeLabel[5]= ui->labelMode_6;
+    m_pModeLabel[6]= ui->labelMode_7;
+    m_pModeLabel[7]= ui->labelMode_8;
+    m_pModeLabel[8]= ui->labelMode_9;
+    m_pModeLabel[9]= ui->labelMode_10;
+    m_pModeLabel[10]= ui->labelMode_11;
+    m_pModeLabel[11]= ui->labelMode_12;
+    m_pModeLabel[12]= ui->labelMode_13;
+    m_pModeLabel[13]= ui->labelMode_14;
+    m_pModeLabel[14]= ui->labelMode_15;
+    m_pModeLabel[15]= ui->labelMode_16;
+    m_pModeLabel[16]= ui->labelMode_17;
+    m_pModeLabel[17]= ui->labelMode_18;
+    m_pModeLabel[18]= ui->labelMode_19;
+    m_pModeLabel[19]= ui->labelMode_20;
+    m_pModeLabel[20]= ui->labelMode_21;
+    m_pModeLabel[21]= ui->labelMode_22;
+    m_pModeLabel[22]= ui->labelMode_23;
+    m_pModeLabel[23]= ui->labelMode_24;
+    m_pModeLabel[24]= ui->labelMode_25;
+    m_pModeLabel[25]= ui->labelMode_26;
+    m_pModeLabel[26]= ui->labelMode_27;
+    m_pModeLabel[27]= ui->labelMode_28;
+    m_pModeLabel[28]= ui->labelMode_29;
+    m_pModeLabel[29]= ui->labelMode_30;
+    m_pModeLabel[30]= ui->labelMode_31;
+    m_pModeLabel[31]= ui->labelMode_32;
+    m_pModeLabel[32]= ui->labelMode_33;
+    m_pModeLabel[33]= ui->labelMode_34;
+    m_pModeLabel[34]= ui->labelMode_35;
+    m_pModeLabel[35]= ui->labelMode_36;
+    m_pModeLabel[36]= ui->labelMode_37;
+    m_pModeLabel[37]= ui->labelMode_38;
+    m_pModeLabel[38]= ui->labelMode_39;
+    m_pModeLabel[39]= ui->labelMode_40;
+    m_pModeLabel[40]= ui->labelMode_41;
+    m_pModeLabel[41]= ui->labelMode_42;
+    m_pModeLabel[42]= ui->labelMode_43;
+    m_pModeLabel[43]= ui->labelMode_44;
+    m_pModeLabel[44]= ui->labelMode_45;
+    m_pModeLabel[45]= ui->labelMode_46;
+    m_pModeLabel[46]= ui->labelMode_47;
+    m_pModeLabel[47]= ui->labelMode_48;
+    m_pModeLabel[48]= ui->labelMode_49;
+    m_pModeLabel[49]= ui->labelMode_50;
+    m_pModeLabel[50]= ui->labelMode_51;
+    m_pModeLabel[51]= ui->labelMode_52;
+
+
+    m_pModeCombox[0]= ui->comboBoxMode;
+    m_pModeCombox[1]= ui->comboBoxMode_2;
+    m_pModeCombox[2]= ui->comboBoxMode_3;
+    m_pModeCombox[3]= ui->comboBoxMode_4;
+    m_pModeCombox[4]= ui->comboBoxMode_5;
+    m_pModeCombox[5]= ui->comboBoxMode_6;
+    m_pModeCombox[6]= ui->comboBoxMode_7;
+    m_pModeCombox[7]= ui->comboBoxMode_8;
+    m_pModeCombox[8]= ui->comboBoxMode_9;
+    m_pModeCombox[9]= ui->comboBoxMode_10;
+    m_pModeCombox[10]= ui->comboBoxMode_11;
+    m_pModeCombox[11]= ui->comboBoxMode_12;
+    m_pModeCombox[12]= ui->comboBoxMode_13;
+    m_pModeCombox[13]= ui->comboBoxMode_14;
+    m_pModeCombox[14]= ui->comboBoxMode_15;
+    m_pModeCombox[15]= ui->comboBoxMode_16;
+    m_pModeCombox[16]= ui->comboBoxMode_17;
+    m_pModeCombox[17]= ui->comboBoxMode_18;
+    m_pModeCombox[18]= ui->comboBoxMode_19;
+    m_pModeCombox[19]= ui->comboBoxMode_20;
+    m_pModeCombox[20]= ui->comboBoxMode_21;
+    m_pModeCombox[21]= ui->comboBoxMode_22;
+    m_pModeCombox[22]= ui->comboBoxMode_23;
+    m_pModeCombox[23]= ui->comboBoxMode_24;
+    m_pModeCombox[24]= ui->comboBoxMode_25;
+    m_pModeCombox[25]= ui->comboBoxMode_26;
+    m_pModeCombox[26]= ui->comboBoxMode_27;
+    m_pModeCombox[27]= ui->comboBoxMode_28;
+    m_pModeCombox[28]= ui->comboBoxMode_29;
+    m_pModeCombox[29]= ui->comboBoxMode_30;
+    m_pModeCombox[30]= ui->comboBoxMode_31;
+    m_pModeCombox[31]= ui->comboBoxMode_32;
+    m_pModeCombox[32]= ui->comboBoxMode_33;
+    m_pModeCombox[33]= ui->comboBoxMode_34;
+    m_pModeCombox[34]= ui->comboBoxMode_35;
+    m_pModeCombox[35]= ui->comboBoxMode_36;
+    m_pModeCombox[36]= ui->comboBoxMode_37;
+    m_pModeCombox[37]= ui->comboBoxMode_38;
+    m_pModeCombox[38]= ui->comboBoxMode_39;
+    m_pModeCombox[39]= ui->comboBoxMode_40;
+    m_pModeCombox[40]= ui->comboBoxMode_41;
+    m_pModeCombox[41]= ui->comboBoxMode_42;
+    m_pModeCombox[42]= ui->comboBoxMode_43;
+    m_pModeCombox[43]= ui->comboBoxMode_44;
+    m_pModeCombox[44]= ui->comboBoxMode_45;
+    m_pModeCombox[45]= ui->comboBoxMode_46;
+    m_pModeCombox[46]= ui->comboBoxMode_47;
+    m_pModeCombox[47]= ui->comboBoxMode_48;
+    m_pModeCombox[48]= ui->comboBoxMode_49;
+    m_pModeCombox[49]= ui->comboBoxMode_50;
+    m_pModeCombox[50]= ui->comboBoxMode_51;
+    m_pModeCombox[51]= ui->comboBoxMode_52;
+
+    m_curLayer = 0;
+    struGsh.nView = 0;
+    m_curIpcIndex = 0;
+    m_totalPage = 1;
+    m_curPage = 0;
+
+    getCurrentViewIpcIndex();
+
+    m_classEnableSigMapper = new QSignalMapper(this);
+    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+//        m_pClassEnable[i]->setType(textType);
+        m_classEnableSigMapper->setMapping(m_pClassEnable[i], i);
+        m_pClassEnable[i]->setObjectName("ipcClassEnale");
+        connect(m_pClassEnable[i],SIGNAL(clicked()),m_classEnableSigMapper,SLOT(map()));
+    }
+    connect(m_classEnableSigMapper,SIGNAL(mapped(int)),this,SLOT(sClassEnableSlots(int)));
+
+    m_classNameEditSigMapper = new QSignalMapper(this);
+    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+        m_nameClassEdit[i]->setType(textType);
+        m_classNameEditSigMapper->setMapping(m_nameClassEdit[i], i);
+        m_nameClassEdit[i]->setObjectName("ipcClassName");
+        connect(m_nameClassEdit[i],SIGNAL(valueSetSignal()),m_classNameEditSigMapper,SLOT(map()));
+    }
+    connect(m_classNameEditSigMapper,SIGNAL(mapped(int)),this,SLOT(sClass1NameChanged(int)));
+
+
+    m_classTickEnableSigMapper = new QSignalMapper(this);
+    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+        m_classTickEnableSigMapper->setMapping(m_pTickModeClass[i], i);
+        m_pTickModeClass[i]->setObjectName("ipcClassTickModeEnable");
+        connect(m_pTickModeClass[i],SIGNAL(clicked()),m_classTickEnableSigMapper,SLOT(map()));
+    }
+    connect(m_classTickEnableSigMapper,SIGNAL(mapped(int)),this,SLOT(sClassTickEnableChanged(int)));
+
+    m_classFixedEnableSigMapper = new QSignalMapper(this);
+    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+        m_classFixedEnableSigMapper->setMapping(m_pFixedClass[i], i);
+        m_pFixedClass[i]->setObjectName("ipcClassFixedEnable");
+        connect(m_pFixedClass[i],SIGNAL(clicked()),m_classFixedEnableSigMapper,SLOT(map()));
+    }
+    connect(m_classFixedEnableSigMapper,SIGNAL(mapped(int)),this,SLOT(sClassFixedChanged(int)));
+
+    QStringList modeType;
+    modeType<<"1"<<"2";
+    m_classModeSigMapper = new QSignalMapper(this);
+    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+        m_pModeCombox[i]->addItems(modeType);
+        m_pModeCombox[i]->setObjectName("ipcClassMode");
+        m_classModeSigMapper->setMapping(m_pModeCombox[i], i);
+        connect(m_pModeCombox[i],SIGNAL(activated(int)),m_classModeSigMapper,SLOT(map()));
+    }
+    connect(m_classModeSigMapper,SIGNAL(mapped(int)),this,SLOT(sClassModeChanged(int)));
+
+//    for(int i = 0; i < CONST_MAX_MODEL_PER_PAGE; i++){
+//        m_pClassSensEdit[i]->setObjectName("ipcClassSense");
+//        m_pClassThresholdEdit[i]->setObjectName("ipcClassThreshold");
+//    }
+
+    ui->lastPageBtn->hide();
+    ui->nextPageBtn->hide();
+    ui->curPagelabel->hide();
+    ui->advBtn->hide();
+
+}
+
+ipcclassparams::~ipcclassparams()
+{
+    delete ui;
+}
+
+void ipcclassparams::getCurrentViewIpcIndex()
+{
+    switch(struCnfg.nIpcCount)
+    {
+    case 1:
+        for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+        {
+            m_curViewIpcIndex[i] = 0;
+        }
+        break;
+    case 2:
+        for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+        {
+            int tmpIpcId[MAX_VIEW];
+            tmpIpcId[i] = 0;
+
+            if(struCnfg.struIpcCameraParams[0][i][0].ipcType > 0)
+            {
+                tmpIpcId[i] = struCnfg.struIpcCameraParams[0][i][0].ipcType-1;
+            }
+            m_curViewIpcIndex[i] = tmpIpcId[i];
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void ipcclassparams::sClassEnableSlots(int index)
+{
+    struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classEnable[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]
+            = !struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classEnable[m_curPage*CONST_MAX_MODEL_PER_PAGE+index];
+
+//    updateView();
+}
+
+void ipcclassparams::sClass1NameChanged(int index)
+{
+    memset(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].className[m_curPage*CONST_MAX_MODEL_PER_PAGE+index],0,
+            sizeof(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].className[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]));
+
+    QString name = m_nameClassEdit[index]->text();
+    QByteArray namearr = name.toUtf8();
+    const char *strName = namearr.data();
+    memcpy(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].className[m_curPage*CONST_MAX_MODEL_PER_PAGE+index],strName,strlen(strName));
+}
+
+void ipcclassparams::sClassLabelBoxChanged(int index)
+{
+    struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classEnable[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]
+            = !struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classEnable[m_curPage*CONST_MAX_MODEL_PER_PAGE+index];
+
+//    updateView();
+}
+
+void ipcclassparams::sClassTickEnableChanged(int index)
+{
+    struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classTickMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]
+            = !struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classTickMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+index];
+
+//    updateView();
+}
+
+void ipcclassparams::sClassFixedChanged(int index)
+{
+    struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classFixMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]
+            = !struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classFixMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+index];
+
+//    updateView();
+}
+
+void ipcclassparams::sClassModeChanged(int index)
+{
+    struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]
+            = m_pModeCombox[m_curPage*CONST_MAX_MODEL_PER_PAGE+index]->currentIndex();
+
+//    updateView();
+}
+void ipcclassparams::showPage(bool bshow)
+{
+    basewidget::showPage(bshow);
+    if(bshow){
+        struGsh.isInIpcClassPage = 1;
+        struGsh.nLayer = 0;
+        struGsh.nView = 0;
+        struGsh.nMatGroup = 0;
+
+        updateViewButtonVisible();
+        updateViewBtnState();
+        updateGroupWidgetState();
+
+        getCurrentViewIpcIndex();
+
+        for(int i = 0; i < struCnfg.nIpcCount; i++)
+        {
+            struCnfp.ipcModelClassCount[i] = struIpcShare.struIpcModelClass[i].classCount;
+        }
+
+        m_curPage = 0;
+        m_totalPage = (struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]%CONST_MAX_MODEL_PER_PAGE==0)
+                ?struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]/CONST_MAX_MODEL_PER_PAGE:struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]/CONST_MAX_MODEL_PER_PAGE+1;
+
+        updateView();
+
+        basewidget::showPage(bshow);
+    }
+    else
+    {
+        struGsh.isInIpcClassPage = 0;
+    }
+}
+
+void ipcclassparams::receiveMsg(int msg1, int msg2, int msg3)
+{
+    if(msg1 == MSG_DATA_CHANGED){
+        if (msg2 <= MAX_IPC_MODEL_CLASS*2){
+            if(msg2 < MAX_IPC_MODEL_CLASS)
+            {
+                struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classSens[msg2] = m_sensValue[msg2];
+#if 0
+                switch(struCnfg.nIpcCameraClassSameMode)
+                {
+                case 0:
+                    break;
+                case 1:
+                    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+                    {
+                        struCnfp.struCameraIpcClassParams[m_curLayer][i].classSens[msg2] = m_sensValue[msg2];
+                    }
+                    break;
+                case 2:
+                    struCnfp.struCameraIpcClassParams[m_curLayer][struGsh.nView+1].classSens[msg2] = m_sensValue[msg2];
+//                    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+//                    {
+//                        struCnfp.struCameraIpcClassParams[m_curLayer][i].classSens[msg2] = struCnfp.struCameraIpcClassParams[m_curLayer][i/2].classSens[msg2];
+//                    }
+                    break;
+                }
+#endif
+            }
+            else
+            {
+                struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classThreshold[msg2-MAX_IPC_MODEL_CLASS] = m_ThresholdValue[msg2-MAX_IPC_MODEL_CLASS];
+#if 0
+                switch(struCnfg.nIpcCameraClassSameMode)
+                {
+                case 0:
+                    break;
+                case 1:
+                    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+                    {
+                        struCnfp.struCameraIpcClassParams[m_curLayer][i].classThreshold[msg2-MAX_IPC_MODEL_CLASS] = m_ThresholdValue[msg2-MAX_IPC_MODEL_CLASS];
+                    }
+                    break;
+                case 2:
+                    struCnfp.struCameraIpcClassParams[m_curLayer][struGsh.nView+1].classThreshold[msg2] = m_ThresholdValue[msg2-MAX_IPC_MODEL_CLASS];
+//                    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+//                    {
+//                        struCnfp.struCameraIpcClassParams[m_curLayer][i].classThreshold[msg2-MAX_IPC_MODEL_CLASS] = struCnfp.struCameraIpcClassParams[m_curLayer][i/2].classSens[msg2-MAX_IPC_MODEL_CLASS];
+//                    }
+                    break;
+                }
+#endif
+            }
+//            updateView();
+        }
+        else if(msg2 == 100)
+        {
+            if(0 > struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]])
+            {
+                for(int i = 0; i < struCnfg.nIpcCount; i++)
+                {
+                    struCnfp.ipcModelClassCount[i] = 0;
+                }
+            }
+            if (MAX_IPC_MODEL_CLASS < struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]] )
+            {
+                for(int i = 0; i < struCnfg.nIpcCount; i++)
+                {
+                    struCnfp.ipcModelClassCount[i] = MAX_IPC_MODEL_CLASS;
+                }
+            }
+            m_totalPage = (struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]%CONST_MAX_MODEL_PER_PAGE==0)
+                ? struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]/CONST_MAX_MODEL_PER_PAGE:struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]/CONST_MAX_MODEL_PER_PAGE+1;
+            if(m_curPage >= m_totalPage)
+            {
+                m_curPage = m_totalPage-1;
+            }
+            if (m_totalPage == 0) m_curPage = 0;
+            updateView();
+        }
+        else if(msg2 == 101)
+        {
+//            updateView();
+        }
+        else if(msg2 == 102)
+        {
+//            updateView();
+        }
+    }
+}
+
+void ipcclassparams::OnViewChange(int view)
+{
+//    ui->widget->update();
+    updateView();
+}
+
+void ipcclassparams::OnChuteChange()
+{
+    updateView();
+}
+
+void ipcclassparams::OnGroupChange(int groupIndex)
+{
+    updateView();
+}
+
+void ipcclassparams::OnLayerChange()
+{
+//    ui->widget->update();
+    updateView();
+}
+
+void ipcclassparams::retranslateUiWidget()
+{
+    ui->applyBtn->setText(g_myLan().ids_apply);
+//    ui->checkBox_bias->setText(g_myLan().camera_signal_bias_enable);
+    ui->labelLengthLimit->setText(g_myLan().ids_lowlimit);
+    ui->advBtn->setText(g_myLan().advance);
+    for(int i = 0;i < CONST_MAX_MODEL_PER_PAGE; i++){
+        m_pBoxClassLable[i]->setText(g_myLan().ids_lowlimit);
+        m_pTickModeClass[i]->setText(g_myLan().ipc_heavyBlow);
+        m_pFixedClass[i]->setText(g_myLan().maximum); //最值
+        m_pModeLabel[i]->setText(g_myLan().ids_model);
+    }
+}
+
+void ipcclassparams::updateView()
+{
+#if 0
+    for(int i = 0; i < MAX_VIEW; i++)
+    {
+        m_viewBtn[i]->hide();
+    }
+
+    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+    {
+        if(struCnfg.struLayerInfo[0].nViewIsUsed[i] == 1)
+        {
+            m_viewBtn[i]->show();
+        }
+    }
+
+    switch(struCnfg.nIpcCameraClassSameMode)
+    {
+    case 0:
+        for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+        {
+            if(struCnfg.struLayerInfo[0].nViewIsUsed[i] == 1)
+            {
+                m_viewBtn[i]->setEnabled(true);
+            }
+        }
+        break;
+    case 1:
+        m_viewBtn[0]->setEnabled(true);
+        m_viewBtn[1]->setEnabled(false);
+        m_viewBtn[2]->setEnabled(false);
+        m_viewBtn[3]->setEnabled(false);
+        break;
+    case 2:
+        m_viewBtn[0]->setEnabled(true);
+        m_viewBtn[1]->setEnabled(false);
+        m_viewBtn[2]->setEnabled(true);
+        m_viewBtn[3]->setEnabled(false);
+        break;
+    }
+
+    for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+    {
+        m_viewBtn[i]->setChecked(false);
+    }
+    m_viewBtn[struGsh.nView]->setChecked(true);
+#endif
+    ui->labelIpcNum->hide();
+
+    ui->lastPageBtn->setFixedWidth(60);
+    ui->nextPageBtn->setFixedWidth(60);
+
+    ui->comboBoxIpcSelect->setMinimumSize(150, 40);
+    ui->comboBoxIpcSelect->clear();
+    QStringList ipcTypeList;
+
+    for(int i = 0; i < struCnfg.nIpcCount; i++)
+    {
+        QString ipcType = QString("IPC%1").arg(i+1);
+        ipcTypeList.append(ipcType);
+    }
+    ui->comboBoxIpcSelect->addItems(ipcTypeList);
+    ui->comboBoxIpcSelect->setCurrentIndex(m_curIpcIndex);
+
+    ui->comboBoxIpcSelect->hide();
+
+    ui->classCountWidget->setParams(this,0, MAX_IPC_MODEL_CLASS,100,&struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]);
+    ui->classCountWidget->setTitle(g_myLan().ipc_classCount);
+    ui->classCountWidget->setValue(struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]);
+    ui->classCountWidget->setVisible(struGsh.debugMode);
+//    ui->classCountWidget->setEnabled(struGsh.bRunMode > RUNMODE_USER);
+
+    ui->lineEditLengthLimit->setText(QString::number(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].lengthLimit));
+    ui->lineEditLengthLimit->setMinMax(this, 0, 10000000, 101,&struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].lengthLimit);
+
+    for(int i = 0;i < CONST_MAX_MODEL_PER_PAGE;i++){
+        m_pClassSensEdit[i]->setVisible(false);
+        m_pClassEnable[i]->setVisible(false);
+        m_pClassThresholdEdit[i]->setVisible(false);
+        m_nameClassEdit[i]->setVisible(false);
+        m_pBoxClassLable[i]->setVisible(false);
+        m_pBoxClassEdit[i]->setVisible(false);
+        m_pTickModeClass[i]->setVisible(false);
+        m_pFixedClass[i]->setVisible(false);
+        m_pModeLabel[i]->setVisible(false);
+        m_pModeCombox[i]->setVisible(false);
+
+
+        if(i < (struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]-m_curPage*CONST_MAX_MODEL_PER_PAGE)){
+//        if(i < MAX_IPC_MODEL_CLASS){
+            m_pClassEnable[i]->setVisible(true);
+            m_pClassEnable[i]->setChecked(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classEnable[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+            m_sensValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classSens[m_curPage*CONST_MAX_MODEL_PER_PAGE+i];
+            m_pClassSensEdit[i]->setVisible(true);
+//            m_pClassSensEdit[i]->setFixedWidth(280);
+            m_pClassSensEdit[i]->setParams(this,0,100,m_curPage*CONST_MAX_MODEL_PER_PAGE+i,&m_sensValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+            m_pClassSensEdit[i]->setTitle(QString::number(m_curPage*CONST_MAX_MODEL_PER_PAGE+i+1));
+//            m_pClassSensEdit[i]->setTitle(QString("%1").arg(struIpcShare.struIpcModelClass[m_curIpcIndex].className[i]));
+            m_pClassSensEdit[i]->setValue(m_sensValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+
+            m_ThresholdValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classThreshold[m_curPage*CONST_MAX_MODEL_PER_PAGE+i];
+//            qDebug()<<"m_ThresholdValue"<<i<<m_ThresholdValue[i];
+            m_pClassThresholdEdit[i]->setVisible(true);
+//            m_pClassThresholdEdit[i]->setFixedWidth(280);
+            m_pClassThresholdEdit[i]->setParams(this,0,100, MAX_IPC_MODEL_CLASS+m_curPage*CONST_MAX_MODEL_PER_PAGE+i,&m_ThresholdValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+            m_pClassThresholdEdit[i]->setTitle("");
+            m_pClassThresholdEdit[i]->setValue(m_ThresholdValue[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+
+            m_nameClassEdit[i]->setVisible(true);
+            m_nameClassEdit[i]->setFixedWidth(150);
+            m_nameClassEdit[i]->setText(QString("%1").arg(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].className[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]));
+
+            //高级参数
+            m_pBoxClassLable[i]->setVisible(true);
+            m_pBoxClassEdit[i]->setVisible(true);
+            m_pBoxClassEdit[i]->setText(QString::number(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classLabelBox[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]));
+            if (struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+i] == 1)
+                labelBoxValueLimit = 24;
+            else
+                labelBoxValueLimit = 65535;
+            m_pBoxClassEdit[i]->setMinMax(this, 0, labelBoxValueLimit, 102,&struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classLabelBox[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+
+            m_pTickModeClass[i]->setVisible(true);
+            m_pTickModeClass[i]->setChecked(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classTickMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+
+            m_pFixedClass[i]->setVisible(true);
+            m_pFixedClass[i]->setChecked(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classFixMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+
+            m_pModeLabel[i]->setVisible(true);
+            m_pModeLabel[i]->setText(g_myLan().ids_model);
+            m_pModeCombox[i]->setVisible(true);
+            m_pModeCombox[i]->setCurrentIndex(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+i]);
+        }
+    }
+}
+
+void ipcclassparams::on_comboBoxIpcSelect_activated(int index)
+{
+    m_curIpcIndex = index;
+    qDebug("m_curIpcIndex is %d", m_curIpcIndex);
+
+    updateView();
+//    struCnfg.struIpcCameraParams[m_curLayer][struGsh.nView][cameraIndex].ipcType = m_pIpcTypeCmx[cameraIndex]->currentIndex();
+}
+
+void ipcclassparams::on_applyBtn_clicked()
+{
+    for(int i = 0;i < struCnfp.ipcModelClassCount[m_curViewIpcIndex[struGsh.nView]]-m_curPage*CONST_MAX_MODEL_PER_PAGE; i++){
+        if(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classMode[m_curPage*CONST_MAX_MODEL_PER_PAGE+i] == 1){
+            if(struCnfp.struCameraIpcClassGroupParams[m_curLayer][struGsh.nView][struGsh.nMatGroup].classLabelBox[m_curPage*CONST_MAX_MODEL_PER_PAGE+i] > 24){
+                g_infoWidget().setLabelText("模式2:框最大不能超过24");
+                g_infoWidget().showSecs();
+                return;
+            }
+        }
+    }
+
+    g_infoWidget().setLabelText(g_myLan().ids_apply);
+    g_infoWidget().delayShow();
+
+    switch(struCnfg.nIpcCameraClassSameMode)
+    {
+    case 0:
+        break;
+    case 1: //整机相同， == 一次前主
+        for(int i = 0; i < struCnfg.struLayerInfo[0].nViewChainTotal; i++)
+        {
+            for(int j = 0; j < struCnfg.struLayerInfo[0].stuViewInfo[j].nIdentifyGroupTotal; j++)
+            {
+                for(int m = 0; m < MAX_IPC_MODEL_CLASS; m++)
+                {
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classEnable[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classEnable[m];
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classSens[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classSens[m];
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classThreshold[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classThreshold[m];
+
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classLabelBox[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classLabelBox[m];
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classTickMode[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classTickMode[m];
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classFixMode[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classFixMode[m];
+                    struCnfp.struCameraIpcClassGroupParams[m_curLayer][i][j].classMode[m] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0][0].classMode[m];
+                }
+            }
+        }
+        break;
+//    case 2: //层内相同
+//        for(int j = 0; j < MAX_IPC_MODEL_CLASS; j++)
+//        {
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classEnable[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classEnable[j];
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classSens[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classSens[j];
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classThreshold[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classThreshold[j];
+
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classLabelBox[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classLabelBox[j];
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classTickMode[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classTickMode[j];
+//            struCnfp.struCameraIpcClassGroupParams[m_curLayer][1].classFixMode[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][0].classFixMode[j];
+//        }
+//        if(struCnfg.struLayerInfo[0].nViewChainTotal == 4)
+//        {
+//            for(int j = 0; j < MAX_IPC_MODEL_CLASS; j++)
+//            {
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classEnable[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classEnable[j];
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classSens[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classSens[j];
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classThreshold[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classThreshold[j];
+
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classLabelBox[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classLabelBox[j];
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classTickMode[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classTickMode[j];
+//                struCnfp.struCameraIpcClassGroupParams[m_curLayer][3].classFixMode[j] = struCnfp.struCameraIpcClassGroupParams[m_curLayer][2].classFixMode[j];}
+//        }
+//        break;
+    }
+    for(int i = 0; i < struCnfg.nIpcCount; i++)
+    {
+        myFlow.configIpcClassParams(i);
+    }
+    g_infoWidget().hide();
+}
+
+void ipcclassparams::on_lastPageBtn_clicked()
+{
+    if(m_curPage > 0)
+    {
+        m_curPage--;
+    }
+    updateView();
+}
+
+void ipcclassparams::on_nextPageBtn_clicked()
+{
+    if(m_curPage < m_totalPage-1)
+    {
+        m_curPage++;
+    }
+    updateView();
+}
+
+
+void ipcclassparams::on_advBtn_clicked()
+{
+    g_MainManager().ShowWidget(SM_IPC_CLASS_ADV_PARAMS_WIDGET);
+}

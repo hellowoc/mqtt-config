@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DoubleLightSetWidget</class>
+ <widget class="QWidget" name="DoubleLightSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>962</width>
+    <height>918</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,8">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>9</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="pushButton_allInOne">
+       <property name="text">
+        <string>合板</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_0">
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_1">
+       <property name="text">
+        <string notr="true">2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="text">
+        <string notr="true">3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string notr="true">4</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string notr="true">5</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string notr="true">6</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string notr="true">7</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="text">
+        <string notr="true">8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string notr="true">meterial light</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="MylightControl" name="widget_1_1" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_2" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_3" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_4" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_5" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_6" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_7" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_8" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_9" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_10" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string notr="true">backlight</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="MylightControl" name="widget_1_11" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_12" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_13" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_14" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_15" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_16" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_17" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_18" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_19" native="true"/>
+        </item>
+        <item>
+         <widget class="MylightControl" name="widget_1_20" native="true"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MylightControl</class>
+   <extends>QWidget</extends>
+   <header>mysortwidget/mylightcontrol.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

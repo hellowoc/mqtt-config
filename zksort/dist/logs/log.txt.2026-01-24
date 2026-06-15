@@ -1,0 +1,6 @@
+程序启动
+2026-01-24 10:08:48.735 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-24 10:08:49.217 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-01-24 10:27:25.549 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-24 15:12:13.220 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-24 15:12:13.881 [Mainthread] INFO FactorySetWidget - enter misc function of machine page

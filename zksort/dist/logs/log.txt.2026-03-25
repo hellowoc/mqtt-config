@@ -1,0 +1,7 @@
+程序启动
+2026-03-25 10:41:36.483 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-03-25 10:41:38.372 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-03-25 10:41:38.372 [Mainthread] INFO MyLanguage - 1
+2026-03-25 10:41:38.429 [Mainthread] INFO ZKSort - power on: 250times
+2026-03-25 10:41:38.429 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序结束

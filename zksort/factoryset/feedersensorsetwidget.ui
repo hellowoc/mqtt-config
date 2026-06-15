@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FeederSensorSetWidget</class>
+ <widget class="QWidget" name="FeederSensorSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>886</width>
+    <height>548</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>40</number>
+   </property>
+   <property name="topMargin">
+    <number>60</number>
+   </property>
+   <property name="rightMargin">
+    <number>40</number>
+   </property>
+   <property name="bottomMargin">
+    <number>60</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>100</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>20</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string notr="true">料位传感器1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_9">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QCheckBox" name="checkBox_5">
+       <property name="text">
+        <string notr="true">料位传感器5</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_5">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_13">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="text">
+        <string notr="true">料位传感器2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_2">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_10">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QCheckBox" name="checkBox_6">
+       <property name="text">
+        <string notr="true">料位传感器6</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_6">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_14">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QCheckBox" name="checkBox_3">
+       <property name="text">
+        <string notr="true">料位传感器3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_3">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_11">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <item>
+      <widget class="QCheckBox" name="checkBox_7">
+       <property name="text">
+        <string notr="true">料位传感器7</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_7">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_15">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QCheckBox" name="checkBox_4">
+       <property name="text">
+        <string notr="true">料位传感器4</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_4">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_12">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <item>
+      <widget class="QCheckBox" name="checkBox_8">
+       <property name="text">
+        <string notr="true">料位传感器8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="myLineEdit" name="lineEdit_8">
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_16">
+       <property name="text">
+        <string notr="true">顶部</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

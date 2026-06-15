@@ -1,0 +1,86 @@
+#!/bin/sh
+export PATH=$PATH:/opt/tslib/bin/
+export LD_LIBRARY_PATH=/opt/tslib/lib:/opt/Qt4.8.4-AM335X/lib:/app/3rdparty:/usr/lib:$LD_LIBRARY_PATH
+
+# sd card exist
+if [ ! -b /dev/mmcblk0p2 ]; then
+    DRIVE="/mmcblk0p1"
+else
+    DRIVE="/mmcblk0p2"
+fi
+
+LOWBOARD=`cat /proc/bus/input/devices |grep TSC2007|wc -l`
+
+cp -fr /media${DRIVE}/ts/pointercal /etc/pointercal
+sync
+
+# set ts env
+export TSLIB_ROOT=/opt/tslib
+export TSLIB_TSDEVICE=/dev/input/touchscreen0
+export TSLIB_CONFFILE=$TSLIB_ROOT/etc/ts.conf
+export TSLIB_CALIBFILE=/media${DRIVE}/ts/pointercal
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_TSEVENTTYPE=input
+export TSLIB_PLUGINDIR=$TSLIB_ROOT/lib/ts
+
+# set Qt env
+export QTDIR=/opt/Qt4.8.4-AM335X
+export QWS_DISPLAY=:1
+export QWS_KEYBOARD=TTY:/dev/tty1
+export QWS_MOUSE_PROTO="Tslib MouseMan:/dev/input/mice"
+export QT_PLUGIN_PATH=/opt/Qt4.8.4-AM335X/plugins
+
+# load app fonts to system font path
+for font in `ls $PWD/fonts/`
+do
+	if [ ! -f /opt/Qt4.8.4-AM335X/lib/fonts/$font ]; then
+		cp -rf $PWD/fonts/$font /opt/Qt4.8.4-AM335X/lib/fonts/
+		sync
+	fi
+done
+
+# set ip
+/sbin/ifconfig eth0 192.168.1.100 netmask 255.255.255.0 up
+/sbin/ifconfig eth1 162.254.129.100 netmask 255.255.255.0 up
+
+if [ $LOWBOARD = 0 ]; then
+    ./pmsAttach 9000 /dev/ttyO4 19200 &
+    usleep 500000
+    cat /proc/bus/input/devices >/sdcard/logs/.device
+    event=$(cat /proc/bus/input/devices | sed -n '/PenMount Serial TouchScreen/,/ABS/p' | grep Handlers | tail -n1 | awk '{print $3}')
+    rm -fr "$TSLIB_TSDEVICE"
+
+    if [ -n "$event" ];then
+        /bin/ln -sf "/dev/input/$event" $TSLIB_TSDEVICE
+    else
+        if [ ! -e /dev/input/event2 ]; then
+            /bin/ln -sf /dev/input/event1 $TSLIB_TSDEVICE
+        else
+            /bin/ln -sf /dev/input/event2 $TSLIB_TSDEVICE
+        fi
+    fi
+    usleep 100000    
+fi
+
+# if have not calibrate the touchscreen, do it.
+if [ ! -s $TSLIB_CALIBFILE ]; then
+    /opt/tslib/bin/ts_calibrate
+    if [ ${DRIVE} = "/mmcblk0p1" ]; then 
+        cp -fr /media${DRIVE}/ts/pointercal /media/mmcblk1p2/ts/pointercal
+    fi
+    sync
+fi
+
+if [ -e myled.sh ];then
+    ./myled.sh 500 &
+fi
+
+#./zksort -qws -display VNC:LinuxFB &
+#exit 0
+
+mv  /sdcard/cnf/.log /sdcard/cnf/.log_last
+sync
+nohup ./zksort -qws -display VNC:LinuxFB >/sdcard/cnf/.log 2>&1 &
+exit 0
+

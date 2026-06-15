@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EjectWidget</class>
+ <widget class="QWidget" name="EjectWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>899</width>
+    <height>624</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_6">
+   <item row="2" column="1">
+    <widget class="QGroupBox" name="groupBoxall">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1,1,1">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string notr="true">infect</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="1">
+            <widget class="myLineEdit" name="ImpuredEdit1"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="colorArithLbl">
+             <property name="text">
+              <string notr="true">I</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="newInfrctArithLbl">
+             <property name="text">
+              <string notr="true">III</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="myLineEdit" name="ImpuredEdit2"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="shapeArithLbl">
+             <property name="text">
+              <string notr="true">II</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="myLineEdit" name="ImpuredEdit3"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="newInfrctArithLbl2">
+             <property name="text">
+              <string notr="true">IV</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="myLineEdit" name="ImpuredEdit4"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="myLineEdit" name="ImpuredEdit5"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="newInfrctArithLbl3">
+             <property name="text">
+              <string notr="true">V</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_5">
+          <property name="title">
+           <string notr="true">PositiveOrNagetive</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="1" column="1">
+            <widget class="QPushButton" name="ReverseSortBtn2">
+             <property name="text">
+              <string notr="true">Negative</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="ReverseLbl2">
+             <property name="text">
+              <string notr="true">II</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="ReverseLbl1">
+             <property name="text">
+              <string notr="true">I</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="ReverseSortBtn1">
+             <property name="text">
+              <string notr="true">Positive</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_delayRow">
+          <property name="title">
+           <string notr="true">delayRow</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="myLineEdit" name="EdgeCutEditDelayRow"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string notr="true">EdgeCut</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="1">
+            <widget class="myLineEdit" name="EdgeCutEdit1"/>
+           </item>
+           <item row="1" column="1">
+            <widget class="myLineEdit" name="EdgeCutEdit2"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="EdgeCutLbl1">
+             <property name="text">
+              <string notr="true">I</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="EdgeCutLbl2">
+             <property name="text">
+              <string notr="true">II</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>355</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>355</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_abnormal" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1,1,1">
+         <item>
+          <widget class="QGroupBox" name="groupBox_4">
+           <property name="title">
+            <string notr="true">Contextual relationship</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string notr="true">Main</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="viewMode">
+              <property name="text">
+               <string notr="true">Front &amp;&amp; Rear</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_7">
+           <property name="title">
+            <string notr="true">Bad points</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <widget class="myLineEdit" name="badPointEdit"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_9">
+           <property name="title">
+            <string notr="true">CenterSize</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <widget class="QLabel" name="centerSizeLabel_1">
+              <property name="text">
+               <string notr="true">I</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="myLineEdit" name="centerSizeEdit_2"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="myLineEdit" name="centerSizeEdit_1"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="centerSizeLabel_2">
+              <property name="text">
+               <string notr="true">II</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_8">
+           <property name="title">
+            <string notr="true">ColseCal</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_11">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string notr="true">I</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="myLineEdit" name="ColseCalEdit2"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="myLineEdit" name="ColseCalEdit1"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string notr="true">II</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>9</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="pushButton_0">
+       <property name="text">
+        <string notr="true">前主</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_1">
+       <property name="text">
+        <string notr="true">后主</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string notr="true">前辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_9">
+       <property name="text">
+        <string notr="true">后辅</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="mainBtn">
+       <property name="text">
+        <string notr="true">PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="viceBtn">
+       <property name="text">
+        <string notr="true">PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="UiGroupWidget" name="groupWidget" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>UiGroupWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">../uikits/src/UiGroupWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

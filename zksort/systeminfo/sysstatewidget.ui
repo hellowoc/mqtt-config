@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SysStateWidget</class>
+ <widget class="QWidget" name="SysStateWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>824</width>
+    <height>571</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="btn_system_info">
+       <property name="text">
+        <string notr="true">sysStateBtn</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_sw_version">
+       <property name="text">
+        <string notr="true">verInfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_device_info">
+       <property name="text">
+        <string notr="true">machineinfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_alarm_set">
+       <property name="text">
+        <string notr="true">alarmsetBtn</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_remote_help">
+       <property name="text">
+        <string notr="true">remote</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_iPCInfo">
+       <property name="text">
+        <string notr="true">ipcinfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_iPCClassInfo">
+       <property name="text">
+        <string notr="true">ipcclassinfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_viBoardInfo">
+       <property name="text">
+        <string notr="true">viBoardinfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_wifi_set">
+       <property name="text">
+        <string>WIFI</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_camcali_info">
+       <property name="text">
+        <string>camcaliInfo</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>5</number>
+     </property>
+     <widget class="MachineInfoWidget" name="page_6"/>
+     <widget class="AlarmSetWidget" name="page_3"/>
+     <widget class="SysVersionInfoWidget" name="page_2"/>
+     <widget class="SysInfoWidget" name="page"/>
+     <widget class="RemoteWidget" name="page_5"/>
+     <widget class="IPCInfoWidget" name="page_4"/>
+     <widget class="IPCClassInfoWidget" name="page_7"/>
+     <widget class="VIDetectBoardInfoWidget" name="page_8"/>
+     <widget class="WifiConfigWidget" name="page_9"/>
+     <widget class="SysCamCaliInfoWidget" name="page_10"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SysInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/sysinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SysVersionInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/sysversioninfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlarmSetWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/alarmsetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MachineInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/machineinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IPCInfoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">systeminfo/ipcinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IPCClassInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/ipcclassinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VIDetectBoardInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/videtectboardinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WifiConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/wificonfigwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RemoteWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/remotewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SysCamCaliInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/syscamcaliinfowidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

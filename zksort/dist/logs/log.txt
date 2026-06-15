@@ -1,0 +1,15 @@
+程序启动
+2026-06-05 16:57:57.854 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-06-05 16:57:59.625 [Mainthread] INFO GlobalFlow - No machine type
+2026-06-05 16:57:59.687 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-06-05 16:57:59.687 [Mainthread] INFO MyLanguage - 1
+2026-06-05 16:58:02.462 [Mainthread] INFO ZKSort - power on: 251times
+2026-06-05 16:58:02.462 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序启动
+2026-06-05 17:10:06.109 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-06-05 17:10:06.526 [Mainthread] INFO GlobalFlow - No machine type
+2026-06-05 17:10:06.583 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-06-05 17:10:06.583 [Mainthread] INFO MyLanguage - 1
+2026-06-05 17:10:06.620 [Mainthread] INFO ZKSort - power on: 252times
+2026-06-05 17:10:06.620 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序结束

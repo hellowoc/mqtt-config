@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ImageWidget</class>
+ <widget class="QWidget" name="ImageWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1251</width>
+    <height>705</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="pos_press">
+         <property name="text">
+          <string notr="true">XY(2000,100)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="rgblabel">
+         <property name="text">
+          <string notr="true">RGB(255,255,255)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="namelabel">
+         <property name="text">
+          <string notr="true">前主１</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="imageLabel">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>416</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>416</height>
+        </size>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="lastPicBtn">
+         <property name="text">
+          <string notr="true">last</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_No_Bg">
+         <property name="text">
+          <string notr="true">去除背景</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="reduce">
+         <property name="text">
+          <string notr="true">&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_zoom">
+         <property name="text">
+          <string notr="true">1.0X</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="enlarge">
+         <property name="text">
+          <string notr="true">&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string notr="true">平移锁定</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>数据统计</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="nextPicBtn">
+         <property name="text">
+          <string notr="true">next</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="horizontalSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_3" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>7</number>
+      </property>
+      <item row="0" column="8">
+       <widget class="QRadioButton" name="radioBtn_rbn">
+        <property name="text">
+         <string notr="true">rbn</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QRadioButton" name="radioBtn_b">
+        <property name="text">
+         <string notr="true">blue</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="14">
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="text">
+         <string notr="true">显示所有坏点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QRadioButton" name="radioBtn_rgn">
+        <property name="text">
+         <string notr="true">rgn</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>326</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="15">
+       <widget class="QCheckBox" name="simulateCheckBox">
+        <property name="text">
+         <string notr="true">仿真</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QRadioButton" name="radioBtn_gbn">
+        <property name="text">
+         <string notr="true">gbn</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radioBtn_origin">
+        <property name="text">
+         <string notr="true">origin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QRadioButton" name="radioBtn_n">
+        <property name="text">
+         <string notr="true">n</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QRadioButton" name="radioBtn_g">
+        <property name="text">
+         <string notr="true">green</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QRadioButton" name="radioBtn_r">
+        <property name="text">
+         <string notr="true">red</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QRadioButton" name="radioBtn_rgb">
+        <property name="text">
+         <string notr="true">rgb</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <widget class="QSlider" name="m_saturationSlider">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::NoTicks</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="13">
+       <widget class="QLabel" name="m_saturationValue">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="12">
+       <widget class="SetEditValueWidget" name="m_saturationWidget" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_2" native="true">
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item row="0" column="4">
+       <widget class="QLabel" name="svmPerLabel">
+        <property name="text">
+         <string>斑点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="myLineEdit" name="svmSensEdit">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="svmRowLabel">
+        <property name="text">
+         <string>尺寸</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QLabel" name="svmCutLabel">
+        <property name="text">
+         <string>切边</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="myLineEdit" name="svmExpandEdit">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <widget class="myLineEdit" name="svmBrightLimitEdit">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="myLineEdit" name="svmRowEdit">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="myLineEdit" name="svmCutEdit">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="svmSensLabel">
+        <property name="text">
+         <string>精度</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <widget class="QLabel" name="svmExpandLabel">
+        <property name="text">
+         <string>放大系数</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="myLineEdit" name="svmPerEdit">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="12">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>568</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="10">
+       <widget class="QLabel" name="svmBrightLimitLabel">
+        <property name="text">
+         <string>亮度下限</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="cleanSampleBtn">
+        <property name="text">
+         <string notr="true">清空样本</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <spacer name="horizontalSpacer_8">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>167</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="imgDataBtn_2">
+        <property name="text">
+         <string notr="true">数据分析2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="imgDataBtn">
+        <property name="text">
+         <string notr="true">数据分析</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="imgDataBtn_3">
+        <property name="text">
+         <string notr="true">数据分析3</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QPushButton" name="saveSampleBtn">
+        <property name="text">
+         <string notr="true">保存样本</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="QRadioButton" name="goodTypeBtn">
+        <property name="text">
+         <string notr="true">good</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QRadioButton" name="badTypeBtn">
+        <property name="text">
+         <string notr="true">bad</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="8">
+       <spacer name="horizontalSpacer_9">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>167</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="10">
+       <widget class="QPushButton" name="revokeBtn">
+        <property name="text">
+         <string notr="true">revoke</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="sampleClassBtn">
+        <property name="text">
+         <string notr="true">样本集</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SetEditValueWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">mysortwidget/seteditvaluewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

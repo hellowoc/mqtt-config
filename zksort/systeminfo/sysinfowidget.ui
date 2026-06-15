@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SysInfoWidget</class>
+ <widget class="QWidget" name="SysInfoWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>722</width>
+    <height>681</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_7">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="whatsThis">
+        <string notr="true"/>
+       </property>
+       <property name="accessibleName">
+        <string notr="true"/>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="SysInfoLog" name="tab_4">
+        <property name="whatsThis">
+         <string notr="true"/>
+        </property>
+        <property name="accessibleName">
+         <string notr="true"/>
+        </property>
+        <attribute name="title">
+         <string notr="true">日志</string>
+        </attribute>
+       </widget>
+       <widget class="SysInfoNet" name="tab_2">
+        <attribute name="title">
+         <string>组网</string>
+        </attribute>
+       </widget>
+       <widget class="SysInfoDebug" name="tab">
+        <attribute name="title">
+         <string>系统信息</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SysInfoLog</class>
+   <extends>QWidget</extends>
+   <header location="global">systeminfo/sysinfolog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SysInfoDebug</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/sysinfodebug.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SysInfoNet</class>
+   <extends>QWidget</extends>
+   <header>systeminfo/sysinfonet.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

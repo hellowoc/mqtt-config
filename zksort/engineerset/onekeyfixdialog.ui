@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OneKeyDialog</class>
+ <widget class="QDialog" name="OneKeyDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>773</width>
+    <height>550</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_5">
+   <property name="topMargin">
+    <number>45</number>
+   </property>
+   <item row="7" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="horizontalSpacing">
+      <number>50</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="cancelBtn">
+       <property name="text">
+        <string notr="true">PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="okBtn">
+       <property name="text">
+        <string notr="true">PushButton</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>修改信息</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_name">
+            <property name="text">
+             <string>姓名</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="myLineEdit" name="lineEdit_name"/>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_phone">
+            <property name="text">
+             <string>手机号</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="myLineEdit" name="lineEdit_phone"/>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_compname">
+            <property name="text">
+             <string>公司名称</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="myLineEdit" name="lineEdit_comname"/>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <item>
+            <widget class="QLabel" name="label_place_3">
+             <property name="text">
+              <string>区/县</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="myLineEdit" name="lineEdit_place_3"/>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_14">
+           <item>
+            <widget class="QLabel" name="label_place_4">
+             <property name="text">
+              <string>具体地址</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="myLineEdit" name="lineEdit_place_4"/>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <widget class="QLabel" name="label_place_6">
+             <property name="text">
+              <string>市</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="myLineEdit" name="lineEdit_place_2"/>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_place_2">
+             <property name="text">
+              <string>省</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="myLineEdit" name="lineEdit_place_1"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_QCnum">
+          <property name="text">
+           <string>QC号</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="myLineEdit" name="lineEdit_QCnum"/>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="label_id">
+          <property name="text">
+           <string>设备编号</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="myLineEdit" name="lineEdit_machineID"/>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QLabel" name="label_type2">
+          <property name="text">
+           <string>对外型号</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="myLineEdit" name="lineEdit_type2"/>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_type">
+        <property name="text">
+         <string>设备机型</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+     <zorder></zorder>
+     <zorder>label_type</zorder>
+     <zorder>horizontalSpacer_2</zorder>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>请确认信息！</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

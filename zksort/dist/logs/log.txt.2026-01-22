@@ -1,0 +1,36 @@
+程序启动
+2026-01-22 18:56:22.872 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-22 18:56:22.872 [Mainthread] INFO MyLanguage - 1
+2026-01-22 18:56:22.922 [Mainthread] INFO ZKSort - power on: 233times
+2026-01-22 18:56:22.922 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序结束
+程序启动
+2026-01-22 18:57:04.069 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-22 18:57:04.069 [Mainthread] INFO MyLanguage - 1
+2026-01-22 18:57:04.096 [Mainthread] INFO ZKSort - power on: 234times
+2026-01-22 18:57:04.096 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序结束
+程序启动
+2026-01-22 18:58:25.304 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-22 18:58:25.304 [Mainthread] INFO MyLanguage - 1
+2026-01-22 18:58:25.334 [Mainthread] INFO ZKSort - power on: 235times
+2026-01-22 18:58:25.334 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-01-22 18:58:48.454 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-22 18:58:49.443 [Mainthread] INFO FactorySetWidget - enter setting machine page
+2026-01-22 18:59:05.384 [Mainthread] INFO MachineSetWidget - apply new machine setting
+2026-01-22 18:59:05.617 [Mainthread] INFO GlobalFlow - save json
+2026-01-22 18:59:06.129 [Mainthread] INFO GlobalFlow - save jsonprofile
+2026-01-22 18:59:16.943 [Mainthread] INFO GlobalFlow - save json
+2026-01-22 19:02:02.434 [Mainthread] INFO FactorySetWidget - enter setting machine page
+2026-01-22 19:02:21.620 [Mainthread] INFO FactorySetWidget - enter setting machine page
+2026-01-22 19:03:16.409 [Mainthread] INFO MachineSetWidget - apply new machine setting
+2026-01-22 19:03:16.644 [Mainthread] INFO GlobalFlow - save json
+2026-01-22 19:03:17.161 [Mainthread] INFO GlobalFlow - save jsonprofile
+2026-01-22 19:03:32.389 [Mainthread] INFO FactorySetWidget - enter setting machine page
+2026-01-22 19:15:09.594 [Mainthread] INFO FactorySetWidget - enter setting camera page
+2026-01-22 19:16:00.017 [Mainthread] INFO FactorySetWidget - enter dividing pixels page
+2026-01-22 19:16:02.417 [Mainthread] INFO FactorySetWidget - enter dividing pixels page
+2026-01-22 19:16:08.828 [Mainthread] INFO DividePixelWidget - enter deviding pixels show all page
+2026-01-22 19:16:14.745 [Mainthread] INFO FactorySetWidget - enter camera signal page
+2026-01-22 19:16:29.285 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-22 19:16:29.898 [Mainthread] INFO FactorySetWidget - enter misc function of machine page

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UpdateFpgaWidget</class>
+ <widget class="QWidget" name="UpdateFpgaWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,4">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="horizontalSpacing">
+      <number>30</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>10</number>
+     </property>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="comboBox_chute"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_board">
+       <property name="text">
+        <string notr="true">电路板</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_mode">
+       <property name="text">
+        <string notr="true">模式</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_chute">
+       <property name="text">
+        <string notr="true">通道</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="comboBox_mode"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="comboBox_board">
+       <item>
+        <property name="text">
+         <string>接口板</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>相机板</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>喷阀板</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>控制板</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>恒流源板</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_chain">
+       <property name="text">
+        <string notr="true">链路</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="comboBox_chain"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QListWidget" name="FileListWidget"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="OneKeyUpdateBtn">
+         <property name="text">
+          <string>一键整机升级</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="checkFileBtn">
+         <property name="text">
+          <string notr="true">检测升级文件</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="BackBurnBtn">
+         <property name="text">
+          <string>反烧工厂</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>切换用户</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="startUpgradeBtn">
+         <property name="text">
+          <string notr="true">开始升级</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

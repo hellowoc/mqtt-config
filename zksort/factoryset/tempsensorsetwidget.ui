@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TempSensorSetWidget</class>
+ <widget class="QWidget" name="TempSensorSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>769</width>
+    <height>621</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>60</number>
+   </property>
+   <property name="topMargin">
+    <number>40</number>
+   </property>
+   <property name="rightMargin">
+    <number>60</number>
+   </property>
+   <property name="bottomMargin">
+    <number>40</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>60</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>30</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string notr="true">温度传感器1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="myLineEdit" name="nameEdit1"/>
+   </item>
+   <item row="0" column="2">
+    <widget class="myLineEdit" name="lineEdit"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="text">
+      <string notr="true">温度传感器2</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="myLineEdit" name="nameEdit2"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="myLineEdit" name="lineEdit_2"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="checkBox_3">
+     <property name="text">
+      <string notr="true">温度传感器3</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="myLineEdit" name="nameEdit3"/>
+   </item>
+   <item row="2" column="2">
+    <widget class="myLineEdit" name="lineEdit_3"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="checkBox_4">
+     <property name="text">
+      <string notr="true">温度传感器4</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="myLineEdit" name="nameEdit4"/>
+   </item>
+   <item row="3" column="2">
+    <widget class="myLineEdit" name="lineEdit_4"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="checkBox_5">
+     <property name="text">
+      <string notr="true">温度传感器5</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="myLineEdit" name="nameEdit5"/>
+   </item>
+   <item row="4" column="2">
+    <widget class="myLineEdit" name="lineEdit_5"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

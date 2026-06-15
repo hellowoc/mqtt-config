@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IPSetWidget</class>
+ <widget class="QWidget" name="IPSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>938</width>
+    <height>564</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1,1,1" columnstretch="2,3,3">
+     <property name="horizontalSpacing">
+      <number>50</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>30</number>
+     </property>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string notr="true">网口一</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string notr="true">网口二</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="myLineEdit" name="IP_LineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string notr="true">IP地址</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="myLineEdit" name="Dns_LineEdit_2"/>
+     </item>
+     <item row="3" column="2">
+      <widget class="myLineEdit" name="Gateway_LineEdit_2"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string notr="true">子网掩码</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="myLineEdit" name="Gateway_LineEdit"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="myLineEdit" name="IP_LineEdit_2"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="myLineEdit" name="Mask_LineEdit_2"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string notr="true">默认网关</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="myLineEdit" name="Mask_LineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string notr="true">DNS服务器</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="myLineEdit" name="Dns_LineEdit"/>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1,1,1,1">
+     <item>
+      <widget class="QPushButton" name="btn_connect">
+       <property name="text">
+        <string notr="true">远程连接</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_connectedIP">
+       <property name="text">
+        <string notr="true">0.0.0.0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_disconnect">
+       <property name="text">
+        <string notr="true">断开连接</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_import_cert">
+       <property name="text">
+        <string notr="true">import cert</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_request_cert">
+       <property name="text">
+        <string notr="true">request cert</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,2,0,1,1">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="btn_nettest">
+       <property name="text">
+        <string notr="true">测试网络</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_netstate">
+       <property name="text">
+        <string notr="true">网络连接正常</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="changeBtn">
+       <property name="text">
+        <string notr="true">切换</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string notr="true">调整</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okBtn">
+       <property name="text">
+        <string notr="true">设置</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>80</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">mysortwidget/mylineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

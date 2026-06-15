@@ -1,0 +1,485 @@
+#include "upgrademodelwidget.h"
+#include "ui_upgrademodelwidget.h"
+
+upgradeModelWidget::upgradeModelWidget(QWidget *parent) :
+    basewidget(parent),
+    ui(new Ui::upgradeModelWidget)
+{
+    ui->setupUi(this);
+    m_count = 0;
+    m_nUpgradeTypeIndex = 0;
+
+    for(int i = 0; i < MAX_IPC_NUM; i++)
+    {
+        m_upgradeResList.append(g_myLan().not_satrt);
+    }
+    ui->ipcsetcomboBox->setFixedWidth(300);
+    ui->ipc2resultlabel->hide();
+}
+
+upgradeModelWidget::~upgradeModelWidget()
+{
+    delete ui;
+}
+
+void upgradeModelWidget::showPage(bool bshow)
+{
+    if(bshow){
+        struGsh.bUpdateState = 1;
+        updateAll();
+    }
+    else
+        struGsh.bUpdateState = 0;
+}
+
+void upgradeModelWidget::receiveMsg(int msg1, int msg2, int msg3)
+{
+
+}
+
+void upgradeModelWidget::retranslateUiWidget()
+{
+    updateAll();
+    ui->checkFileBtn->setText(g_myLan().ids_checkUpdateFile);
+    ui->startUpgradeBtn->setText(g_myLan().ids_startUpdate);
+}
+
+void upgradeModelWidget::appendUpdateResult(QString str,bool ok)
+{
+    m_count++;
+    QString date = QDateTime::currentDateTime().toString("hh:mm:ss");
+    QString log =QString::number(m_count)+"    "+date+"    "+str;
+    QListWidgetItem *item= new QListWidgetItem(log,ui->FileListWidget);
+
+    if(!ok)
+        item->setTextColor(QColor(255,0,0));
+    ui->FileListWidget->scrollToBottom();
+}
+
+/* 检查升级文件是否匹配 */
+bool upgradeModelWidget::checkUpdateFile()
+{
+    QString str="dma",str2="dmb";
+
+    if (!ui->FileListWidget->currentItem())
+    {
+        ui->FileListWidget->clear();
+        appendUpdateResult(g_myLan().ids_notSelectFile);
+        return 0;
+    }
+    QString listinfo = ui->FileListWidget->currentItem()->text();
+    ui->FileListWidget->clear();
+
+    if (!listinfo.contains(str) && !listinfo.contains(str2))
+    {
+        appendUpdateResult(g_myLan().ids_wrongFileName);
+        return 0;
+    }
+    QStringList list = listinfo.split(" ");
+    modeFileDataName = list.at(0).left(list.at(0).length()-4);
+    modeFileDataWholeName = QString("%1%2").arg(g_Runtime().getUsbPath()+"zkmodels/").arg(list.at(0));
+#ifdef Q_OS_UNIX
+    if(myMqttMsgParaseThread->m_updateFileType == myMqttMsgParaseThread->UPDATE_IPCMODEL)
+    {
+        modeFileDataWholeName = QString("%1%2").arg("/sdcard/udisk/").arg(list.at(0));
+    }
+#endif
+
+    modeFileConfigWholeName = modeFileDataWholeName.left(modeFileDataWholeName.length()-4)+".ini";
+
+    QFile file(modeFileConfigWholeName);  //头文件不存在
+    if (!file.open(QIODevice::ReadOnly) && listinfo.contains(str))
+    {
+#ifdef Q_OS_UNIX
+        if(myMqttMsgParaseThread->m_updateFileType == myMqttMsgParaseThread->UPDATE_IPCMODEL)
+        {
+            myMqttMsgParaseThread->onCmdReturn(myMqttMsgParaseThread->m_uuid,myMqttMsgParaseThread->m_tmp,MODEL_FILE_MISS);
+        }
+#endif
+        g_infoWidget().setLabelText(g_myLan().model_file_miss+"-105");
+        g_infoWidget().delayShow();
+        myFlow.sleep(2);
+        g_infoWidget().hide();
+        return 0;
+    }
+
+    qDebug("000 modeFileDataWholeName = %s", modeFileDataWholeName.toUtf8().data());
+    return 1;
+}
+
+void upgradeModelWidget::on_startUpgradeBtn_clicked()
+{
+    int packetLen = 1024*8;
+    int dataLen = 0, configLen = 0;
+    m_upgradeResList.clear();
+    for(int i = 0; i < MAX_IPC_NUM; i++)
+    {
+        m_upgradeResList.append(g_myLan().not_satrt);
+    }
+    ui->startUpgradeBtn->setEnabled(false);
+    m_count = 0;
+    if (!checkUpdateFile())
+    {
+#ifdef Q_OS_UNIX
+        if(myMqttMsgParaseThread->m_updateFileType == myMqttMsgParaseThread->UPDATE_IPCMODEL)
+        {
+            myMqttMsgParaseThread->onCmdReturn(myMqttMsgParaseThread->m_uuid,myMqttMsgParaseThread->m_tmp,MODEL_FILE_MISMATCH);
+        }
+#endif
+        g_infoWidget().setLabelText(g_myLan().model_file_mismatch+"-100");
+        g_infoWidget().delayShow();
+        myFlow.sleep(2);
+        g_infoWidget().hide();
+        return;
+    }
+
+    QFile fileData(modeFileDataWholeName);
+
+    qDebug("111 modeFileDataWholeName is %s", modeFileDataWholeName.toAscii().data());
+
+    if (fileData.open(QIODevice::ReadOnly))
+    {        
+        dataLen = fileData.size();
+        QFile fileConfig(modeFileConfigWholeName);
+        //配置文件判断
+        if (fileConfig.open(QIODevice::ReadOnly) && fileData.fileName().contains(".dma"))
+        {
+            struGsh.bIsUpgrading = true;
+            configLen = fileConfig.size();
+
+            if((dataLen == 0)||(configLen == 0))
+            {
+#ifdef Q_OS_UNIX
+                if(myMqttMsgParaseThread->m_updateFileType == myMqttMsgParaseThread->UPDATE_IPCMODEL)
+                {
+                    myMqttMsgParaseThread->onCmdReturn(myMqttMsgParaseThread->m_uuid,myMqttMsgParaseThread->m_tmp,MODEL_FILE_MISMATCH);
+                }
+#endif
+                g_infoWidget().setLabelText(g_myLan().model_file_mismatch+"-101");
+                g_infoWidget().delayShow();
+                myFlow.sleep(2);
+                g_infoWidget().hide();
+
+               fileData.close();
+               fileConfig.close();
+               return;
+            }
+        }
+        //组包添加模型-头
+        unsigned char sendPacket[MAX_IPC_MODEL_NAME_LENGTH+16];
+        struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddDataReq = IPC_REQ_RETURN_NULL;
+
+//        for(int i = 0; i < 1; i++)
+//        {
+//            memset(sendPacket, 0, MAX_IPC_MODEL_NAME_LENGTH);
+//            memcpy(sendPacket, modeFileDataName.toAscii().data(), modeFileDataName.length());
+//            sendPacket[64] = dataLen/(256*256*256);
+//            sendPacket[65] = (dataLen/(256*256))%256;
+//            sendPacket[66] = (dataLen%(256*256))/256;
+//            sendPacket[67] = dataLen%256;
+
+//            sendPacket[68] = configLen/(256*256*256);
+//            sendPacket[69] = (configLen/(256*256))%256;
+//            sendPacket[70] = (configLen%(256*256))/256;
+//            sendPacket[71] = configLen%256;
+
+//            sendPacket[72] = packetLen/256;
+//            sendPacket[73] = packetLen%256;
+
+//            struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddHeadReq = 0;
+//            g_Udp.pushUdpCmdData(CMD_UDP_IPC_MODEL_ADD_HEAD, true, struCnfg.nIpcIpAddrBase+m_nUpgradeTypeIndex, 0, MAX_IPC_MODEL_NAME_LENGTH+10, sendPacket);
+//            for(int j = 0; j < 20; j++)
+//            {
+//                myFlow.msleep(500);
+//                if(struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddHeadReq == 1)
+//                {
+//                    break;
+//                }
+//            }
+//            if(struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddHeadReq == 1)
+//            {
+//                break;
+//            }
+//        }
+//        if(struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddHeadReq == 0)    //头文件配置错误
+//        {
+//#ifdef Q_OS_UNIX
+//            if(myMqttMsgParaseThread->m_updateFileType == myMqttMsgParaseThread->UPDATE_IPCMODEL)
+//            {
+//                myMqttMsgParaseThread->onCmdReturn(myMqttMsgParaseThread->m_uuid,myMqttMsgParaseThread->m_tmp,IPC_CONNECT_FAIL);
+//            }
+//#endif
+//            g_infoWidget().setLabelText(g_myLan().connect_ipc_fail+"-103");
+//            g_infoWidget().delayShow();
+//            myFlow.sleep(2);
+//            g_infoWidget().hide();
+
+//            fileData.close();
+//            fileConfig.close();
+//            return;
+//        }
+
+        //组包添加模型-数据
+        g_infoWidget().setLabelText(g_myLan().model_file_upgrading);
+        g_infoWidget().delayShow();
+
+//        char* tmpModeldata = new char[dataLen];
+        QDataStream dsData(&fileData);
+        QByteArray tmpModeldata;
+        dsData>>tmpModeldata;
+//        dsData.readRawData(tmpModeldata, dataLen);
+        fileData.close();
+
+//        char* tmpModelConfig = new char[configLen];
+        QDataStream dsConfig(&fileConfig);
+        QByteArray tmpModelConfig;
+        dsConfig>>tmpModelConfig;
+//        dsConfig.readRawData(tmpModelConfig, configLen);
+        fileConfig.close();
+
+
+        QString proecessStrDisp;
+        int packetTotal = 1;
+        int hasSendLen = 0;
+        unsigned char* tmpPacket = new unsigned char[packetLen+3];
+
+        //发送数据文件
+        packetTotal = (dataLen%packetLen == 0) ? dataLen/packetLen : dataLen/packetLen+1;
+
+        for(int ii = 0; ii < packetTotal; ii++)
+        {
+            memset(tmpPacket, 0, packetLen+3);
+
+            tmpPacket[0] = 0;
+            tmpPacket[1] = ii/256;
+            tmpPacket[2] = ii%256;
+
+            if(dataLen-hasSendLen >= packetLen) //至少还剩一个整包
+            {
+                memcpy(tmpPacket+3, tmpModeldata+hasSendLen, packetLen);
+                g_Udp.pushUdpCmdData(CMD_UDP_IPC_MODEL_ADD_DATA, true, struCnfg.nIpcIpAddrBase+m_nUpgradeTypeIndex, 0, packetLen+3, tmpPacket);
+                hasSendLen += packetLen;
+            }
+            else    //剩不到一个整包
+            {
+                memcpy(tmpPacket+3, tmpModeldata+hasSendLen, dataLen-hasSendLen);
+                g_Udp.pushUdpCmdData(CMD_UDP_IPC_MODEL_ADD_DATA, true, struCnfg.nIpcIpAddrBase+m_nUpgradeTypeIndex, 0, packetLen+3, tmpPacket);
+            }
+            if(ii%100 == 0)
+            {
+                proecessStrDisp = QString::number((ii*100)/packetTotal)+"%";
+                ui->processlabel->setText(proecessStrDisp);
+            }
+            if((ii > 0)&&(ii%3 == 0))
+            {
+                myFlow.msleep(6);
+            }
+        }
+        proecessStrDisp = "99.1%";
+        ui->processlabel->setText(proecessStrDisp);
+
+        myFlow.msleep(500);
+        //发送配置文件
+        hasSendLen = 0;
+        packetTotal = (configLen%packetLen == 0) ? configLen/packetLen : configLen/packetLen+1;
+
+        for(int ii = 0; ii < packetTotal; ii++)
+        {
+            memset(tmpPacket, 0, packetLen+3);
+
+            tmpPacket[0] = 1;
+            tmpPacket[1] = ii/256;
+            tmpPacket[2] = ii%256;
+
+            if(configLen-hasSendLen >= packetLen) //至少还剩一个整包
+            {
+                memcpy(tmpPacket+3, tmpModelConfig+hasSendLen, packetLen);
+                g_Udp.pushUdpCmdData(CMD_UDP_IPC_MODEL_ADD_DATA, true, struCnfg.nIpcIpAddrBase+m_nUpgradeTypeIndex, 0, packetLen+3, tmpPacket);
+            }
+            else    //剩不到一个整包
+            {
+                qDebug()<<"send cfg"<<tmpModelConfig<<hasSendLen<<configLen;
+                memcpy(tmpPacket+3, tmpModelConfig+hasSendLen, configLen-hasSendLen);
+                g_Udp.pushUdpCmdData(CMD_UDP_IPC_MODEL_ADD_DATA, true, struCnfg.nIpcIpAddrBase+m_nUpgradeTypeIndex, 0, packetLen+3, tmpPacket);
+            }
+
+            if((ii > 0)&&(ii%5 == 0))
+            {
+                myFlow.msleep(5);
+            }
+//            qDebug("222 send %d--%d", packetTotal, ii);
+//            myFlow.msleep(5);
+        }
+
+        proecessStrDisp = "99.9%";
+        ui->processlabel->setText(proecessStrDisp);
+
+//        bzero(tmpModeldata,dataLen);
+//        bzero(tmpModelConfig,configLen);
+//        bzero(tmpPacket,packetLen+3);
+//        delete[] tmpPacket;
+//        delete[] tmpModeldata;
+//        delete[] tmpModelConfig;
+//        tmpPacket =NULL;
+//        tmpModeldata=NULL;
+//        tmpModelConfig = NULL;
+        tmpModeldata.clear();
+        tmpModelConfig.clear();
+
+        QString upgradeResStr=g_myLan().upgrade_timeout;
+        for(int ii = 0; ii < 5; ii++)
+        {
+            myFlow.sleep(1);
+            if(struIpcShare.struIpcReqStauts[m_nUpgradeTypeIndex].modelAddDataReq == 1)
+            {
+                switch(struIpcShare.struIpcReqValue[m_nUpgradeTypeIndex].modelAddDataRes)
+                {
+                case 0:
+                    upgradeResStr = g_myLan().upgrade_success;
+                    proecessStrDisp = "100%";
+                    ui->processlabel->setText(proecessStrDisp);
+                    break;
+                case 1:
+                    upgradeResStr = g_myLan().model_file_upgrade_fail;
+                    break;
+                case 2:
+                    upgradeResStr = g_myLan().config_file_upgrade_fail;
+                    break;
+                case 3:
+                    upgradeResStr = g_myLan().upgrade_fail;
+                    break;
+                default:
+                    upgradeResStr = g_myLan().other_error;
+                    break;
+                }
+                break;
+            }
+        }
+        logger()->info("ipc%1 model %2!",m_nUpgradeTypeIndex,upgradeResStr);
+        m_upgradeResList.replace(m_nUpgradeTypeIndex, upgradeResStr);
+
+        g_infoWidget().hide();
+        updateAll();
+    }
+}
+
+
+void upgradeModelWidget::timerEvent(QTimerEvent *event)
+{    
+//    killTimer(event->timerId());
+//    if(id == timer_interface_wait_toFactory){
+//        myFlow.resetMachineConfigRG();
+//        id = timer_ask_interface_version ;
+//        startTimer(3000);
+
+//    }
+}
+
+void upgradeModelWidget::updateElecBoardCombobox()
+{
+    QStringList ipcTypeList;
+
+    ui->ipcsetcomboBox->clear();
+    ui->ipcsetcomboBox->setVisible(struCnfg.nIpcCount > 1);
+
+    for(int i = 0; i < struCnfg.nIpcCount; i++)
+    {
+        QString ipcType = QString("IPC%1").arg(i+1);
+        ipcTypeList.append(ipcType);
+    }
+
+    ui->ipcsetcomboBox->addItems(ipcTypeList);
+    ui->ipcsetcomboBox->setCurrentIndex(m_nUpgradeTypeIndex);
+}
+
+void upgradeModelWidget::on_checkFileBtn_clicked()
+{
+    QDir myDir;
+#ifdef Q_OS_UNIX
+    if(myMqttMsgParaseThread->m_updateFileType != myMqttMsgParaseThread->UPDATE_IPCMODEL)
+    {
+        ui->startUpgradeBtn->setEnabled(true);
+        if(!g_Runtime().checkUsbExist()){
+            g_infoWidget().setLabelText(g_myLan().msg_usb_insert);
+            g_infoWidget().showSecs();
+            return;
+        }
+
+        QString path = g_Runtime().getUsbPath();
+        if (path == ""){
+            g_infoWidget().setLabelText(g_myLan().msg_usb_not_recognized);
+            g_infoWidget().showSecs();
+            return;
+        }
+        myDir.setPath(path+"zkmodels");
+    }
+    else
+    {
+        myDir.setPath("/sdcard/udisk");
+    }
+#else
+    myDir.setPath(qApp->applicationDirPath()+"/zkmodels");
+#endif
+
+    if (!myDir.exists()) {
+        qWarning("Cannot find the /udisk directory");
+        return;
+    }
+    ui->FileListWidget->clear();
+    QStringList filters;
+
+    filters << "*.dma"<<"*.dmb";
+    myDir.setNameFilters(filters);
+    QFileInfoList list;
+    list = myDir.entryInfoList(filters);
+
+    int m_nFileNum = list.size();
+    if (m_nFileNum < 1) {
+        ui->startUpgradeBtn->setEnabled(false);
+    } else {
+        ui->startUpgradeBtn->setEnabled(true);
+    }
+
+    QString filename;
+    float filesize;
+    QDateTime filedate;
+    QString str;
+
+    filelist.clear();
+
+    for(int i=0;i< list.size();i++)
+    {
+        filename = list.at(i).fileName();
+        filesize = list.at(i).size();
+        filedate = list.at(i).lastModified();
+        if (filesize > 1024*1024)
+        {
+            filesize = filesize /1024 /1024;
+            str= filename + "        "+filedate.toString("yyyy/MM/dd hh:mm:ss")+ "        "+QString::number(filesize,'f',1)+"M";
+        }
+        else
+        {
+            filesize = filesize/1024;
+            str = filename + "        "+filedate.toString("yyyy/MM/dd hh:mm:ss")+ "        "+QString::number(filesize,'f',1)+"K";
+        }
+        filelist.append(str);
+    }
+
+    ui->FileListWidget->insertItems(0, filelist);
+    ui->FileListWidget->setCurrentRow(0);
+}
+
+
+
+void upgradeModelWidget::updateAll()
+{
+    updateElecBoardCombobox();
+    ui->ipc1resultlabel->setText(m_upgradeResList.at(m_nUpgradeTypeIndex));
+}
+
+void upgradeModelWidget::on_ipcsetcomboBox_activated(int index)
+{
+    m_nUpgradeTypeIndex = index;
+    ui->ipcsetcomboBox->setCurrentIndex(m_nUpgradeTypeIndex);
+    on_checkFileBtn_clicked();
+}

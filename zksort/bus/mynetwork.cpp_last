@@ -1,0 +1,1376 @@
+#include "mynetwork.h"
+#include <QDebug>
+#include <time.h>
+#include <algorithm>
+#include<fcntl.h>
+
+MyNetCptureThread *myNetCpture;
+
+MyNetWorkThread::MyNetWorkThread(QThread *parent) : QThread(parent)
+{
+    curTotal = 0;
+    retNum = 0;
+    isrunning = false;
+    dim = 3;
+    curPixels = 2048;
+
+    memset(waveDataBuf,0,sizeof(waveDataBuf));
+    memset(imagePacketBuf,0,sizeof(imagePacketBuf));
+    memset(imageDataBuf,0,sizeof(imageDataBuf));
+    memset(blowCountsPacketBuf,0,sizeof(blowCountsPacketBuf));
+    memset(blowCountsTempDataBuf,0,sizeof(blowCountsTempDataBuf));
+}
+
+int MyNetWorkThread::myGetTickCount()
+{
+#ifdef Q_OS_UNIX
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return(ts.tv_sec*1000+ts.tv_nsec/1000000);
+#else
+    return(GetTickCount());
+#endif
+}
+
+void MyNetWorkThread::setSocket(int fd)
+{
+    sockfd = fd;
+}
+
+void MyNetWorkThread::setRecvType(int type,int layer,int view,int unit)
+{
+    currenttype = type;
+    mlayer = layer;
+    mview = view;
+    munit = unit;
+}
+
+void MyNetWorkThread::updateCameraInfo()
+{
+    if(struGsh.nRemoteImageCaptureIsRun){
+        dim = struCnfg.struLayerInfo[mlayer].stuViewInfo[mview].nSensorDim;
+        curPixels = myFlow.getSensorPixels(mlayer, mview);
+    }
+    else{
+        dim = struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nSensorDim;
+        curPixels = myFlow.getSensorPixels(struGsh.nLayer, struGsh.nView);
+    }
+
+    waveBufSize = dim * curPixels + 6;
+//    qDebug()<<dim <<" "<<curPixels <<" "<<rowPacketTotal<<" "<<imageRawBufSize<<" "<<waveBufSize;
+}
+
+int MyNetWorkThread::saveBMPFile(QString path,int w,int h)
+{
+    BITMAPFILEHEADER bmfh; //bmp文件头
+    BITMAPINFOHEADER bmih;
+    unsigned short wWidth, wHeight;//图像的分辨率，需要预先设置
+    wWidth = w;
+    wHeight = h;
+
+    const char* filename = QString(path).toAscii().constData();
+    FILE *f;
+    int fd = open(filename, O_WRONLY|O_CREAT, 0640);
+    if(-1 == fd){
+        printf("open %s failure, errno %d\n", filename, errno);
+        return 0;
+    }
+
+    size_t imageBuffSize= (((size_t)wWidth) * ((size_t)wHeight)) << 2;
+    //设置BMP文件头
+    bmfh.bfType = 0x4D42;//'BM'
+    bmfh.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + imageBuffSize;
+    bmfh.bfReserved1 = 0;
+    bmfh.bfReserved2 = 0;
+    bmfh.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+    //设置BMP信息头
+    bmih.biSize = 0U | sizeof(BITMAPINFOHEADER);
+    bmih.biWidth = wWidth;
+    bmih.biHeight = wHeight;
+    bmih.biPlanes = 1;
+    bmih.biBitCount = 32;
+    bmih.biCompression = 0;
+    bmih.biSizeImage = 0U | imageBuffSize;
+    bmih.biXPelsPerMeter = 0;
+    bmih.biYPelsPerMeter = 0;
+    bmih.biClrUsed = 0;
+    bmih.biClrImportant = 0;
+    //写文件
+    write(fd, &bmfh, sizeof(BITMAPFILEHEADER));
+    write(fd, &bmih, sizeof(BITMAPINFOHEADER));
+    write(fd, imageDataBuf, imageBuffSize);
+    //完成
+#ifdef Q_OS_UNIX
+    fsync(fd);
+#endif
+    close(fd);
+    return 1;
+}
+
+void MyNetWorkThread::waveDataPacketed(bool needFocus)
+{
+    int totalRed = 0, totalGreen=0, totalBlue=0, totalInf=0, curScale=0;
+
+    switch(dim)
+    {
+    case 1:
+        for(int i = 0; i < curPixels; i++)
+        {
+            struGsh.sRowRed[i]      = waveDataBuf[i*dim];
+            struGsh.sRowAveForFocusData[i] = struGsh.sRowRed[i];
+        }
+        break;
+    case 2:
+        for(int i = 0; i < curPixels; i++)
+        {
+            struGsh.sRowRed[i]      = waveDataBuf[i*dim];
+            struGsh.sRowGreen[i]    = waveDataBuf[i*dim+1];
+
+            struGsh.sRowAveForFocusData[i] = (struGsh.sRowRed[i]+struGsh.sRowGreen[i])/2;
+        }
+        break;
+    case 3:
+        for(int i = 0; i < curPixels; i++)
+        {
+            struGsh.sRowRed[i]      = waveDataBuf[i*dim];
+            struGsh.sRowGreen[i]    = waveDataBuf[i*dim+1];
+            struGsh.sRowBlue[i]     = waveDataBuf[i*dim+2];
+
+            struGsh.sRowAveForFocusData[i] = (struGsh.sRowRed[i]+struGsh.sRowGreen[i]+struGsh.sRowBlue[i])/3;
+        }
+        break;
+    case 4:
+        for(int i = 0; i < curPixels; i++)
+        {
+            struGsh.sRowInf[i]      = waveDataBuf[i*dim];
+            struGsh.sRowRed[i]      = waveDataBuf[i*dim+1];
+            struGsh.sRowGreen[i]    = waveDataBuf[i*dim+2];
+            struGsh.sRowBlue[i]     = waveDataBuf[i*dim+3];
+
+            struGsh.sRowAveForFocusData[i] = (struGsh.sRowRed[i]+struGsh.sRowGreen[i]+struGsh.sRowBlue[i]+struGsh.sRowInf[i])/4;
+        }
+        break;
+    default:
+        for(int i = 0; i < curPixels; i++)
+        {
+            struGsh.sRowRed[i]      = waveDataBuf[i*dim];
+            struGsh.sRowGreen[i]    = waveDataBuf[i*dim+1];
+            struGsh.sRowBlue[i]     = waveDataBuf[i*dim+2];
+            struGsh.sRowAveForFocusData[i] = (struGsh.sRowRed[i]+struGsh.sRowGreen[i]+struGsh.sRowBlue[i])/3;
+        }
+        break;
+    }
+
+    /* 计算各颜色平均值 */
+
+    curScale = abs(struCnfg.struLayerInfo[struGsh.nLayer].stuCameraInfo[struGsh.nView].nChannelEnd[struGsh.nUnit]-struCnfg.struLayerInfo[struGsh.nLayer].stuCameraInfo[struGsh.nView].nChannelBegin[struGsh.nUnit]);
+    curScale = (curScale == 0) ? 1 : curScale;
+    for(int i = struCnfg.struLayerInfo[struGsh.nLayer].stuCameraInfo[struGsh.nView].nChannelBegin[struGsh.nUnit]; i <= struCnfg.struLayerInfo[struGsh.nLayer].stuCameraInfo[struGsh.nView].nChannelEnd[struGsh.nUnit]; i++)
+    {
+        totalRed += struGsh.sRowRed[i];
+        totalGreen += struGsh.sRowGreen[i];
+        totalBlue += struGsh.sRowBlue[i];
+        totalInf += struGsh.sRowInf[i];
+    }
+
+   struGsh.fRowAveRed = (float)totalRed/curScale;
+   struGsh.fRowAveGreen = (float)totalGreen/curScale;
+   struGsh.fRowAveBlue = (float)totalBlue/curScale;
+   struGsh.fRowAveInf = (float)totalInf/curScale;
+
+#if 1
+   if(needFocus)
+   {
+       int highDataLen = 0;
+       int pixelCount = 0;
+
+       if(struGsh.focusAveEndPixel >= struGsh.focusAveBeginPixel)
+       {
+           pixelCount = struGsh.focusAveEndPixel-struGsh.focusAveBeginPixel;
+           for(int i = 0;  i < pixelCount; i++)
+           {
+                struGsh.sRowAveForFocusData[i] = abs(struGsh.sRowAveForFocusData[struGsh.focusAveBeginPixel+i]-struGsh.sRowAveForFocusData[struGsh.focusAveBeginPixel+i+1]);
+           }
+
+           for(int i = 0; i < SENSOR_MAX_PIXELS; i++)
+           {
+                struGsh.sRowFocusHighData[i]=0;
+           }
+           myFlow.dataSort(struGsh.sRowAveForFocusData, pixelCount, 1, 0);
+
+           highDataLen = SENSOR_FOCUS_GRADE_DADA_LEN*pixelCount;
+
+           memcpy(struGsh.sRowFocusHighData, struGsh.sRowAveForFocusData, highDataLen);
+           struGsh.focusAveVavle = 0;
+           for(int i = 0; i < highDataLen; i++)
+           {
+                struGsh.focusAveVavle += struGsh.sRowFocusHighData[i];
+           }
+
+           struGsh.focusAveVavle = (float)struGsh.focusAveVavle/highDataLen;
+       }
+
+       if(struGsh.focusAveEndPixel2 >= struGsh.focusAveBeginPixel2)
+       {
+           pixelCount = struGsh.focusAveEndPixel2-struGsh.focusAveBeginPixel2;
+           for(int i = 0;  i < pixelCount; i++)
+           {
+                struGsh.sRowAveForFocusData[i] = abs(struGsh.sRowAveForFocusData[struGsh.focusAveBeginPixel2+i]-struGsh.sRowAveForFocusData[struGsh.focusAveBeginPixel2+i+1]);
+           }
+
+           for(int i = 0; i < SENSOR_MAX_PIXELS; i++)
+           {
+                struGsh.sRowFocusHighData[i]=0;
+           }
+           myFlow.dataSort(struGsh.sRowAveForFocusData, pixelCount, 1, 0);
+
+           highDataLen = SENSOR_FOCUS_GRADE_DADA_LEN*pixelCount;
+
+           memcpy(struGsh.sRowFocusHighData, struGsh.sRowAveForFocusData, highDataLen);
+           struGsh.focusAveVavle2 = 0;
+           for(int i = 0; i < highDataLen; i++)
+           {
+                struGsh.focusAveVavle2 += struGsh.sRowFocusHighData[i];
+           }
+
+           struGsh.focusAveVavle2 = (float)struGsh.focusAveVavle2/highDataLen;
+       }
+   }
+#endif
+
+#if 0
+   if(needFocus)
+   {
+       int highDataLen = 0;
+
+       for(int i = 0; i < curPixels-1; i++)
+       {
+           struGsh.sRowAveForFocusData[i] = abs(struGsh.sRowAveForFocusData[i]-struGsh.sRowAveForFocusData[i+1]);
+       }
+       struGsh.sRowAveForFocusData[curPixels-1] = 0;
+
+       for(int i = 0; i < SENSOR_MAX_PIXELS; i++)
+       {
+            struGsh.sRowFocusHighData[i]=0;
+       }
+       myFlow.dataSort(struGsh.sRowAveForFocusData, curPixels, 1, 0);
+
+       highDataLen = SENSOR_FOCUS_GRADE_DADA_LEN*curPixels;
+
+       memcpy(struGsh.sRowFocusHighData, struGsh.sRowAveForFocusData, highDataLen);
+       struGsh.focusAveVavle = 0;
+       for(int i = 0; i < highDataLen; i++)
+       {
+            struGsh.focusAveVavle += struGsh.sRowFocusHighData[i];
+       }
+
+       struGsh.focusAveVavle = (float)struGsh.focusAveVavle/highDataLen;
+   }
+#endif
+}
+
+/* 根据维度进行图像数据包的组包 */
+void MyNetWorkThread::imageDataPacketed(int correctHeight)
+{
+    memset(imageDataBuf,0,sizeof(imageDataBuf));
+    uchar tmpBuf[WAVE_FRAME_DATA_LEN*MAX_WAVE_DEVIDE*MAX_WAVE_DIM*IMAGE_HEIGHT];
+    memset(tmpBuf,0,sizeof(tmpBuf));
+    /********************************************1-3维********************************************/
+    //i: 包数
+    for(int i = 0 ;i < correctHeight; i++)
+    {
+        memcpy(&tmpBuf[i*(waveBufSize-6)], &imagePacketBuf[i*waveBufSize +6], waveBufSize - 6);
+    };
+
+    if (!struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nImageSplice){
+        switch(dim)
+        {
+        case 1:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)
+                {
+                    imageDataBuf[i*curPixels*4 +j*4]   = tmpBuf[i*curPixels*dim+j];
+                    imageDataBuf[i*curPixels*4 +j*4+1] = tmpBuf[i*curPixels*dim+j];
+                    imageDataBuf[i*curPixels*4 +j*4+2] = tmpBuf[i*curPixels*dim+j];
+                    imageDataBuf[i*curPixels*4 +j*4+3]   = 255;
+                }
+            }
+            break;
+        case 2:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)  //512*2
+                {
+                    imageDataBuf[i*curPixels*4 +j*4]   = 0;
+                    imageDataBuf[i*curPixels*4 +j*4+1] = tmpBuf[i*curPixels*dim+j*dim+1];
+                    imageDataBuf[i*curPixels*4 +j*4+2] = tmpBuf[i*curPixels*dim+j*dim];
+                    imageDataBuf[i*curPixels*4 +j*4+3]   = 255;
+                }
+            }
+            break;
+        case 3:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)  //512*2
+                {
+                    imageDataBuf[i*curPixels*4 +j*4]   = tmpBuf[i*curPixels*dim+j*dim+2];
+                    imageDataBuf[i*curPixels*4 +j*4+1] = tmpBuf[i*curPixels*dim+j*dim+1];
+                    imageDataBuf[i*curPixels*4 +j*4+2] = tmpBuf[i*curPixels*dim+j*dim];
+                    imageDataBuf[i*curPixels*4 +j*4+3]   = 255;
+                }
+            }
+            break;
+        case 4:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)
+                {
+                    imageDataBuf[i*curPixels*4 +j*4]   = tmpBuf[i*curPixels*dim+j*dim+3];
+                    imageDataBuf[i*curPixels*4 +j*4+1] = tmpBuf[i*curPixels*dim+j*dim+2];
+                    imageDataBuf[i*curPixels*4 +j*4+2] = tmpBuf[i*curPixels*dim+j*dim+1];
+                    imageDataBuf[i*curPixels*4 +j*4+3] = tmpBuf[i*curPixels*dim+j*dim+0];   //NRGB格式
+                }
+            }
+            break;
+        }
+    }
+    else{//图像拼接
+        switch(dim)
+        {
+        case 1:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)
+                {
+                    if( j % 2 != 0) continue;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4]   = (tmpBuf[i*curPixels*dim+j]+tmpBuf[i*curPixels*dim+j+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+1] = (tmpBuf[i*curPixels*dim+j]+tmpBuf[i*curPixels*dim+j+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+2] = (tmpBuf[i*curPixels*dim+j]+tmpBuf[i*curPixels*dim+j+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+3]   = 255;
+                }
+            }
+            break;
+        case 2:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)  //512*2
+                {
+                    if( j % 2 != 0) continue;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4]   = 0;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+1] = (tmpBuf[i*curPixels*dim+j*dim+1]+tmpBuf[i*curPixels*dim+(j+1)*dim+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+2] = (tmpBuf[i*curPixels*dim+j*dim]+tmpBuf[i*curPixels*dim+(j+1)*dim])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+3]   = 255;
+                }
+            }
+            break;
+        case 3:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)  //512*2
+                {
+                    if( j % 2 != 0) continue;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4]   = (tmpBuf[i*curPixels*dim+j*dim+2]+tmpBuf[i*curPixels*dim+(j+1)*dim+2])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+1] = (tmpBuf[i*curPixels*dim+j*dim+1]+tmpBuf[i*curPixels*dim+(j+1)*dim+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+2] = (tmpBuf[i*curPixels*dim+j*dim]+tmpBuf[i*curPixels*dim+(j+1)*dim])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+3]   = 255;
+                }
+            }
+            break;
+        case 4:
+            for(int i = 0;i < correctHeight;i++)
+            {
+                for(int j =0;j< curPixels;j++)
+                {
+                    if( j % 2 != 0) continue;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4]   = (tmpBuf[i*curPixels*dim+j*dim+3]+tmpBuf[i*curPixels*dim+(j+1)*dim+3])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+1] = (tmpBuf[i*curPixels*dim+j*dim+2]+tmpBuf[i*curPixels*dim+(j+1)*dim+2])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+2] = (tmpBuf[i*curPixels*dim+j*dim+1]+tmpBuf[i*curPixels*dim+(j+1)*dim+1])/2;
+                    imageDataBuf[i*curPixels/2*4 +j/2*4+3] = (tmpBuf[i*curPixels*dim+j*dim]+tmpBuf[i*curPixels*dim+(j+1)*dim])/2;;   //NRGB格式
+                }
+            }
+            break;
+        }
+    }
+}
+
+
+/*
+ * 校验网络获取的数据包，准备可靠的图像数据
+ */
+#if 0
+int MyNetWorkThread::imageCheckSum(int curHeight)
+{
+    if (curHeight == 0)
+        return 0;
+
+    for(int i = 0; i < curHeight; i++) //图像行号
+    {
+        for(int j = 0; j < rowPacketTotal *dim; j++) //每行波形中包编号
+        {
+            int tmp = i * rowPacketTotal * dim * WAVE_FRAME_SINGLE_LEN + j * WAVE_FRAME_SINGLE_LEN; //i行j包
+
+            if( (imagePacketBuf[tmp] != 0xA5) || (imagePacketBuf[tmp + 1] != 0xF0) ||(imagePacketBuf[tmp + WAVE_FRAME_SINGLE_LEN -1] != 0xFF ))
+            {
+                memset(&imagePacketBuf[tmp],0,sizeof(imagePacketBuf)- tmp);
+                imageDataPacketed(i);
+                return i;           //返回异常行号
+            }
+        }
+    }
+
+   imageDataPacketed(curHeight);
+   return curHeight;
+}
+#endif
+int MyNetWorkThread::imageCheckSum(int curHeight)
+{
+    int lastIndex;
+
+    if (curHeight == 0)
+        return 0;
+
+    for(int i = 0; i < curHeight; i++) //图像行号
+    {
+        int tmp = i * waveBufSize; //i行头
+
+        if( (imagePacketBuf[tmp] != 0xFF) || (imagePacketBuf[tmp + 1] != 0x00) || (imagePacketBuf[tmp + 2] != 0xA5)
+            || (imagePacketBuf[tmp + 3] != 0x5A)|| (imagePacketBuf[tmp + 4] != 0xC3)|| (imagePacketBuf[tmp + 5] != 0x3C))// 判断包头、包尾、包序号
+        {
+            memset(&imagePacketBuf[tmp],0,sizeof(imagePacketBuf)- tmp);
+            imageDataPacketed(i);
+            return i;           //返回异常行号
+        }
+
+    }
+   imageDataPacketed(curHeight);
+   return curHeight;
+}
+
+/* 在线程中每次读取前调用，对超时进行处理 */
+int MyNetWorkThread::checkUdpSocketStatues(int seconds)
+{
+    struct timeval timeout;
+    timeout.tv_sec  = seconds;
+    timeout.tv_usec = 500*1000;
+    fd_set rds;
+    FD_ZERO (&rds);
+    FD_SET(sockfd, &rds);
+    int ret = select(sockfd+1,&rds,NULL,NULL,&timeout);
+    if(ret == -1)
+    {
+        emit SignalSocketFailed();
+        myFlow.msleep(200);
+        return -1;
+    }
+    if(ret == 0)
+    {
+        return -1;
+    }
+    return 1;
+}
+
+// flag 0获取图像，1上传图像，仅在同步图像获取有效
+// view 本次获取哪一视
+void MyNetWorkThread::serialSendTransStartStop(int flag,int view)
+{
+    int board;  // 0x00表示当前 视的所有相机板
+    int nInt=0, nUnitAddr;
+    char data[SEND_PACKET_DATA_SIZE];
+
+    memset(data, 0, SEND_PACKET_DATA_SIZE);
+
+    switch(currenttype)
+    {
+    case CAPTURE_SINGLE_WAVE:
+        data[0] = 0;
+        break;
+    case CAPTURE_IMAGE:
+    case CAPTURE_IAMGE_CONTINUOUS:
+        data[0] = 1;
+        break;
+    case CAPTURE_IMAGE_SYNC:
+        data[0] = (flag == 0)? 0 : 1;
+        break;
+    case CAPTURE_BACKGROUND_WAVE:
+        data[0] = 0;
+        data[3] = 1;
+        break;
+    default:
+        data[0] = 0;
+        break;
+    }
+
+    switch (currenttype) {
+    case CAPTURE_SINGLE_WAVE:
+    case CAPTURE_BACKGROUND_WAVE:
+        //正在清灰，不请求波形数据
+        if (struGsh.bFlagWiping == 1) return;
+    case CAPTURE_IMAGE:
+    case CAPTURE_IAMGE_CONTINUOUS:
+        data[1] = struGsh.nImageCapTrigValue/256;
+        data[2] = struGsh.nImageCapTrigValue%256;
+
+        //远程采图时支持指定层视通道
+        if (struGsh.nRemoteImageCaptureIsRun){
+            data[1] = 0;
+            data[2] = 0;
+            board = struCnfg.struLayerInfo[mlayer].nViewBoardType[mview];
+            nUnitAddr = struCnfg.struLayerInfo[mlayer].stuViewInfo[mview].nViewUnitId[munit];
+        }
+        else{
+            board = struCnfg.struLayerInfo[struGsh.nLayer].nViewBoardType[struGsh.nView];
+            nUnitAddr = struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nViewUnitId[struGsh.nUnit];
+        }
+        if(struGsh.nPageSm == SM_IMAGE_CAPTURE_WIDGET)
+            mySerial.pushCom1CmdData(CMD_CAMERA_WAVE_CAPTURE, nInt, board, nUnitAddr, data, 1);
+
+        break;
+    case CAPTURE_IMAGE_SYNC:
+        if (struCnfg.struLayerInfo[struGsh.nLayer].nViewIsUsed[view])
+        {
+            board = struCnfg.struLayerInfo[struGsh.nLayer].nViewBoardType[view];
+            nUnitAddr = struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[view].nViewUnitId[struGsh.nUnit];
+
+            mySerial.pushCom1CmdData(CMD_CAMERA_IMAGE_CAPTURE_SYNC, nInt, board, nUnitAddr, data, 1);
+        }
+        break;
+
+    case CAPTURE_BLOW_COUNTS:
+        mySerial.pushCom1CmdData(CMD_INT_BLOW_COUNTS_CAPTURE, nInt, BOARD_TYPE_INTERFACE, BOARD_TYPE_ALL_IN_CHAIN, data, 1);
+        break;
+    default:
+        break;
+    }
+}
+/*
+ *  用在下发串口指令前清除本地缓存
+ */
+void MyNetWorkThread::cleanUdpSocket(int seconds)
+{
+#if 0
+    int num;
+    struct sockaddr_in client;
+    socklen_t sin_size = sizeof(struct sockaddr_in);
+    setUdpRecvTimeOut(0,10);
+    int e;
+    while(1)
+    {
+        num = recv(sockfd,(char *)dirtydatabuf,sizeof(dirtydatabuf),0);
+#ifdef Q_OS_WIN32
+        e = GetTickCount();
+#endif
+        num = recv(sockfd,(char *)dirtydatabuf,sizeof(dirtydatabuf),0);
+
+        if(num < 520) break;
+    }
+#endif
+
+
+#if 1 //采用非阻塞方式判断套接字缓冲区是否有数据可读
+    struct timeval timeout;
+    timeout.tv_sec  = 0;
+    timeout.tv_usec = 0;
+    fd_set rds;
+    FD_ZERO (&rds);
+    FD_SET(sockfd, &rds);
+    int ret = -1;
+    while(1)
+    {
+        ret = select(sockfd+1,&rds,NULL,NULL,&timeout);
+        if(ret == -1)
+        {
+            emit SignalSocketFailed();
+            myFlow.msleep(200);
+            return;
+        }
+        else if (ret == 0)
+        {
+            return;
+        }
+        ret = recv(sockfd,(char *)dirtydatabuf,sizeof(dirtydatabuf),0);
+        logger()->info("recv:%1",ret);
+        if (ret == 0)
+        {
+            return;
+        }
+
+    }
+#endif
+
+}
+
+void MyNetWorkThread::run()
+{
+    int k = 0;                          // 波形计数
+    int rowPacketCnt = 0;               // 每行波形的包计数，用于确认是否丢包
+    int imageRowCnt  = 0;               // 图像采集使用，每幅图像的波形行数计数
+
+    socklen_t sin_size = sizeof(struct sockaddr_in);
+    int retrycount = 0;                 // 接收异常处理最多5
+    int dataStart = 6;                  // 数据起始字节
+    int index = 6;                      // 数据起始字节
+    int e;
+
+    int imageCorrectWaveCnt;            // 每幅图像前正确波形数（0行~第一个出错包的行数）
+    char sCrcData[WAVE_FRAME_SINGLE_LEN-5];
+    unsigned int nCrcItt=0;
+
+    int test_count = 0;
+    QString tmpStr;
+    QString curFilePath;            //同步采图使用
+    int curImageCorrectWaveCnt;     //同步采图使用
+    int totalTimeCost;
+    int thisTimeCost;
+    bool pingPangFlag;               //连续采图使用
+
+    /* 更新图像传感器信息  */
+    updateCameraInfo();
+
+    curTotal = 0;
+    pingPangFlag = true;
+
+    memset(wavePacketBuf,0,sizeof(wavePacketBuf));
+    memset(waveDataBuf,0,sizeof(waveDataBuf));
+    memset(imagePacketBuf,0,sizeof(imagePacketBuf));
+    memset(imageDataBuf,0,sizeof(imageDataBuf));
+
+    memset(struGsh.sRgbRow,0,WAVE_FRAME_SINGLE_LEN);
+
+    while (isrunning){
+        switch (currenttype)
+        {
+        case CAPTURE_SINGLE_WAVE:
+        case CAPTURE_BACKGROUND_WAVE:
+            retNum = 0;
+            curTotal = 0;
+            memset (wavePacketBuf,0,sizeof(wavePacketBuf));
+            memset(waveDataBuf,0,sizeof(waveDataBuf));
+            updateCameraInfo();
+
+            cleanUdpSocket();
+            /* 发送获取单行波形命令 */
+            serialSendTransStartStop();
+            while (isrunning)
+            {
+                if( checkUdpSocketStatues(0) < 0)
+                {
+                    break;
+                }
+
+                retNum = recvfrom(sockfd, (char *)&wavePacketBuf[curTotal], waveBufSize-curTotal,0,(struct sockaddr*)&client,&sin_size);
+
+                curTotal += retNum;
+
+//                qDebug()<<"curtotal: "<<curTotal;
+                if (curTotal == waveBufSize)
+                {
+                    break;
+                }
+            }
+            if (curTotal != waveBufSize)
+            {
+                myFlow.msleep(100);
+                continue;
+            }
+
+            if( (wavePacketBuf[0] != 0xFF) || (wavePacketBuf[1] != 0x00) ||(wavePacketBuf[2] != 0xA5)
+                || (wavePacketBuf[3] != 0x5A) || (wavePacketBuf[4] != 0xC3) ||(wavePacketBuf[5] != 0x3C ))
+            {
+                /* 包头异常*/
+                qDebug()<<"wave head error!";
+                continue;
+            }
+
+#if 0       //添加CRC校验
+            /* CRC check  */
+            for (int j = 0; j < WAVE_FRAME_SINGLE_LEN-5; j++) {
+                sCrcData[j] = (char)(struGsh.sRgbRow[j+2]);
+            }
+
+            nCrcItt = mySerial.crcFpga(sCrcData, WAVE_FRAME_SINGLE_LEN-5);
+            nCrcItt = nCrcItt&0x0000ffff;
+
+            if(nCrcItt != (struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-3]*256+struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-2]))
+            {
+                qDebug("nCrcItt is %x, crc data is %x %x %x", nCrcItt, struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-3]
+                        ,struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-2], struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-1]);
+
+//                emit SignalSocketFailed();
+                memset (struGsh.sRgbRow,0,WAVE_FRAME_SINGLE_LEN);
+                memset(waveDataBuf,0,WAVE_FRAME_DATA_LEN*(SENSOR_MAX_PIXELS/WAVE_FRAME_DATA_LEN)*SENSOR_MAX_DIM);
+                rowPacketCnt = 0;
+                continue;
+            }
+#endif
+
+            memcpy(waveDataBuf, &wavePacketBuf[dataStart], dim * curPixels );
+
+            waveDataPacketed(true);
+            if(struGsh.nPageSm == SM_NIR_DOT_CORRECTIVE_LIST_WIDGET)
+            {
+                if (curTotal == waveBufSize)
+                {
+                    for(int i = 0; i < 512; i++)
+                    {
+                        struGsh.nNirDotCorrectiveRed[struGsh.nView][struGsh.nUnit][i] = 0;
+                        struGsh.nNirDotCorrectiveGreen[struGsh.nView][struGsh.nUnit][i] = 0;
+                    }
+
+                    for(int i = 0; i < 512; i++)
+                    {
+                        struGsh.nNirDotCorrectiveRed[struGsh.nView][struGsh.nUnit][i] = struGsh.sRowRed[i];
+                        struGsh.nNirDotCorrectiveGreen[struGsh.nView][struGsh.nUnit][i] = struGsh.sRowGreen[i];
+                    }
+                }
+            }
+            else
+            {
+                emit SignalWaveRecvFinished();
+            }
+            if (struGsh.nRemoteImageCaptureIsRun) return;
+            myFlow.msleep(300);
+            break;
+        case CAPTURE_IMAGE:
+
+            cleanUdpSocket();
+            /* 发送获取单幅图像命令 */
+            serialSendTransStartStop();
+            while (isrunning)
+            {
+                if( checkUdpSocketStatues(25) < 0 )
+                {
+                    imageCorrectWaveCnt = imageCheckSum(imageRowCnt);
+                    emit SignalImageRecvFinished(imageCorrectWaveCnt,QString(""));
+                    return;
+                }
+
+                retNum = recvfrom(sockfd, (char *)&imagePacketBuf[curTotal], sizeof(imagePacketBuf) - curTotal, 0,(struct sockaddr*)&client,&sin_size);
+
+                curTotal += retNum;
+
+                imageRowCnt = curTotal / waveBufSize;
+
+                if(curTotal == waveBufSize * IMAGE_HEIGHT )
+                    break; //一张图片已经读完
+            }
+            imageRowCnt = curTotal/waveBufSize;
+            imageCorrectWaveCnt = imageCheckSum(imageRowCnt);
+
+            if(imageCorrectWaveCnt > 300)
+            {
+                QString fileName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+                QString filePath;
+            #ifdef Q_OS_UNIX
+                if (struGsh.nRemoteImageCaptureIsRun){
+                    filePath = QString("/sdcard/ts/%1_%2_%3_%4.bmp").arg(mlayer+1).arg(mview+1).arg(munit+1).arg(fileName);
+                }else{
+                    filePath = QString("/sdcard/bmp/%1_%2_%3_%4.bmp").arg(struGsh.nLayer).arg(struGsh.nView).arg(struGsh.nUnit).arg(fileName);
+                }
+            #else
+                if (struGsh.nRemoteImageCaptureIsRun){
+                    filePath = QString(qApp->applicationDirPath()+"%1_%2_%3_%4.bmp").arg(mlayer+1).arg(mview+1).arg(munit+1).arg(fileName);
+                }else{
+                    filePath = QString(qApp->applicationDirPath()+"/%1_%2_%3_%4.bmp").arg(struGsh.nLayer).arg(struGsh.nView).arg(struGsh.nUnit).arg(fileName);
+                }
+            #endif
+                if (struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nImageSplice){
+                    curPixels = curPixels/2;
+                }
+
+                QImage img(imageDataBuf, curPixels, imageRowCnt, QImage::Format_ARGB32);
+                if(saveBMPFile(filePath, curPixels, imageRowCnt))
+                {
+                    if(dim == 4){
+                        for(int i = 0;i < imageRowCnt;i++)
+                        {
+                            for(int j =0;j< curPixels;j++)
+                            {
+                                imageDataBuf[i*curPixels*4 +j*4+3] = 255;   //缩略图不带有透明度
+                            }
+                        }
+                        img = QImage(imageDataBuf, curPixels, imageRowCnt, QImage::Format_ARGB32);
+                    }
+                    if (!struGsh.nRemoteImageCaptureIsRun){
+                        img = img.scaled(180,120);
+                        img.save(filePath+"_copy","PNG",50);
+                    }
+                    emit SignalImageRecvFinished(imageCorrectWaveCnt,filePath);
+                }
+                else
+                {
+                    emit SignalImageRecvFinished(imageCorrectWaveCnt,QString(""));
+                }
+            }
+            else
+            {
+                emit SignalImageRecvFinished(imageCorrectWaveCnt,QString(""));
+                /* 异常情形3：图像接收完成后（数据包数据异常） */
+                qDebug()<<"图像异常，请重新获取！";
+            }
+
+            return;
+
+        case CAPTURE_IAMGE_CONTINUOUS:
+
+            cleanUdpSocket();
+            updateCameraInfo();
+            /* 发送获取单幅图像命令 */
+            serialSendTransStartStop();
+            curTotal = 0;
+            imageRowCnt = 0;
+            while (isrunning)
+            {
+                if(struGsh.nPageSm == SM_IMAGE_CAPTURE_WIDGET){
+                    if( checkUdpSocketStatues(25) < 0 ){
+                        struGsh.bNetContinuousCapture = -1;
+                        break;
+                    }
+                }else{
+                    if( checkUdpSocketStatues(0) < 0 ){
+                        struGsh.bNetContinuousCapture = -1;
+                        break;
+                    }
+                }
+                retNum = recvfrom(sockfd, (char *)&imagePacketBuf[curTotal], sizeof(imagePacketBuf) - curTotal, 0,(struct sockaddr*)&client,&sin_size);
+
+                curTotal += retNum;
+
+                imageRowCnt = curTotal / waveBufSize;
+
+                if(curTotal == waveBufSize * IMAGE_HEIGHT )
+                    break; //一张图片已经读完
+            }
+            imageRowCnt = curTotal/waveBufSize;
+            imageCorrectWaveCnt = imageCheckSum(imageRowCnt);
+
+            if (struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nImageSplice)
+                curPixels = curPixels/2;
+
+            if(imageCorrectWaveCnt > 300)
+            {
+                /*连续采图时，若插了USB设备则直接保存在外设中，不然不保存*/
+                if(g_Runtime().checkUsbExist()){
+                    QString path = g_Runtime().getUsbPath();
+                    if (path != ""){
+                        QString imagePath = path+"IMG";
+                        g_Runtime().dirExist(imagePath);
+                        QString fileName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+                        QString filePath;
+#ifdef Q_OS_UNIX
+                        filePath = QString("%1/%2_%3_%4_%5.bmp").arg(imagePath).arg(struGsh.nLayer).arg(struGsh.nView).arg(struGsh.nUnit).arg(fileName);
+#endif
+                        QImage img(imageDataBuf, curPixels, imageRowCnt, QImage::Format_ARGB32);
+                        saveBMPFile(filePath, curPixels, imageRowCnt);
+                        struGsh.bNetContinuousCapture = 1;
+                    }
+                }else{
+                    printf("img receive complete,%d \n",imageRowCnt);
+                    if(pingPangFlag){
+                        pingPangFlag = false;
+                        if (saveBMPFile("/tmp/ping.bmp", curPixels, imageRowCnt))
+                            emit showContinuousImage("/tmp/ping.bmp");
+                    }else{
+                        pingPangFlag = true;
+                        if (saveBMPFile("/tmp/pang.bmp", curPixels, imageRowCnt))
+                            emit showContinuousImage("/tmp/pang.bmp");
+                    }
+                }
+            }
+            if(struGsh.nPageSm == SM_IMAGE_CAPTURE_WIDGET)
+                myFlow.msleep(50);
+            break;
+        case CAPTURE_IMAGE_SYNC:
+            for(int view = 0; view < MAX_VIEW; view++ )
+            {
+                if (struCnfg.struLayerInfo[struGsh.nLayer].nViewIsUsed[view] == 0)
+                {
+                    continue;
+                }
+                /* 发送同步获取图像命令 */
+                serialSendTransStartStop(0, view);
+                msleep(100);
+            }
+            totalTimeCost = 25;
+            thisTimeCost = 0;
+            for(int view = 0; view < MAX_VIEW; view++ )
+            {
+                totalTimeCost -= thisTimeCost;
+                if (totalTimeCost < 0) totalTimeCost = 2;
+                imageCorrectWaveCnt = 0;
+
+                if (struCnfg.struLayerInfo[struGsh.nLayer].nViewIsUsed[view] == 0)
+                {
+                    continue;
+                }
+                /* 更新图像传感器信息,防止前后相机类型不一样  */
+                dim = struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[view].nSensorDim;
+                curPixels = myFlow.getSensorPixels(struGsh.nLayer, view);
+                waveBufSize = dim * curPixels + 6;
+
+                memset(imagePacketBuf,0,sizeof(imagePacketBuf));
+                memset(imageDataBuf,0,sizeof(imageDataBuf));
+
+                cleanUdpSocket();
+                /* 发送同步获取图像命令 */
+                serialSendTransStartStop(1, view);
+                thisTimeCost = myGetTickCount()/1000;
+
+                retNum = 0;
+                curTotal = 0;
+
+                while (isrunning)
+                {
+                    if( checkUdpSocketStatues(totalTimeCost) < 0 )
+                    {
+                        imageCorrectWaveCnt = imageCheckSum(imageRowCnt);
+                        break;
+                    }
+
+                    retNum = recvfrom(sockfd, (char *)&imagePacketBuf[curTotal], sizeof(imagePacketBuf) - curTotal, 0,(struct sockaddr*)&client,&sin_size);
+
+                    curTotal += retNum;
+
+                    imageRowCnt = curTotal / waveBufSize;
+
+                    if(curTotal == waveBufSize * IMAGE_HEIGHT )
+                        break; //一张图片已经读完
+                }
+                thisTimeCost = myGetTickCount()/1000 - thisTimeCost;
+                if(curTotal != waveBufSize * IMAGE_HEIGHT )
+                    continue; //本张图片异常，读取下一张
+
+                /*********************************图片处理************************************/
+
+                imageCorrectWaveCnt = imageCheckSum(imageRowCnt);
+
+                if(imageCorrectWaveCnt > 300)
+                {
+                    QString fileName = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+                    QString filePath;
+                #ifdef Q_OS_UNIX
+                    filePath = QString("/sdcard/bmp/%1_%2_%3_%4.bmp").arg(struGsh.nLayer).arg(view).arg(struGsh.nUnit).arg(fileName);
+                #else
+                    filePath = QString(qApp->applicationDirPath()+"/%1_%2_%3_%4.png").arg(struGsh.nLayer).arg(view).arg(struGsh.nUnit).arg(fileName);
+                #endif
+                    QImage img(imageDataBuf, curPixels, imageRowCnt, QImage::Format_ARGB32);
+                    if(saveBMPFile(filePath, curPixels, imageRowCnt))
+                    {
+                        if(dim == 4){
+                            for(int i = 0;i < imageRowCnt;i++)
+                            {
+                                for(int j =0;j< curPixels;j++)
+                                {
+                                    imageDataBuf[i*curPixels*4 +j*4+3] = 255;   //缩略图不带有透明度
+                                }
+                            }
+                            img = QImage(imageDataBuf, curPixels, imageRowCnt, QImage::Format_ARGB32);
+                        }
+                        if (!struGsh.nRemoteImageCaptureIsRun){
+                            img = img.scaled(180,120);
+                            img.save(filePath+"_copy","PNG",50);
+                        }
+                        if (view == struGsh.nView )
+                        {
+                            curFilePath = filePath;
+                            curImageCorrectWaveCnt = imageCorrectWaveCnt;
+                        }
+                    }
+                    else{
+                        if (view == struGsh.nView )
+                        {
+                            curFilePath = "";
+                            curImageCorrectWaveCnt = imageCorrectWaveCnt;
+                        }
+                    }
+                }
+                else
+                {
+                    if (view == struGsh.nView )
+                    {
+                        curFilePath = "";
+                        curImageCorrectWaveCnt = imageCorrectWaveCnt;
+                    }
+                }
+            }
+            /* 界面默认显示还是当前视的图片 */
+            emit SignalImageRecvFinished(curImageCorrectWaveCnt,curFilePath);
+            return;
+
+        case CAPTURE_BLOW_COUNTS:
+            retNum = 0;
+            curTotal = 0;
+            memset(blowCountsPacketBuf,0,sizeof(blowCountsPacketBuf));
+
+            cleanUdpSocket();
+            /* 发送获取吹气频率命令 */
+            serialSendTransStartStop();
+            while (isrunning)
+            {
+                if( checkUdpSocketStatues(0) < 0)
+                {
+                    break;
+                }
+
+                retNum = recvfrom(sockfd, (char *)&blowCountsPacketBuf[curTotal], sizeof(blowCountsPacketBuf)-curTotal,0,(struct sockaddr*)&client,&sin_size);
+                curTotal += retNum;
+
+                if (curTotal == sizeof(blowCountsPacketBuf))
+                {
+                    break;
+                }
+            }
+
+            if (curTotal != sizeof(blowCountsPacketBuf))
+            {
+                logger()->info("curTotal:%1",curTotal);
+                isrunning = false;
+                return;
+            }
+
+            if((blowCountsPacketBuf[0] != 0x53)
+                    || (blowCountsPacketBuf[1] != 0xb9)
+                    || (blowCountsPacketBuf[2] != BOARD_TYPE_INTERFACE)
+                    || (blowCountsPacketBuf[3] != 0x00)
+                    || (blowCountsPacketBuf[4] != 0x00)
+                    || (blowCountsPacketBuf[5] != 0x8d )
+                    || (blowCountsPacketBuf[sizeof(blowCountsPacketBuf) - 2] != 0xff))
+            {
+                /* 数据包异常 */
+                logger()->info("wave head error!");
+                return;
+            }
+
+#if 0       //添加CRC校验
+            /* CRC check  */
+            for (int j = 0; j < WAVE_FRAME_SINGLE_LEN-5; j++) {
+                sCrcData[j] = (char)(struGsh.sRgbRow[j+2]);
+            }
+
+            nCrcItt = mySerial.crcFpga(sCrcData, WAVE_FRAME_SINGLE_LEN-5);
+            nCrcItt = nCrcItt&0x0000ffff;
+
+            if(nCrcItt != (struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-3]*256+struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-2]))
+            {
+                qDebug("nCrcItt is %x, crc data is %x %x %x", nCrcItt, struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-3]
+                        ,struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-2], struGsh.sRgbRow[WAVE_FRAME_SINGLE_LEN-1]);
+
+//                emit SignalSocketFailed();
+                memset (struGsh.sRgbRow,0,WAVE_FRAME_SINGLE_LEN);
+                memset(waveDataBuf,0,WAVE_FRAME_DATA_LEN*(SENSOR_MAX_PIXELS/WAVE_FRAME_DATA_LEN)*SENSOR_MAX_DIM);
+                rowPacketCnt = 0;
+                continue;
+            }
+#endif
+
+            for(int i = 0; i< struCnfg.nChuteTotal;i++){
+                for(int j = 0;j< struCnfg.struLayerInfo[struGsh.nLayer].nEjectorsPerChute;j++){
+                    blowCountsTempDataBuf[i*struCnfg.struLayerInfo[struGsh.nLayer].nEjectorsPerChute+j] += (blowCountsPacketBuf[6+i*MAX_EJECTOR*4+j*4] <<24) + \
+                            (blowCountsPacketBuf[7+i*MAX_EJECTOR*4+j*4] <<16) +\
+                            (blowCountsPacketBuf[8+i*MAX_EJECTOR*4+j*4] <<8 ) +\
+                            (blowCountsPacketBuf[9+i*MAX_EJECTOR*4+j*4]);
+
+                }
+            }
+
+            emit SignalBlowCountsRecvFinished();
+
+            if (struGsh.nRemoteImageCaptureIsRun) return;
+
+            break;
+        case CAPTURE_SUSPEND:
+            sleep(1);
+            break;
+        }
+    }//end whole recv loop
+}
+
+
+/****************************网络采图线程类*******************************/
+MyNetCptureThread::MyNetCptureThread(QThread *parent) : QThread(parent)
+{
+
+}
+void MyNetCptureThread::udpSendTransStartStop()
+{
+    int board;  // 0x00表示当前 视的所有相机板
+    int nInt=0, nUnitAddr;
+    char data[SEND_PACKET_DATA_SIZE];
+
+    memset(data, 0, SEND_PACKET_DATA_SIZE);
+
+    data[0] = 1;
+    data[1] = struGsh.nImageCapTrigValue/256;
+    data[2] = struGsh.nImageCapTrigValue%256;
+
+    board = struCnfg.struLayerInfo[struGsh.nLayer].nViewBoardType[struGsh.nView];
+    nUnitAddr = struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nViewUnitId[struGsh.nUnit];
+
+    udpSendCmdData(CMD_CAMERA_WAVE_CAPTURE, nInt, board, nUnitAddr, data, 1);
+
+}
+void MyNetCptureThread::udpSendCmdData(int nCmd, char intAddr, char boardType, char boardAddr, char *data, int nCount)
+{
+    char sPacket[SEND_PACKET_SIZE+7];
+    char sCrcData[20];
+    unsigned int nCrcItt=0;
+    int i, ret = 0;
+
+    memset(sPacket, 0, 25);
+
+    sPacket[0]  = 0x53;
+    sPacket[1]  = 0xb9;
+//    sPacket[2]   = (intAddr<<6)|(boardType%64);    // 接口板地址2bit|电路板型号6bit
+    sPacket[2]   = boardType%64;    // 接口板地址2bit|电路板型号6bit，目前只支持一个接口板
+    sPacket[3]   = (boardAddr == BOARD_TYPE_ALL_IN_CHAIN) ? 0 : boardAddr+1;                       // 电路板地址
+    sPacket[4]   = nCmd/256;
+    sPacket[5]   = nCmd%256;
+
+    for(i = 0; i < 16; i++)
+    {
+        sPacket[6+i]   = data[i];
+    }
+
+    for (i = 0; i < 20; i++) {
+        sCrcData[i] = sPacket[i+2];
+    }
+
+    nCrcItt = mySerial.crcFpga(sCrcData, 20);
+
+    sPacket[22] = nCrcItt/256;
+    sPacket[23] = nCrcItt%256;
+    sPacket[24] = 0xff;
+
+    char queData[SEND_PACKET_SIZE];
+    memcpy(queData, sPacket, SEND_PACKET_SIZE);
+
+    myFlow.myNetWork->udpSendTo(queData,SEND_PACKET_SIZE);
+}
+
+void MyNetCptureThread::run()
+{
+    while(1){
+        if(struGsh.bSortStart){ //只在色选时采图
+            if(struGsh.nPageSm == SM_BACKGROUND_SET_WIDGET
+                    || struGsh.nPageSm == SM_IMAGE_CAPTURE_WIDGET
+                    || struGsh.nPageSm == SM_CAMERA_SIGNAL_WIDGET
+                    || struGsh.nPageSm == SM_DIVIDE_PIXEL_WIDGET
+                    || struGsh.nPageSm == SM_IR_BAD_POINT_WIDGET
+                    || struGsh.nPageSm == SM_NIR_DOT_CORRECTIVE_LIST_WIDGET
+                    || struGsh.nPageSm == SM_UPDATE_FPGA_WDIGET)
+            {
+                struGsh.bNetContinuousCapture = 0;
+                sleep(1);
+            }
+            else
+            {
+                struGsh.bNetContinuousCapture = 0;
+                myFlow.myNetWork->setUdpRecvType(CAPTURE_IAMGE_CONTINUOUS);
+                myFlow.myNetWork->udpStart();
+                udpSendTransStartStop();
+                msleep(300);
+                if(struGsh.bNetContinuousCapture) continue;
+                msleep(200); continue;
+            }
+        }
+        else{//关闭色选
+            if(struGsh.nPageSm == SM_BACKGROUND_SET_WIDGET
+                    || struGsh.nPageSm == SM_IMAGE_CAPTURE_WIDGET
+                    || struGsh.nPageSm == SM_CAMERA_SIGNAL_WIDGET
+                    || struGsh.nPageSm == SM_DIVIDE_PIXEL_WIDGET
+                    || struGsh.nPageSm == SM_IR_BAD_POINT_WIDGET
+                    || struGsh.nPageSm == SM_NIR_DOT_CORRECTIVE_LIST_WIDGET
+                    || struGsh.nPageSm == SM_UPDATE_FPGA_WDIGET)
+            {
+                sleep(1);
+            }
+            else
+            {
+                myFlow.myNetWork->udpStop();
+                sleep(1);
+            }
+        }
+    }
+}
+
+
+
+
+NetWork::NetWork(QWidget *parent) : QWidget(parent)
+{
+    capType = CAPTURE_SINGLE_WAVE;
+    //默认读取波形
+
+    udpthread = new MyNetWorkThread();
+    setUdpRecvType(capType);
+
+    connect(udpthread,SIGNAL(SignalSocketFailed()),\
+            this,SLOT(doProcessDealSocketFailed()));
+}
+
+void NetWork::udpBind(QString ip,QString port)
+{
+    char* netip;
+    int netport;
+    FILE *fp;
+    int j;
+    int valueTemp;
+
+    IP = ip;
+    Port = port;
+    netport = port.toInt();
+    netip = (char *)ip.toLocal8Bit().constData();
+
+#ifdef Q_OS_WIN32
+    WSADATA data;
+    if (WSAStartup (MAKEWORD(1, 1), &data) != 0)
+    {
+        fputs ("Could not initialise Winsock.\n", stderr);
+        exit (1);
+    }
+#endif
+
+    printf("netip is %s\n",netip);
+    if((host = gethostbyname("162.254.129.100")) == NULL) {
+
+        printf ("Usage: get name error\n");
+        return;
+    }
+    /* Get the Socket file descriptor */
+    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
+        printf("ERROR: Failed to obtain Socket Descriptor!\n");
+        return;
+    } else {
+        printf ("OK: Obtain Socket Despcritor sucessfully.\n");
+    }
+#ifdef Q_OS_UNIX
+    system("echo 8388608 > /proc/sys/net/core/rmem_default");
+    system("echo 33554432 > /proc/sys/net/core/rmem_max");
+#endif
+
+    valueTemp = 1;
+    //设置允许地址重用
+#ifdef Q_OS_UNIX
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &valueTemp, sizeof(valueTemp));
+#else
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&valueTemp, sizeof(valueTemp));
+#endif
+
+    valueTemp= 8 * 1024 * 1024;
+    //设置接收缓冲区
+#ifdef Q_OS_UNIX
+    setsockopt(sockfd,SOL_SOCKET, SO_RCVBUF,  &valueTemp, sizeof(valueTemp));
+#else
+    setsockopt(sockfd,SOL_SOCKET, SO_RCVBUF,  (const char*)&valueTemp, sizeof(valueTemp));
+#endif
+
+    memset(&addr_local, 0, sizeof(addr_local));
+    addr_local.sin_family = AF_INET;
+    addr_local.sin_port = htons(8081);
+    addr_local.sin_addr.s_addr = htonl(INADDR_ANY);
+
+
+    if(bind(sockfd, (struct sockaddr*)&addr_local, sizeof(struct sockaddr)) == -1 ){
+        printf ("ERROR: Failed to bind Port %d.\n",netport);
+        return;
+    } else {
+        printf("OK: Bind the Port %d sucessfully.\n",netport);
+     }
+
+    memset(&addr_remote, 0, sizeof(addr_remote));
+    addr_remote.sin_family = AF_INET;
+#ifdef Q_OS_UNIX
+    inet_pton(AF_INET, "162.254.129.10", &addr_remote.sin_addr); 	// Net Address
+#endif
+    //    addr_remote.sin_addr.s_addr = htonl(INADDR_BROADCAST);    //UDP 广播包 远端端口
+    addr_remote.sin_port = htons(5000);
+}
+
+/*
+ *  udpstop未关闭套接字清空内存，而是通知fpga停止发送数据，实际fpga会继续发送直到
+ *  当前波形发送完毕，该数据会存在udp的接收缓存中，直到下一次udpstart读取此段数据，
+ *  但该脏数据会被丢弃掉（此种情况未考虑数据包乱序情况！！）
+ */
+void NetWork::udpStart()
+{
+    qDebug()<<"-----------Start-----------";
+    udpthread->setSocket(sockfd);
+
+    udpthread->cleanUdpSocket();
+
+    qDebug("struCnfg.struLayerInfo[%d].stuViewInfo[%d].nSensorDim is %d", struGsh.nLayer, struGsh.nView, struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nSensorDim);
+    qDebug("struCnfg.struLayerInfo[%d].stuViewInfo[%d].nSensorPixel is %d", struGsh.nLayer, struGsh.nView, struCnfg.struLayerInfo[struGsh.nLayer].stuViewInfo[struGsh.nView].nSensorPixel);
+
+    if (udpthread->isrunning) return; //远程已经开启了采图线程
+    udpthread->isrunning = true;
+    udpthread->start();
+}
+
+/*
+ *  为防止波形切换到图像界面时，套接字缓存垃圾数据导致图像采集异常，在退出界面时，需要
+ *  调用terminate()，否则线程会卡在recvfrom()无法安全停止.
+ */
+void NetWork::udpStop()
+{
+    qDebug()<<"-----------Terminate-----------";
+    udpthread->isrunning = false;
+}
+
+/*
+ * 网络重连
+ */
+void NetWork::udpRestart()
+{
+#ifdef Q_OS_UNIX
+    ::close(sockfd);
+#else
+    closesocket(sockfd);
+#endif
+    udpBind(IP,Port);
+    udpthread->setSocket(sockfd);
+    myFlow.msleep(100);
+}
+
+int NetWork::udpSendTo(char *buf, int len)
+{
+    socklen_t addrlen;
+    addrlen=sizeof(addr_remote);
+
+    return sendto(sockfd,buf,len,0,(struct sockaddr *)&addr_remote,addrlen);
+}
+
+void NetWork::setUdpRecvType(int type,int layer,int view,int unit)
+{
+    capType = type;
+    udpthread->setRecvType(type,layer,view,unit);
+}
+
+void NetWork::setUdpRecvTimeOut(int t_s, int t_ms)
+{
+#if 0
+#ifdef Q_OS_UNIX
+    struct timeval time_out={t_s, t_ms * 1000};
+//    struct timeval time_out={timeout,10000};//10s
+#else
+    int time_out = t_s * 1000 + t_ms;
+#endif
+    //设置接收超时时间
+    setsockopt(sockfd,SOL_SOCKET,SO_RCVTIMEO,(const char*)&time_out,sizeof(time_out));
+#endif
+
+}
+
+void NetWork::doProcessDealSocketFailed()
+{
+    qDebug()<<"SocketFailed";
+    for(int i = 0; i < SENSOR_MAX_PIXELS; i++)
+    {
+        struGsh.sRowRed[i]      = 0;
+        struGsh.sRowGreen[i]    = 0;
+        struGsh.sRowBlue[i]     = 0;
+        struGsh.sRowInf[i]      = 0;
+    }
+
+    udpRestart();
+
+}

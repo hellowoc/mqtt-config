@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# qt_make
+#
+# Build release file for Qt
+#
+
+# toolschain path
+PATH=/opt/i686-arago-linux/usr/bin:$PATH
+export PATH
+
+# debug && clean
+case "$1" in
+	"clean")
+		find . -name Makefile* -print | xargs rm -rf
+		find . -name moc_* -print | xargs rm -rf
+		find . -name *.o -print | xargs rm -rf
+		find . -name object_script.* -print | xargs rm -rf
+		find . -name *.pro.user -print | xargs rm -rf
+#		make distclean;
+		exit 1;;
+	"")
+		MYMODEOPT="debug";
+		break;;
+	"debug")
+		MYMODEOPT="debug";
+		break;;
+	"release")
+		MYMODEOPT="release";
+		break;;
+	*)
+		echo "";
+		echo "****************************************";
+		echo "";
+		echo "wrong parameters";
+		echo "$1 must be debug(default) or clean or release";
+		echo "";
+		echo "****************************************";
+
+		exit 1;;
+esac
+
+# build
+/opt/Qt4.8.4-AM335X/bin/qmake 
+#make $MYMODEOPT 
+make 
+
+# strip executable file
+#/opt/i686-arago-linux/usr/bin/arm-linux-gnueabihf-strip ZKSort/dist/ZKSort
+
+exit 0

@@ -1,0 +1,10 @@
+程序启动
+2026-02-05 14:30:26.014 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-05 14:30:26.014 [Mainthread] INFO MyLanguage - 1
+2026-02-05 14:30:26.078 [Mainthread] INFO ZKSort - power on: 242times
+2026-02-05 14:30:26.078 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序启动
+2026-02-05 14:32:07.879 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-05 14:32:07.879 [Mainthread] INFO MyLanguage - 1
+2026-02-05 14:32:07.906 [Mainthread] INFO ZKSort - power on: 243times
+2026-02-05 14:32:07.906 [Mainthread] INFO ZKSort - NO CALIBFILE

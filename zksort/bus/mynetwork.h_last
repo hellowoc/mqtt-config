@@ -1,0 +1,223 @@
+#ifndef MYNETWORK_H
+#define MYNETWORK_H
+
+#include <QWidget>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <sys/types.h>
+
+#ifdef Q_OS_UNIX
+#include <sys/socket.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#else
+#include <winsock.h>
+#include <ws2tcpip.h>
+#endif
+
+#include "globalparams.h"
+#include "globalflow.h"
+#include "myqextserialport.h"
+#include "logger.h"
+
+#define CAPTURE_SINGLE_WAVE     0       //单个波形
+#define CAPTURE_IMAGE           1       //正常图像400行
+#define CAPTURE_IMAGE_SYNC      2      //
+#define CAPTURE_BLOW_COUNTS     3       //吹气频率
+#define CAPTURE_BACKGROUND_WAVE 4       //背景波形采集
+#define CAPTURE_IAMGE_CONTINUOUS 5      //连续采图
+#define CAPTURE_SUSPEND          6      //线程挂起
+
+#ifdef Q_OS_UNIX
+#pragma pack(2)
+//下面两个结构是位图的结构
+typedef struct BITMAPFILEHEADER
+{
+    u_int16_t bfType;
+    u_int32_t bfSize;
+    u_int16_t bfReserved1;
+    u_int16_t bfReserved2;
+    u_int32_t bfOffBits;
+}BITMAPFILEHEADER;
+
+typedef struct BITMAPINFOHEADER
+{
+    u_int32_t biSize;
+    u_int32_t biWidth;
+    u_int32_t biHeight;
+    u_int16_t biPlanes;
+    u_int16_t biBitCount;
+    u_int32_t biCompression;
+    u_int32_t biSizeImage;
+    u_int32_t biXPelsPerMeter;
+    u_int32_t biYPelsPerMeter;
+    u_int32_t biClrUsed;
+    u_int32_t biClrImportant;
+}BITMAPINFOHEADER;
+#pragma pack(4)
+#endif
+//void showBmpHead(BITMAPFILEHEADER &pBmpHead){
+//    cout<<"位图文件头:"<<endl;
+//    cout<<"文件头类型:"<<pBmpHead.bfType<<endl;
+//    cout<<"文件大小:"<<pBmpHead.bfSize<<endl;
+//    cout<<"保留字_1:"<<pBmpHead.bfReserved1<<endl;
+//    cout<<"保留字_2:"<<pBmpHead.bfReserved2<<endl;
+//    cout<<"实际位图数据的偏移字节数:"<<pBmpHead.bfOffBits<<endl<<endl;
+//}
+
+//void showBmpInforHead(BITMAPINFODEADER &pBmpInforHead){
+//    cout<<"位图信息头:"<<endl;
+//    cout<<"结构体的长度:"<<pBmpInforHead.biSize<<endl;
+//    cout<<"位图宽:"<<pBmpInforHead.biWidth<<endl;
+//    cout<<"位图高:"<<pBmpInforHead.biHeight<<endl;
+//    cout<<"biPlanes平面数:"<<pBmpInforHead.biPlanes<<endl;
+//    cout<<"biBitCount采用颜色位数:"<<pBmpInforHead.biBitCount<<endl;
+//    cout<<"压缩方式:"<<pBmpInforHead.biCompression<<endl;
+//    cout<<"biSizeImage实际位图数据占用的字节数:"<<pBmpInforHead.biSizeImage<<endl;
+//    cout<<"X方向分辨率:"<<pBmpInforHead.biXPelsPerMeter<<endl;
+//    cout<<"Y方向分辨率:"<<pBmpInforHead.biYPelsPerMeter<<endl;
+//    cout<<"使用的颜色数:"<<pBmpInforHead.biClrUsed<<endl;
+//    cout<<"重要颜色数:"<<pBmpInforHead.biClrImportant<<endl;
+//}
+
+/*****
+ *
+ *     读取波形及图像线程
+ *
+ ********************************/
+class MyNetWorkThread : public QThread
+{
+    Q_OBJECT
+    LOG4QT_DECLARE_QCLASS_LOGGER
+
+public:
+    explicit MyNetWorkThread(QThread *parent = 0);
+    void setSocket(int fd);
+    void setRecvType(int type,int layer=0,int view=0,int unit=0);
+    void updateCameraInfo();
+    void waveDataPacketed(bool needFocus);
+    void imageDataPacketed(int correctHeight);
+    int  saveBMPFile(QString path,int w,int h);
+    int  imageCheckSum(int packCnt);
+    int  myGetTickCount();
+    int  checkUdpSocketStatues(int seconds);
+    void serialSendTransStartStop(int flag = 0,int view = 0);
+    void cleanUdpSocket(int seconds = 0);
+
+    bool isrunning;
+    uchar blowCountsPacketBuf[6+4096+3+1];
+    int blowCountsTempDataBuf[12*80];
+protected:
+    void run();
+
+signals:
+    void SignalWaveRecvFinished();
+    void SignalImageRecvFinished(int correctWaveLines,QString path);
+    void showContinuousImage(QString path);
+    void SignalSocketFailed();
+    void SignalBlowCountsRecvFinished();
+
+private:
+#ifdef Q_OS_UNIX
+    int sockfd;
+#else
+    SOCKET sockfd;
+#endif
+    int curTotal;       // 当前累计接收的波形或图像字节数
+    int retNum;         // 每次recv或recvfrom的返回的实际读取字节数
+    int currenttype;
+    int mlayer;
+    int mview;
+    int munit;
+    int m_nNumOfImg;
+    struct sockaddr_in client;
+
+    int dim;                // 传感器维度
+    int curPixels;          // 传感器分辨率
+    int rowPacketTotal;     // 传感器单色每行 包数
+    int imageRawBufSize;    // 接收的图像缓冲区大小，单位：字节
+    int waveBufSize;        // 接收的一行波形缓冲区大小，单位：字节
+
+    uchar dirtydatabuf[WAVE_FRAME_SINGLE_LEN*MAX_WAVE_DEVIDE*MAX_WAVE_DIM*IMAGE_HEIGHT];
+    uchar wavePacketBuf[SENSOR_MAX_PIXELS*SENSOR_MAX_DIM+6];
+    uchar waveDataBuf[WAVE_FRAME_DATA_LEN*MAX_WAVE_DEVIDE*MAX_WAVE_DIM];
+    uchar imagePacketBuf[WAVE_FRAME_SINGLE_LEN*MAX_WAVE_DEVIDE*MAX_WAVE_DIM*IMAGE_HEIGHT];
+    uchar imageDataBuf[WAVE_FRAME_DATA_LEN*MAX_WAVE_DEVIDE*MAX_WAVE_DIM*IMAGE_HEIGHT];
+
+};
+
+/*****
+ *
+ *     网络采图线程
+ *
+ ********************************/
+class MyNetCptureThread : public QThread
+{
+    Q_OBJECT
+    LOG4QT_DECLARE_QCLASS_LOGGER
+
+public:
+    explicit MyNetCptureThread(QThread *parent = 0);
+    void udpSendTransStartStop();
+    void udpSendCmdData(int nCmd, char intAddr, char boardType,  char boardAddr, char *data, int nCount);
+
+protected:
+    void run();
+
+};
+
+
+/*****
+ *
+ *     网络接口类
+ *
+ *****************************/
+class NetWork : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit NetWork(QWidget *parent = 0);
+
+    void udpBind(QString ip="162.254.129.100",QString port="8081");         //绑定本地IP、端口
+    void setUdpRecvType(int type,int layer=0,int view=0,int unit=0);                                          //设置接收类型
+    void setUdpRecvTimeOut(int t_s,int t_ms);                               //设置接收超时时间
+    void udpStart();
+    void udpStop();
+//    void serialSendTransStartStop(int flag);                              // 1:开始上传， 0：停止上传
+    void udpRestart();
+
+    int udpSendTo(char *buf, int len);                                     //发送网络数据包
+
+    MyNetWorkThread *udpthread;
+
+public slots:
+    void doProcessDealSocketFailed();
+
+signals:
+
+private:
+    QString IP;
+    QString Port;
+
+#ifdef Q_OS_UNIX
+    int sockfd;
+#else
+    SOCKET sockfd;
+#endif
+    struct sockaddr_in addr_local;
+    struct sockaddr_in addr_remote;
+    struct hostent *host;
+
+    int capType;
+//    MyNetWorkThread *udpthread;
+
+};
+
+extern MyNetCptureThread *myNetCpture;
+
+#endif // MYNETWORK_H

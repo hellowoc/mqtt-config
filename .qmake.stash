@@ -1,0 +1,25 @@
+QMAKE_CXX.QT_COMPILER_STDCXX = 201703L
+QMAKE_CXX.QMAKE_GCC_MAJOR_VERSION = 12
+QMAKE_CXX.QMAKE_GCC_MINOR_VERSION = 3
+QMAKE_CXX.QMAKE_GCC_PATCH_VERSION = 1
+QMAKE_CXX.COMPILER_MACROS = \
+    QT_COMPILER_STDCXX \
+    QMAKE_GCC_MAJOR_VERSION \
+    QMAKE_GCC_MINOR_VERSION \
+    QMAKE_GCC_PATCH_VERSION
+QMAKE_CXX.INCDIRS = \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/include/c++/12.3.1 \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/include/c++/12.3.1/aarch64-none-linux-gnu \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/include/c++/12.3.1/backward \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/lib/gcc/aarch64-none-linux-gnu/12.3.1/include \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/lib/gcc/aarch64-none-linux-gnu/12.3.1/include-fixed \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/include \
+    /home/jie/mywork/zlg-rk3568-sdk/debian/binary/usr/local/include \
+    /home/jie/mywork/zlg-rk3568-sdk/debian/binary/usr/include
+QMAKE_CXX.LIBDIRS = \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/lib/gcc/aarch64-none-linux-gnu/12.3.1 \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/lib/gcc \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/lib64 \
+    /home/jie/prebuilts-gcc-linux-x86-aarch64/gcc12/aarch64-none-linux-gnu/lib \
+    /home/jie/mywork/zlg-rk3568-sdk/debian/binary/lib \
+    /home/jie/mywork/zlg-rk3568-sdk/debian/binary/usr/lib

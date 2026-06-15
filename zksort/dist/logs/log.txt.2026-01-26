@@ -1,0 +1,25 @@
+程序启动
+2026-01-26 08:14:28.778 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-26 08:14:28.778 [Mainthread] INFO MyLanguage - 1
+2026-01-26 08:14:28.842 [Mainthread] INFO ZKSort - power on: 237times
+2026-01-26 08:14:28.842 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-01-26 08:14:58.224 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-26 08:14:59.284 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-01-26 08:19:35.720 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-26 08:19:36.563 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-01-26 08:20:21.368 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-26 08:20:21.877 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+程序结束
+程序启动
+2026-01-26 08:20:44.720 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-26 08:20:44.720 [Mainthread] INFO MyLanguage - 1
+2026-01-26 08:20:44.750 [Mainthread] INFO ZKSort - power on: 238times
+2026-01-26 08:20:44.750 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-01-26 08:21:11.144 [Mainthread] INFO EngineerWidget - enter high level page
+2026-01-26 08:21:11.699 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-01-26 08:22:41.842 [Mainthread] INFO AutoCtrlBoardIPSetWidget - Query Ip and Port
+2026-01-26 09:10:10.202 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-01-26 09:10:15.502 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-26 09:10:15.968 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-01-26 09:10:18.183 [Mainthread] INFO TcpServerObj - TCP connect failed
+程序结束

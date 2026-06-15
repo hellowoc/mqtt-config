@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LanguageSetWidget</class>
+ <widget class="QWidget" name="LanguageSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="4" column="2">
+    <widget class="QPushButton" name="persiaBtn">
+     <property name="text">
+      <string notr="true">فارسی</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="7">
+    <widget class="QPushButton" name="koreanBtn">
+     <property name="text">
+      <string notr="true">한국어</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPushButton" name="spanBtn">
+     <property name="text">
+      <string notr="true">Espanol</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="thaiLbl">
+     <property name="text">
+      <string notr="true">泰语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QLabel" name="persiaLbl">
+     <property name="text">
+      <string notr="true">波斯语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="PortugueseBtn">
+     <property name="text">
+      <string notr="true">Português</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="chinese_zhBtn">
+     <property name="text">
+      <string notr="true">中文</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
+    <widget class="QPushButton" name="italyBtn">
+     <property name="text">
+      <string notr="true">lingua italiana</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="7">
+    <widget class="QLabel" name="burmaLbl">
+     <property name="text">
+      <string notr="true">缅甸语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QPushButton" name="arabicBtn">
+     <property name="text">
+      <string notr="true">عربي</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="japanLbl">
+     <property name="text">
+      <string notr="true">日语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="7">
+    <widget class="QPushButton" name="polandBtn">
+     <property name="text">
+      <string notr="true">Polski</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="7">
+    <widget class="QLabel" name="polandLbl">
+     <property name="text">
+      <string notr="true">波兰语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="chinese_zhLbl">
+     <property name="text">
+      <string notr="true">中文</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="vietBtn">
+     <property name="text">
+      <string notr="true">Tiếng việt</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="4">
+    <widget class="QLabel" name="italyLbl">
+     <property name="text">
+      <string notr="true">意大利语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QPushButton" name="japanBtn">
+     <property name="text">
+      <string notr="true">日本語で</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="turkeyLbl">
+     <property name="text">
+      <string notr="true">土耳其语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="thaiBtn">
+     <property name="text">
+      <string notr="true">ไทย</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4">
+    <widget class="QLabel" name="arabicLbl">
+     <property name="text">
+      <string notr="true">阿拉伯语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="spanLbl">
+     <property name="text">
+      <string notr="true">西班牙语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="turkeyBtn">
+     <property name="text">
+      <string notr="true">Türk dili</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="vieLbl">
+     <property name="text">
+      <string notr="true">越南语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="7">
+    <widget class="QLabel" name="koreanLbl">
+     <property name="text">
+      <string notr="true">韩语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QPushButton" name="russianBtn">
+     <property name="text">
+      <string notr="true">русский</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QLabel" name="russianLbl">
+     <property name="text">
+      <string notr="true">俄罗斯语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QLabel" name="PortugueseLbl">
+     <property name="text">
+      <string notr="true">葡萄牙语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="7">
+    <widget class="QPushButton" name="burmaBtn">
+     <property name="text">
+      <string notr="true">burma</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QPushButton" name="EnglishBtn">
+     <property name="text">
+      <string notr="true">English</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLabel" name="EnglishLbl">
+     <property name="text">
+      <string notr="true">英语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="chtBtn">
+     <property name="text">
+      <string notr="true">中文（繁体）</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="chtLbl">
+     <property name="text">
+      <string notr="true">中文(繁体)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QPushButton" name="indonesiaBtn">
+     <property name="text">
+      <string notr="true">indonesia</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="8">
+    <widget class="QLabel" name="indonesiaLbl">
+     <property name="text">
+      <string notr="true">印尼语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="8">
+    <widget class="QPushButton" name="frenchBtn">
+     <property name="text">
+      <string notr="true">Le français</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="8">
+    <widget class="QLabel" name="frenchLbl">
+     <property name="text">
+      <string notr="true">法语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QPushButton" name="bulgarianBtn">
+     <property name="text">
+      <string notr="true">български</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="bulgarianLbl">
+     <property name="text">
+      <string notr="true">保加利亚语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="8">
+    <widget class="QPushButton" name="germanBtn">
+     <property name="text">
+      <string notr="true">Deutsch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="8">
+    <widget class="QLabel" name="germanLbl">
+     <property name="text">
+      <string notr="true">德语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="8">
+    <widget class="QPushButton" name="cambodiaBtn">
+     <property name="text">
+      <string notr="true">ជនជាតិខ្មែរ</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="8">
+    <widget class="QLabel" name="cambodiaLbl">
+     <property name="text">
+      <string notr="true">柬埔寨语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="7">
+    <widget class="QPushButton" name="uighurBtn">
+     <property name="text">
+      <string notr="true">ئۇيغۇر</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="7">
+    <widget class="QLabel" name="uighurLbl">
+     <property name="text">
+      <string notr="true">维吾尔族语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="4">
+    <widget class="QPushButton" name="ukraineBtn">
+     <property name="text">
+      <string notr="true">ukraine</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="4">
+    <widget class="QLabel" name="ukraineLbl">
+     <property name="text">
+      <string notr="true">乌克兰语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="2">
+    <widget class="QPushButton" name="greekBtn">
+     <property name="text">
+      <string notr="true">Ελληνικά</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="2">
+    <widget class="QLabel" name="greekLbl">
+     <property name="text">
+      <string notr="true">希腊语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="8">
+    <widget class="QPushButton" name="HindiBtn">
+     <property name="text">
+      <string notr="true">हिंदीName</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="8">
+    <widget class="QLabel" name="HindiLbl">
+     <property name="text">
+      <string notr="true">印地语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QPushButton" name="swedishBtn">
+     <property name="text">
+      <string notr="true">Svenska</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="swedishLbl">
+     <property name="text">
+      <string notr="true">瑞典语</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,72 @@
+程序启动
+2026-02-12 08:20:47.164 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 08:20:47.164 [Mainthread] INFO MyLanguage - 1
+2026-02-12 08:20:47.230 [Mainthread] INFO ZKSort - power on: 244times
+2026-02-12 08:20:47.230 [Mainthread] INFO ZKSort - NO CALIBFILE
+程序启动
+2026-02-12 08:23:54.102 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 08:23:54.102 [Mainthread] INFO MyLanguage - 1
+2026-02-12 08:23:54.151 [Mainthread] INFO ZKSort - power on: 245times
+2026-02-12 08:23:54.151 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-02-12 08:24:33.570 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 08:24:35.823 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-02-12 08:24:37.082 [Mainthread] INFO MachineFunction - dp machine :1
+2026-02-12 08:24:38.894 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 08:24:40.817 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+程序启动
+2026-02-12 09:06:28.399 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 09:06:28.399 [Mainthread] INFO MyLanguage - 1
+2026-02-12 09:06:28.428 [Mainthread] INFO ZKSort - power on: 246times
+2026-02-12 09:06:28.429 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-02-12 09:07:05.355 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 09:07:07.297 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-02-12 09:07:08.148 [Mainthread] INFO MachineFunction - dp machine :1
+2026-02-12 09:07:09.895 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 09:07:12.268 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+2026-02-12 09:08:04.895 [Mainthread] INFO Runtime - save json begin
+2026-02-12 09:08:05.164 [Mainthread] INFO GlobalFlow - save jsonprofile
+2026-02-12 09:08:05.685 [Mainthread] INFO GlobalFlow - save json
+2026-02-12 09:08:05.925 [Mainthread] INFO Runtime - save json end ok
+程序结束
+程序启动
+2026-02-12 09:10:07.763 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-02-12 09:10:08.255 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 09:10:08.255 [Mainthread] INFO MyLanguage - 1
+2026-02-12 09:10:08.284 [Mainthread] INFO ZKSort - power on: 247times
+2026-02-12 09:10:08.284 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-02-12 09:10:29.916 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 09:10:30.762 [Mainthread] INFO FactorySetWidget - enter setting machine page
+2026-02-12 09:10:40.648 [Mainthread] INFO MachineSetWidget - apply new machine setting
+2026-02-12 09:10:40.894 [Mainthread] INFO GlobalFlow - save json
+2026-02-12 09:10:41.401 [Mainthread] INFO GlobalFlow - save jsonprofile
+2026-02-12 09:11:13.401 [Mainthread] INFO GlobalFlow - save json
+2026-02-12 09:11:23.529 [Mainthread] INFO FactorySetWidget - enter misc function of machine page
+2026-02-12 09:11:25.689 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 09:11:26.388 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+2026-02-12 09:11:46.068 [Mainthread] INFO IpcSetWidget - enter ipc camera setting page
+2026-02-12 09:11:50.316 [Mainthread] INFO IpcSetWidget - enter color restore page
+2026-02-12 09:12:41.044 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 09:12:41.849 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 09:12:44.109 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+程序启动
+2026-02-12 09:14:36.837 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-02-12 09:14:37.329 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 09:14:37.330 [Mainthread] INFO MyLanguage - 1
+2026-02-12 09:14:37.364 [Mainthread] INFO ZKSort - power on: 248times
+2026-02-12 09:14:37.364 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-02-12 09:15:00.180 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 09:15:00.832 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 09:15:01.660 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+程序启动
+2026-02-12 09:15:34.323 [Mainthread] INFO GlobalFlow - backup cnffile
+2026-02-12 09:15:34.800 [Mainthread] INFO TcpServerObj - TCP connect failed
+2026-02-12 09:15:34.800 [Mainthread] INFO MyLanguage - 1
+2026-02-12 09:15:34.841 [Mainthread] INFO ZKSort - power on: 249times
+2026-02-12 09:15:34.841 [Mainthread] INFO ZKSort - NO CALIBFILE
+2026-02-12 09:18:03.356 [Mainthread] INFO EngineerWidget - enter high level page
+2026-02-12 09:18:04.145 [Mainthread] INFO FactorySetWidget - enter ipc setting page
+2026-02-12 09:18:06.324 [Mainthread] INFO IpcSetWidget - enter ipc camera setting page
+2026-02-12 09:18:11.613 [Mainthread] INFO IpcSetWidget - enter color restore page
+2026-02-12 09:18:13.861 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page
+2026-02-12 09:19:04.156 [Mainthread] INFO IpcSetWidget - enter ipc camera setting page
+2026-02-12 09:20:04.094 [Mainthread] INFO IpcSetWidget - enter ipc alarm control page

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ModeSetWidget</class>
+ <widget class="QWidget" name="ModeSetWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="identifyBtn">
+        <property name="text">
+         <string notr="true">识别</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ejectBtn">
+        <property name="text">
+         <string notr="true">剔除</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="lightBtn">
+        <property name="text">
+         <string notr="true">灯光</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="backgroundBtn">
+        <property name="text">
+         <string notr="true">背景</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>3</number>
+     </property>
+     <widget class="IdentifyWidget" name="page">
+      <layout class="QGridLayout" name="gridLayout_2"/>
+     </widget>
+     <widget class="EjectWidget" name="page_2"/>
+     <widget class="LightSetWidget" name="page_3"/>
+     <widget class="BackGroundSetWidget" name="page_4"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IdentifyWidget</class>
+   <extends>QWidget</extends>
+   <header>mySortWidget/identifywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EjectWidget</class>
+   <extends>QWidget</extends>
+   <header>mySortWidget/ejectwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BackGroundSetWidget</class>
+   <extends>QWidget</extends>
+   <header>wavePage/BackGroundSetWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LightSetWidget</class>
+   <extends>QWidget</extends>
+   <header>mySortWidget/lightsetwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

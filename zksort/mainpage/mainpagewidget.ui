@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainPageWidget</class>
+ <widget class="QWidget" name="MainPageWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>648</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <widget class="myToolButton" name="shutDownBtn">
+   <property name="geometry">
+    <rect>
+     <x>701</x>
+     <y>460</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="valveBtn">
+   <property name="geometry">
+    <rect>
+     <x>701</x>
+     <y>220</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="setBtn">
+   <property name="geometry">
+    <rect>
+     <x>701</x>
+     <y>340</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="feedSetBtn">
+   <property name="geometry">
+    <rect>
+     <x>701</x>
+     <y>100</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>250</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="cleanBtn">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>220</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>294</width>
+     <height>114</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="modeBtn">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>340</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>294</width>
+     <height>114</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="senseSetBtn">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>100</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>294</width>
+     <height>114</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="myToolButton" name="runBtn">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>460</y>
+     <width>294</width>
+     <height>114</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>294</width>
+     <height>114</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>160</y>
+     <width>400</width>
+     <height>300</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>400</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="page"/>
+   <widget class="QWidget" name="page_2"/>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myToolButton</class>
+   <extends>QPushButton</extends>
+   <header>mysortwidget/mytoolbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
