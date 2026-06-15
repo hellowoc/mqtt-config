@@ -1,0 +1,10 @@
+build/
+dist/zksort
+dist/resource.rcc
+Makefile*
+3rdparty/*/Makefile*
+3rdparty/*/build/
+uikits/Makefile*
+uikits/build/
+*.o
+moc_*
