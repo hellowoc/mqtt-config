@@ -60,7 +60,7 @@ void mqttThread::run()
         QProcess m_cmd;
         for(int i =0;i< 15;i++){
             // m_cmd.start("ping -w 5 ntp.ntsc.ac.cn");
-            m_cmd.start("ping -w 5 cloud.chinaamd.cn");
+            m_cmd.start("ping -w 2 127.0.0.1");
             if(m_cmd.waitForFinished())
             {
                 QString str = m_cmd.readAll();
@@ -92,20 +92,20 @@ void mqttThread::run()
     a = mosqpp::lib_version(&b,&c,&d);
     int rc;
     /* 尝试采用鉴权 */
-    test->tls_opts_set(1,"tlsv1",NULL);
-    test->tls_insecure_set(true);
-    rc = test->tls_set("./root.crt", NULL);
+    //test->tls_opts_set(1,"tlsv1",NULL);
+    //test->tls_insecure_set(true);
+    rc = MOSQ_ERR_SUCCESS; //tls_set skipped for local test;
 
     QSettings setting(CFG_APPSet,QSettings::IniFormat);
     QString testip = setting.value("testIp","cloud.chinaamd.cn").toString();
 
     qDebug()<<"iot addr : "<<testip;
-    rc = test->connect(testip.toLocal8Bit().constData(),1884,50);
+    rc = test->connect(testip.toLocal8Bit().constData(),1883,50);
     if( rc == MOSQ_ERR_ERRNO )
     {
         while (1)
         {
-            rc = test->connect(testip.toLocal8Bit().constData(),1884,50);//本地IP
+            rc = test->connect(testip.toLocal8Bit().constData(),1883,50);//本地IP
             if (MOSQ_ERR_SUCCESS == rc)
             {
                 qDebug()<<"connect ok";
@@ -165,7 +165,7 @@ void mqttThread::run()
                 rc = test->reconnect();
                 if(rc == 0)
                 {
-                    struGsh.bFlagMqttConnect = 1;
+                    struGsh.bFlagMqttConnect = 1; break;
                     test->subscribe(NULL,topic.toLocal8Bit().constData());
                 }
             }
