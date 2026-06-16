@@ -10852,9 +10852,6 @@ void GlobalFlow::initAll()
         myMqttThread->start();
         myMqttMsgParaseThread->start();
     }
-    // [zcy 2026.06.15] mqtt verify: VM 测试环境下强制启动 MQTT 线程
-    myMqttThread->start();
-    myMqttMsgParaseThread->start();
 #endif
 //    getThread->start();
 }
